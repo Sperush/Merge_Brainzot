@@ -15,9 +15,8 @@ public class LevelBgrManager : MonoBehaviour
     {
         Instance = this;
     }
-    public IEnumerator Load(bool isLoadGame)
+    public void Load(bool isLoadGame)
     {
-        yield return new WaitForSeconds(2f);
         int level = Char.Instance.level;
         int lvInPage = (level - 1) % 10;
         int page = (level - 1) / 10;
@@ -30,6 +29,11 @@ public class LevelBgrManager : MonoBehaviour
         imgBgr[1].sprite = BgrSprite[page + 1];
         bgr.sprite = BgrSprite[page];
         bgrIcon.sprite = BgrSprite[page];
-        if(!isLoadGame && (level - 1) % 10 == 0) PanelManager.Instance.OpenPanel(PanelManager.Instance.bgrPanel);
+        if(!isLoadGame) StartCoroutine(openPanel());
+    }
+    public IEnumerator openPanel()
+    {
+        yield return new WaitUntil(() => PanelManager.Instance.isOpenPanel == false);
+        if ((Char.Instance.level - 1) % 10 == 0) PanelManager.Instance.OpenPanel(PanelManager.Instance.bgrPanel);
     }
 }

@@ -175,6 +175,22 @@ MonoBehaviour:
     m_Key: block_ads
     m_Metadata:
       m_Items: []
+  - m_Id: 1862262401925120
+    m_Key: not_enough_booster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874686861508608
+    m_Key: extra_cas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1983427046293504
+    m_Key: day_format
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000255214698496
+    m_Key: break_streak
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

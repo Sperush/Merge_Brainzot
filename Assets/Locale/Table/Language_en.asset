@@ -178,6 +178,22 @@ MonoBehaviour:
     m_Localized: Block Ads
     m_Metadata:
       m_Items: []
+  - m_Id: 1862262401925120
+    m_Localized: Not enough uses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874686861508608
+    m_Localized: EXTRA CASH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1983427046293504
+    m_Localized: Day {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000255214698496
+    m_Localized: Break 1 winning streak, lose these extra rewards
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

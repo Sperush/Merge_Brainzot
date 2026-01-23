@@ -34,7 +34,7 @@ public class LuckySpinManager : MonoBehaviour
     private Quaternion initialRotation;
 
     int currentIndex = 0;
-
+    float timerSpin;
     void Start()
     {
         UpdateUI();
@@ -43,11 +43,11 @@ public class LuckySpinManager : MonoBehaviour
 
     void Update()
     {
-        Char.Instance.timerSpin += Time.deltaTime;
+        timerSpin += Time.deltaTime;
 
-        if (Char.Instance.timerSpin >= regenTime)
+        if (timerSpin >= regenTime)
         {
-            Char.Instance.timerSpin = 0f;
+            timerSpin = 0f;
             Char.Instance.freeSpinLeft++;
             UpdateUI();
         }
@@ -177,7 +177,7 @@ public class LuckySpinManager : MonoBehaviour
     {
         txtSpinLeft.text = $"x{Char.Instance.freeSpinLeft}";
 
-        float remain = regenTime - Char.Instance.timerSpin;
+        float remain = regenTime - timerSpin;
         int min = Mathf.FloorToInt(remain / 60);
         int sec = Mathf.FloorToInt(remain % 60);
         if (Char.Instance.freeSpinLeft == 0)

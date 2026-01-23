@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
+using System.Collections;
 
 public enum TypeDanger
 {
@@ -28,7 +28,7 @@ public class DangerWarning : MonoBehaviour
     private int defaultSortingOrder;
     public Sprite[] sprites;
     // Biến lưu Sequence để quản lý
-    private Sequence warningSequence;
+    private DG.Tweening.Sequence warningSequence;
 
     public static DangerWarning Instance;
 
@@ -41,9 +41,14 @@ public class DangerWarning : MonoBehaviour
         defaultRotation = transform.localRotation.eulerAngles;
         defaultSortingOrder = img.sortingOrder;
     }
-
     public void Show(TypeDanger type)
     {
+        StartCoroutine(RunWarningProcess(type));
+    }
+    public IEnumerator RunWarningProcess(TypeDanger type)
+    {
+        //yield return new WaitForSeconds(stayDelay);
+        yield return new WaitUntil(() => PanelManager.Instance.isOpenPanel == false);
         Color cl = img.color;
         // 1. Xử lý màu sắc
         if (type == TypeDanger.Normal)
@@ -51,7 +56,7 @@ public class DangerWarning : MonoBehaviour
             cl.a = 0f;
             img.color = cl;
             // Nếu là Normal thì có thể không cần hiện warning, hoặc return luôn
-            return;
+            yield break;
         }
         else if (type == TypeDanger.Hard) img.sprite = sprites[0];
         else if (type == TypeDanger.VeryHard) img.sprite = sprites[1];
@@ -65,6 +70,8 @@ public class DangerWarning : MonoBehaviour
         transform.localScale = defaultScale;
         transform.eulerAngles = defaultRotation;
 
+        // Nếu có sequence cũ đang chạy thì kill ngay để tránh lỗi chồng chéo
+        if (warningSequence != null) warningSequence.Kill();
         // 3. Tạo Sequence (Chuỗi hành động)
         warningSequence = DOTween.Sequence();
         warningSequence.AppendInterval(stayDelay);

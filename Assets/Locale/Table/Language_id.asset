@@ -146,6 +146,23 @@ MonoBehaviour:
     m_Localized: Blokir Iklan
     m_Metadata:
       m_Items: []
+  - m_Id: 1862262401925120
+    m_Localized: Penggunaan tidak cukup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874686861508608
+    m_Localized: Uang Tambahan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1983427046293504
+    m_Localized: Hari {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000255214698496
+    m_Localized: Akhiri 1 kemenangan beruntun, kamu akan kehilangan hadiah tambahan
+      ini
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -146,6 +146,23 @@ MonoBehaviour:
     m_Localized: "Bloquear An\xFAncios"
     m_Metadata:
       m_Items: []
+  - m_Id: 1862262401925120
+    m_Localized: Usos insuficientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1874686861508608
+    m_Localized: Dinheiro Extra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1983427046293504
+    m_Localized: Dia {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000255214698496
+    m_Localized: "Quebre a sequ\xEAncia de 1 vit\xF3ria e perca estas recompensas
+      extras"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

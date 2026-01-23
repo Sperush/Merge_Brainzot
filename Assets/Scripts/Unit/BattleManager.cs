@@ -53,7 +53,7 @@ public class BattleManager : MonoBehaviour
     }
     void Update()
     {
-        if (startPvP && isOkPvP() && !CheckBattleEnd())
+        if (startPvP && isOkPvP() && !CheckBattleEnd() && !BoosterManager.Instance.isOpenPanel)
         {
             switch (currentState)
             {
@@ -257,7 +257,7 @@ public class BattleManager : MonoBehaviour
         }
         startPvP = true;
         ButtonList.SetActive(false);
-        Booster.SetActive(true);
+        if(Char.Instance.level > 2) Booster.SetActive(true);
         plane.gameObject.SetActive(false);
     }
     public void ChangeLevelUp() //Thắng nên bấm nút sẽ chuyển tới level tiếp theo
@@ -304,10 +304,19 @@ public class BattleManager : MonoBehaviour
     //        }
     //    }
     //}
+    IEnumerator CheckDailyReward()
+    {
+        yield return new WaitUntil(() => PanelManager.Instance.isOpenPanel == false);
+        if (Char.Instance.canClaimToday && Char.Instance.level > 2)
+        {
+            PanelManager.Instance.OpenPanel(PanelManager.Instance.dailyRewardPanel);
+        }
+    }
     public void LoadLevel(bool isLoadGame)
     {
+        StartCoroutine(CheckDailyReward());
         DangerWarning.Instance.Show((Char.Instance.level > 9 && Char.Instance.level % 5 == 0) ? TypeDanger.VeryHard : (Char.Instance.level > 9 && (Char.Instance.level + 1) % 5 == 0) ? TypeDanger.Hard : TypeDanger.Normal);
-        StartCoroutine(LevelBgrManager.Instance.Load(isLoadGame));
+        LevelBgrManager.Instance.Load(isLoadGame);
         _levelStartTime = Time.time;
         GridManager grid = GridManager.Instance;
 

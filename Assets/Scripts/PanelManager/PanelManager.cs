@@ -27,6 +27,7 @@ public class PanelManager : MonoBehaviour
     public ItemManager statsUnit;
 
     public GameObject moreGemsPanel;
+    public GameObject BuyBoosterPanel;
 
     public static PanelManager Instance;
 
@@ -69,16 +70,17 @@ public class PanelManager : MonoBehaviour
     // Gọi hàm này để ĐÓNG Panel
     public void ClosePanel(GameObject panel)
     {
-        isOpenPanel = false;
         AudioManager.Instance.Play(GameSound.clickButtonSound);
         // Thu nhỏ về 0
         panel.transform.DOScale(Vector3.zero, duration) // Đóng thì nên nhanh hơn mở 1 chút
             .SetEase(closeEase)
             .OnComplete(() =>
             {
+                isOpenPanel = false;
                 // Sau khi thu nhỏ xong -> Tắt toàn bộ Container (biến mất cả nền đen)
                 panel.SetActive(false);
-                if(Char.Instance.level > 2) darkPanel.SetActive(false);
+                if(Char.Instance.level > 2 || BattleManager.Instance.startPvP) darkPanel.SetActive(false);
+                BoosterManager.Instance.isOpenPanel = false;
             });
         if (TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge)
         {

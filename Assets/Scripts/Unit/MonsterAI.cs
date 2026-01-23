@@ -25,7 +25,7 @@ public class MonsterAI : MonoBehaviour
 
     void Update()
     {
-        if (isFrozen) return;
+        if (isFrozen || BoosterManager.Instance.isOpenPanel) return;
         var cfg = AIConfig.Instance;
         if (monsterHealth.stats.type == MonsterType.Melee)
         {

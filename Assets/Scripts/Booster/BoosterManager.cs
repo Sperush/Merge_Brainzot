@@ -1,9 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using UnityEngine.UI;
+using TMPro;
+public enum TypeBooster
+{
+    Freeze,
+    Bomp
+}
 public class BoosterManager : MonoBehaviour
 {
+    public Image[] img;
+    public GameObject[] booster;
+    public TMP_Text[] txtCount;
     public static BoosterManager Instance;
+    public bool isOpenPanel;
     private void Awake()
     {
         Instance = this;
@@ -11,7 +21,7 @@ public class BoosterManager : MonoBehaviour
 
     public void UseFreezeBooster(float duration = 5f)
     {
-        if (!BattleManager.Instance.isOkPvP()) return;
+        if (!BattleManager.Instance.isOkPvP() || !Char.Instance.SubBooster(TypeBooster.Freeze)) return;
         foreach (var m in BattleManager.Instance.enemyTeam)
         {
             m.GetComponent<MonsterAI>().Freeze(duration);
@@ -37,11 +47,11 @@ public class BoosterManager : MonoBehaviour
     }
     public void UseBombBooster()
     {
-        if (!BattleManager.Instance.isOkPvP()) return;
+        if (!BattleManager.Instance.isOkPvP() || !Char.Instance.SubBooster(TypeBooster.Bomp)) return;
         int strongestMeleeHP = GetStrongestMeleeMaxHP();
         if (strongestMeleeHP <= 0) return;
 
-        int damage = Mathf.RoundToInt(strongestMeleeHP * 0.8f);
+        int damage = Mathf.RoundToInt(strongestMeleeHP * 0.5f);
         BombPlane plane = BombPlanePool.Instance.Get();
         plane.Init(() =>
         {

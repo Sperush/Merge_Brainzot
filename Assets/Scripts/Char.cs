@@ -24,15 +24,18 @@ public class SaveData //Dữ liệu cần lưu
     public long coins;
     public int gems;
     public int level;
+    public int boosterFreeze;
+    public int boosterBomp;
     public int coutStreak;
     public long costMelee;
     public long costRange;
     public int freeSpinLeft;
-    public float timerSpin;
     public List<bool> giftCollected;
     public Team dataMyTeam;
     public List<bool> unlockUnitMelee;
     public List<bool> unlockUnitRange;
+    public string LastClaimTime;
+    public int currentDayIndex;
 }
 [Serializable]
 public class Team
@@ -50,8 +53,9 @@ public class Char : MonoBehaviour
     public int level; //Level màn chơi của người chơi 
     public long coins; //Số tiền của người chơi 
     public int gems; //Số tiền của người chơi 
+    public int boosterFreeze;
+    public int boosterBomp;
     public int freeSpinLeft;
-    public float timerSpin;
     public TMP_Text txtCoins; 
     public TMP_Text txtGems;
     public TMP_Text txtLevel;
@@ -67,6 +71,9 @@ public class Char : MonoBehaviour
     public List<ItemManager> itemMelee;
     public List<ItemManager> itemRange;
     public int coutStreak;
+    public string LastClaimTime = DateTime.MinValue.ToString();
+    public int currentDayIndex;
+    public bool canClaimToday;
 
     public int activePointerId = -999;
     private void Awake()
@@ -81,13 +88,44 @@ public class Char : MonoBehaviour
         txtGems.SetText(gems.ToString());
         if (level <= 1) TutorialController.Instance.StartPhase1();
         else if(level == 2) TutorialController.Instance.StartPhase2_Merge();
+        CheckStatus();
         BattleManager.Instance.LoadLevel(true);
         AddStreakBar(0);
+        UpdateBooster();
     }
     public void AddStreakBar(int a)
     {
         coutStreak += a;
         StreakManager.Instance.LoadBar();
+    }
+
+    private void CheckStatus()
+    {
+        DateTime lastClaimDate = DateTime.MinValue;
+        if (!string.IsNullOrEmpty(LastClaimTime)) lastClaimDate = DateTime.Parse(LastClaimTime);
+        DateTime today = DateTime.Now.Date;
+        double daysDiff = (today - lastClaimDate).TotalDays;
+        if (daysDiff < 1)
+        {
+            // Đã nhận hôm nay rồi
+            canClaimToday = false;
+        }
+        else if (daysDiff >= 1 && daysDiff < 2)
+        {
+            currentDayIndex++;
+            // Đúng là ngày tiếp theo (Hôm qua nhận, hôm nay vào lại)
+            canClaimToday = true;
+        }
+        else
+        {
+            currentDayIndex = 0;
+            canClaimToday = true;
+            Debug.Log("Đã reset về ngày 1 do đứt chuỗi hoặc lần đầu chơi");
+        }
+        if (currentDayIndex > 6)
+        {
+            currentDayIndex = 0;
+        }
     }
     public void Save(string path) //Lưu lại dữ liệu của người chơi
     {
@@ -96,11 +134,14 @@ public class Char : MonoBehaviour
         saveData.coins = coins;
         saveData.gems = gems;
         saveData.coutStreak = coutStreak;
+        saveData.boosterBomp = boosterBomp;
+        saveData.boosterFreeze = boosterFreeze;
         saveData.freeSpinLeft = freeSpinLeft;
-        saveData.timerSpin = timerSpin;
         saveData.costMelee = UnitSpawner.Instance.costMelee;
         saveData.costRange = UnitSpawner.Instance.costRange;
         saveData.giftCollected = giftCollected;
+        saveData.currentDayIndex = currentDayIndex;
+        saveData.LastClaimTime = LastClaimTime;
         List<DataUnit> data = new List<DataUnit>();
         foreach(var m in dataMyTeam)
         {
@@ -157,12 +198,15 @@ public class Char : MonoBehaviour
         level = saveData.level;
         coins = saveData.coins;
         gems = saveData.gems;
+        boosterFreeze = saveData.boosterFreeze;
+        boosterBomp = saveData.boosterBomp;
         coutStreak = saveData.coutStreak;
         freeSpinLeft = saveData.freeSpinLeft;
-        timerSpin = saveData.timerSpin;
         giftCollected = saveData.giftCollected;
         unlockUnitMelee = saveData.unlockUnitMelee;
         unlockUnitRange = saveData.unlockUnitRange;
+        LastClaimTime = saveData.LastClaimTime;
+        currentDayIndex = saveData.currentDayIndex;
         if (level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UnitSpawner.Instance.LoadCost(saveData.costMelee, saveData.costRange);
         foreach (var m in saveData.dataMyTeam.units)
         {
@@ -216,6 +260,74 @@ public class Char : MonoBehaviour
         coins += a;
         coins = Min(coins, long.MaxValue);
         txtCoins.SetText(FormatMoney(coins));
+    }
+    public bool SubBooster(TypeBooster type) //Trừ coin của người chơi
+    {
+        if (type == TypeBooster.Freeze)
+        {
+            if (boosterFreeze <= 0)
+            {
+                BoosterManager.Instance.isOpenPanel = true;
+                PanelManager.Instance.OpenPanel(PanelManager.Instance.BuyBoosterPanel);
+                return false;
+            }
+            boosterFreeze--;
+            boosterFreeze = Mathf.Max(boosterFreeze, 0);
+        }
+        else
+        {
+            if (boosterBomp <= 0)
+            {
+                BoosterManager.Instance.isOpenPanel = true;
+                PanelManager.Instance.OpenPanel(PanelManager.Instance.BuyBoosterPanel);
+                return false;
+            }
+            boosterBomp--;
+            boosterBomp = Mathf.Max(boosterBomp, 0);
+        }
+        UpdateBooster();
+        return true;
+    }
+    public void AddBooster(TypeBooster type, int a) //Thêm coin của người chơi
+    {
+        if(type == TypeBooster.Freeze)
+        {
+            boosterFreeze += a;
+            boosterFreeze = Mathf.Min(boosterFreeze, int.MaxValue);
+        } else
+        {
+            boosterBomp += a;
+            boosterBomp = Mathf.Min(boosterBomp, int.MaxValue);
+        }
+        UpdateBooster();
+    }
+    public void UpdateBooster()
+    {
+        if (boosterFreeze > 0)
+        {
+            BoosterManager.Instance.img[0].color = Color.cyan;
+            BoosterManager.Instance.txtCount[0].SetText(FormatMoney(boosterFreeze));
+            BoosterManager.Instance.txtCount[0].gameObject.SetActive(true);
+            BoosterManager.Instance.booster[0].SetActive(false);
+        } else
+        {
+            BoosterManager.Instance.img[0].color = Color.green;
+            BoosterManager.Instance.booster[0].SetActive(true);
+            BoosterManager.Instance.txtCount[0].gameObject.SetActive(false);
+        }
+        if (boosterBomp > 0)
+        {
+            BoosterManager.Instance.img[1].color = Color.cyan;
+            BoosterManager.Instance.txtCount[1].SetText(FormatMoney(boosterBomp));
+            BoosterManager.Instance.txtCount[1].gameObject.SetActive(true);
+            BoosterManager.Instance.booster[1].SetActive(false);
+        }
+        else
+        {
+            BoosterManager.Instance.img[1].color = Color.green;
+            BoosterManager.Instance.booster[1].SetActive(true);
+            BoosterManager.Instance.txtCount[1].gameObject.SetActive(false);
+        }
     }
     public long Min(long a, long b)
     {

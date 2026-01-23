@@ -4,10 +4,17 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ItemGift
 {
-    public int gem;
-    public int gold;
-    public int booster1;
-    public int booster2;
+    public Item item;
+    public int quantity;
+    public Sprite img;
+}
+[System.Serializable]
+public enum Item
+{
+    gem,
+    gold,
+    freeze,
+    bomp
 }
 public class GiftStreak : MonoBehaviour
 {
@@ -22,9 +29,21 @@ public class GiftStreak : MonoBehaviour
     }
     public void OpenGift()
     {
-        Char.Instance.AddGems(reward.gem);
-        Char.Instance.AddCoins(reward.gold);
-        //Add reward booster
+        switch (reward.item)
+        {
+            case Item.gem:
+                Char.Instance.AddGems(reward.quantity);
+                break;
+            case Item.gold:
+                Char.Instance.AddCoins(reward.quantity);
+                break;
+            case Item.bomp:
+                Char.Instance.AddBooster(TypeBooster.Bomp, reward.quantity);
+                break;
+            case Item.freeze:
+                Char.Instance.AddBooster(TypeBooster.Freeze, reward.quantity);
+                break;
+        }
         btn.interactable = false;
         Char.Instance.giftCollected[id] = true;
         if (!Char.Instance.giftCollected.Contains(false)) StreakManager.Instance.resetStreak();
