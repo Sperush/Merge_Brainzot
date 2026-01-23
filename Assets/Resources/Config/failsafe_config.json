@@ -1,0 +1,8 @@
+{
+  "failSafe": {
+    "loseStreakTrigger": 10,
+    "damageMultiplier": 1,
+    "hpMultiplier": 1,
+    "rewardBonus": 1
+  }
+}

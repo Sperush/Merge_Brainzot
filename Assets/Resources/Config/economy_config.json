@@ -1,0 +1,10 @@
+{
+  "unitShop": {
+    "startCost": {
+      "melee": 100,
+      "range": 100
+    },
+    "costIncreaseRate": 1.1,
+    "increaseAfterLevel": 2
+  }
+}

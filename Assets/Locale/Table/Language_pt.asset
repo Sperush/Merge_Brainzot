@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Language_pt
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: pt
+  m_SharedData: {fileID: 11400000, guid: 4d401d52c98740b4e8dad908ceb6a95d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 72595554304
+    m_Localized: LUTAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 115473924096
+    m_Localized: Ouro insuficiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 273053925376
+    m_Localized: Gemas insuficientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276086407168
+    m_Localized: "N\xCDVEL {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190861017088
+    m_Localized: Comprar Brainrot Corpo a Corpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6836913192960
+    m_Localized: "Voc\xEA precisa de ouro para comprar Brainrot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6837714305024
+    m_Localized: Comprar Brainrot de Longo Alcance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6838452502528
+    m_Localized: "Toque para come\xE7ar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6839069065216
+    m_Localized: Compre mais um para combinar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6909751476224
+    m_Localized: Arraste aqui
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14206435344384
+    m_Localized: "MEU CART\xC3O"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14208889012224
+    m_Localized: "RECOMPENSA DI\xC1RIA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14209610432512
+    m_Localized: "GR\xC1TIS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14210357018624
+    m_Localized: RESGATAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14211044884480
+    m_Localized: INVOCAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14211749527552
+    m_Localized: "CONFIGURA\xC7\xD5ES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14212676468736
+    m_Localized: CONTINUAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14213368528896
+    m_Localized: "N\xC3O, OBRIGADO"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14214127697920
+    m_Localized: "VOC\xCA GANHOU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14214798786560
+    m_Localized: "VIT\xD3RIA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15653226954752
+    m_Localized: DERROTA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15653931597824
+    m_Localized: DINHEIRO EXTRA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15654543966208
+    m_Localized: COLETAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18001630347264
+    m_Localized: NOVO PERSONAGEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326842841169920
+    m_Localized: Reinicia em
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327215123398656
+    m_Localized: "\xC0 dist\xE2ncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327241862086656
+    m_Localized: Corpo a corpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548409153011712
+    m_Localized: "Recompensa de Sequ\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548411237580800
+    m_Localized: "Sequ\xEAncia de Vit\xF3rias:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548413569613824
+    m_Localized: Novo Ambiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548426085416960
+    m_Localized: Legal!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1581885432545280
+    m_Localized: "Bloquear An\xFAncios"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,14 @@
+{
+  "reward": {
+    "winMultiplier": 2.8,
+    "loseMultiplier": 1.3
+  },
+  "difficulty": {
+    "manualLevels": {
+      "keys": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+      "values": [ 0.5, 0.6, 0.6, 0.7, 0.7, 0.8, 0.8, 0.9, 1.0, 1.3 ]
+    },
+    "baseGroup": [ 0.62, 0.72, 0.92, 1.12, 1.32 ],
+    "groupIncrease": 0.02
+  }
+}

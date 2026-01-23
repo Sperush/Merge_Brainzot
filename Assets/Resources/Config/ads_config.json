@@ -1,0 +1,7 @@
+{
+  "adsConfig": {
+    "InterEnable": true,
+    "MinGameplaySec": 20,
+    "RewardMultiplier": 1.3
+  }
+}

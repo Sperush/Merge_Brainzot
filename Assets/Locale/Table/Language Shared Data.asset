@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Language Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Language
+  m_TableCollectionNameGuidString: 4d401d52c98740b4e8dad908ceb6a95d
+  m_Entries:
+  - m_Id: 72595554304
+    m_Key: fight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 115473924096
+    m_Key: not_enough_gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 273053925376
+    m_Key: not_enough_gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276086407168
+    m_Key: level_format
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190861017088
+    m_Key: buy_melee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6836913192960
+    m_Key: need_gold_buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6837714305024
+    m_Key: buy_range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6838452502528
+    m_Key: click_start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6839069065216
+    m_Key: buy_to_merge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6909751476224
+    m_Key: drag_here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14206435344384
+    m_Key: my_card
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14208889012224
+    m_Key: daily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14209610432512
+    m_Key: free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14210357018624
+    m_Key: claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14211044884480
+    m_Key: summon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14211749527552
+    m_Key: setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14212676468736
+    m_Key: continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14213368528896
+    m_Key: no_thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14214127697920
+    m_Key: you_earned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14214798786560
+    m_Key: victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15653226954752
+    m_Key: lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15653931597824
+    m_Key: extra_cash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15654543966208
+    m_Key: collect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18001630347264
+    m_Key: new_char
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41536608288768
+    m_Key: Game/Canvas/SettingPanel/Dropdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41554346000384
+    m_Key: Game/Canvas/SettingPanel/Dropdown 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41576072495104
+    m_Key: Game/Canvas/SettingPanel/Dropdown 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41598801428480
+    m_Key: Game/Canvas/SettingPanel/Dropdown 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41617491247104
+    m_Key: Game/Canvas/SettingPanel/Dropdown 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41632221642752
+    m_Key: Game/Canvas/SettingPanel/Dropdown 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41645307871232
+    m_Key: Game/Canvas/SettingPanel/Dropdown 6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41660373811200
+    m_Key: Game/Canvas/SettingPanel/Dropdown 7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326842841169920
+    m_Key: reset_in
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327215123398656
+    m_Key: range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327241862086656
+    m_Key: melee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548409153011712
+    m_Key: streak_reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548411237580800
+    m_Key: current_winning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548413569613824
+    m_Key: new_environment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548426085416960
+    m_Key: cool
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1581885432545280
+    m_Key: block_ads
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7365287956378550638
+  references:
+    version: 2
+    RefIds:
+    - rid: 7365287956378550638
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1768715448441

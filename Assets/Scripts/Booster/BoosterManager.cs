@@ -1,0 +1,69 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+public class BoosterManager : MonoBehaviour
+{
+    public static BoosterManager Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void UseFreezeBooster(float duration = 5f)
+    {
+        if (!BattleManager.Instance.isOkPvP()) return;
+        foreach (var m in BattleManager.Instance.enemyTeam)
+        {
+            m.GetComponent<MonsterAI>().Freeze(duration);
+        }
+
+        AudioManager.Instance.Play(GameSound.freezeSound);
+        // TODO: Screen effect / VFX
+    }
+    int GetStrongestMeleeMaxHP()
+    {
+        int maxHP = 0;
+
+        foreach (var m in BattleManager.Instance.playerTeam)
+        {
+            MonsterHealth unit = m.GetComponent<MonsterHealth>();
+            if (unit.stats.type == MonsterType.Melee &&
+                unit.gameObject.activeSelf)
+            {
+                maxHP = Mathf.Max(maxHP, unit.stats.maxHP);
+            }
+        }
+        return maxHP;
+    }
+    public void UseBombBooster()
+    {
+        if (!BattleManager.Instance.isOkPvP()) return;
+        int strongestMeleeHP = GetStrongestMeleeMaxHP();
+        if (strongestMeleeHP <= 0) return;
+
+        int damage = Mathf.RoundToInt(strongestMeleeHP * 0.8f);
+        BombPlane plane = BombPlanePool.Instance.Get();
+        plane.Init(() =>
+        {
+            ApplyBombDamage(damage);
+        });
+
+        AudioManager.Instance.Play(GameSound.planeSound);
+        // TODO: Plane animation + explosion VFX
+    }
+    void ApplyBombDamage(int damage)
+    {
+        var enemies = BattleManager.Instance.enemyTeam;
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            var hp = enemies[i].GetComponent<MonsterHealth>();
+            if (hp != null && enemies[i].activeSelf)
+            {
+                hp.TakeDamage(damage);
+            }
+        }
+
+        AudioManager.Instance.Play(GameSound.bombSound);
+    }
+}

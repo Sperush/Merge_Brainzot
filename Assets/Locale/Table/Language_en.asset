@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Language_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4d401d52c98740b4e8dad908ceb6a95d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 72595554304
+    m_Localized: FIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 115473924096
+    m_Localized: Not enough gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 273053925376
+    m_Localized: Not enough gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 276086407168
+    m_Localized: LEVEL {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190861017088
+    m_Localized: Buy Your Melee Brainrot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6836913192960
+    m_Localized: You Need Gold to Buy Brainrot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6837714305024
+    m_Localized: Buy Your Ranged Brainrot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6838452502528
+    m_Localized: Click Here to Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6839069065216
+    m_Localized: Buy One More to Merge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6909751476224
+    m_Localized: Drag Here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14206435344384
+    m_Localized: MY CARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14208889012224
+    m_Localized: DAILY REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14209610432512
+    m_Localized: Free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14210357018624
+    m_Localized: Claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14211044884480
+    m_Localized: SUMMON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14211749527552
+    m_Localized: SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14212676468736
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14213368528896
+    m_Localized: No Thanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14214127697920
+    m_Localized: You Earned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14214798786560
+    m_Localized: VICTORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15653226954752
+    m_Localized: LOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15653931597824
+    m_Localized: EXTRA CASH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15654543966208
+    m_Localized: Collect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18001630347264
+    m_Localized: NEW CHARACTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41536608288768
+    m_Localized: Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41554346000384
+    m_Localized: Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41576072495104
+    m_Localized: Option B
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41598801428480
+    m_Localized: Option A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41617491247104
+    m_Localized: Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41632221642752
+    m_Localized: Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41645307871232
+    m_Localized: Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41660373811200
+    m_Localized: Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326842841169920
+    m_Localized: Reset in
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327215123398656
+    m_Localized: Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 327241862086656
+    m_Localized: Melee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548409153011712
+    m_Localized: STREAK REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548411237580800
+    m_Localized: 'Current Winning Streak:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548413569613824
+    m_Localized: NEW ENVIRONMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1548426085416960
+    m_Localized: Cool!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1581885432545280
+    m_Localized: Block Ads
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
