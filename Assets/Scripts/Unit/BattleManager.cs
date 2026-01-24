@@ -25,6 +25,7 @@ public class BattleManager : MonoBehaviour
     public GameObject losePanel;
     public GameObject ButtonList;
     public TMP_Text[] txtCoinReward;
+    public TMP_Text txtGemReward;
     public GameObject rangeEnemyPrefab;
     public GameObject meleeEnemyPrefab;
     public GameObject Booster;
@@ -172,11 +173,11 @@ public class BattleManager : MonoBehaviour
             });
             LoseTracker.OnWin();
             Debug.Log("Player Win");
-            PanelManager.Instance.OpenPanel(winPanel);
             AudioManager.Instance.Play(GameSound.victorySound);
             Char.Instance.level++;
             Char.Instance.AddStreakBar(1);
             EndGame(true);
+            VFXManager.Instance.Play(VFXType.WinFirework, winPanel.transform.localPosition);
             if (Char.Instance.level <= 2) Char.Instance.Save(Application.persistentDataPath + "/save.json");
             return true;
         }
@@ -190,7 +191,6 @@ public class BattleManager : MonoBehaviour
             LoseTracker.OnLose();
             Debug.Log("Enemy Win");
             Char.Instance.AddStreakBar(-Char.Instance.coutStreak);
-            PanelManager.Instance.OpenPanel(losePanel);
             AudioManager.Instance.Play(GameSound.loseSound);
             EndGame(false);
             return true;
@@ -199,13 +199,17 @@ public class BattleManager : MonoBehaviour
     }
     public void EndGame(bool isWin)
     {
+        long gem = Char.Instance.level % 5 == 0 ? Char.Instance.level/5:0;
         long coin = CalulatorReward(isWin);
-        txtCoinReward[isWin ? 0:1].SetText("+"+Char.FormatMoney(coin));
+        txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coin));
+        if(isWin) txtGemReward.SetText(Char.FormatMoney(gem));
         Char.Instance.AddCoins(coin);
         startPvP = false;
         ButtonList.SetActive(true);
         Booster.SetActive(false);
         PanelManager.Instance.streakPanel.SetActive(false);
+        PanelManager.Instance.isOpenPanel = false;
+        PanelManager.Instance.OpenPanel(isWin ? winPanel : losePanel);
         float duration = Time.time - _levelStartTime;
         buttonGift[0].SetActive(false);
         buttonGift[1].SetActive(false);

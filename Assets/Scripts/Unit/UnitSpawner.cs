@@ -64,6 +64,7 @@ public class UnitSpawner : MonoBehaviour
                     AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
                     grid.Place(unit, x, y);
                     if(Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(false);
+                    VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);
                     return;
                 }
             }
@@ -87,6 +88,7 @@ public class UnitSpawner : MonoBehaviour
                     AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
                     grid.Place(unit, x, y);
                     if (Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(true);
+                    VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);
                     return;
                 }
             }

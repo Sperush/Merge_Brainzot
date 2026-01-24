@@ -23,14 +23,14 @@ public class BombPlane : MonoBehaviour
         hasEnteredBackground = false;
         StartFly(UnityEngine.Random.value < 0.5);
     }
-    bool IsInsideBackground()
+    public static bool IsInsideBackground(Vector3 pos)
     {
-        return LevelBgrManager.Instance.bgr.bounds.Contains(transform.position);
+        return LevelBgrManager.Instance.bgr.bounds.Contains(pos);
     }
-    bool IsOutOfBackground()
+    public static bool IsOutOfBackground(Vector3 pos)
     {
         Bounds bgBounds = LevelBgrManager.Instance.bgr.bounds;
-        return !bgBounds.Contains(transform.position);
+        return !bgBounds.Contains(pos);
     }
 
     void StartFly(bool isLeftToRight)
@@ -59,7 +59,7 @@ public class BombPlane : MonoBehaviour
     void Update()
     {
         transform.position += dir * speed * Time.deltaTime;
-        if (!hasEnteredBackground && IsInsideBackground())
+        if (!hasEnteredBackground && IsInsideBackground(transform.position))
         {
             hasEnteredBackground = true;
         }
@@ -71,7 +71,7 @@ public class BombPlane : MonoBehaviour
         }
 
         // Kết thúc đường bay
-        if (hasEnteredBackground  && (IsOutOfBackground() || (!BattleManager.Instance.startPvP && !isGift)))
+        if (hasEnteredBackground  && (IsOutOfBackground(transform.position) || (!BattleManager.Instance.startPvP && !isGift)))
         {
             if (isGift)
             {

@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +44,28 @@ public class PanelManager : MonoBehaviour
     // Gọi hàm này để MỞ Panel
     public void OpenPanel(GameObject panel)
     {
+        if (!isOpenPanel)
+        {
+            isOpenPanel = true;
+            darkPanel.SetActive(true);
+            if (panel == unlockUnit)
+            {
+                statsUnit.Load();
+            }
+            panel.SetActive(true);
+            AudioManager.Instance.Play(GameSound.clickButtonSound);
+            initialScale = new Vector3(1, 1, 1);
+            panel.transform.localScale = Vector3.zero;
+            panel.transform.DOScale(initialScale, duration).SetEase(openEase);
+            ResetScroll();
+        } else
+        {
+            StartCoroutine(Open(panel));
+        }
+    }
+    public IEnumerator Open(GameObject panel)
+    {
+        yield return new WaitUntil(() => isOpenPanel == false);
         isOpenPanel = true;
         darkPanel.SetActive(true);
         if (panel == unlockUnit)
@@ -53,9 +76,7 @@ public class PanelManager : MonoBehaviour
         AudioManager.Instance.Play(GameSound.clickButtonSound);
         initialScale = new Vector3(1, 1, 1);
         panel.transform.localScale = Vector3.zero;
-
-        panel.transform.DOScale(initialScale, duration)
-            .SetEase(openEase);
+        panel.transform.DOScale(initialScale, duration).SetEase(openEase);
         ResetScroll();
     }
     public void ResetScroll()

@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,13 +7,15 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 {
     private MonsterHealth unit;
     private Vector3 offset;
+    private bool isBlockedByVFX;
+
     void Awake()
     {
         unit = GetComponent<MonsterHealth>();
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf || Char.Instance.activePointerId != -999) return;
+        if (isBlockedByVFX || BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf || Char.Instance.activePointerId != -999) return;
         Char.Instance.activePointerId = eventData.pointerId;
         offset = transform.position - GetMouseWorldPos();   
         GridManager.Instance.Remove(unit.gridX, unit.gridY);
@@ -20,13 +23,13 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (eventData.pointerId != Char.Instance.activePointerId || BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf) return;
+        if (isBlockedByVFX || eventData.pointerId != Char.Instance.activePointerId || BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf) return;
         transform.position = GetMouseWorldPos() + offset;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (eventData.pointerId != Char.Instance.activePointerId || BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf) return;
+        if (isBlockedByVFX || eventData.pointerId != Char.Instance.activePointerId || BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf) return;
         Char.Instance.activePointerId = -999;
         AudioManager.Instance.Play(GameSound.snapSound);
         TrySnap();
@@ -80,7 +83,6 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         // MERGE
         GridManager.Instance.Remove(other.gridX, other.gridY);
-        Destroy(other.gameObject);
         MergeTracker.OnMerge();
         GameLog.Log("unit_merge", new
         {
@@ -96,6 +98,10 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             TutorialController.Instance.OnMergeCompleted();
         }
         GridManager.Instance.Place(unit, other.gridX, other.gridY);
+        Vector3 pos = unit.transform.position;
+        pos.y += 0.3f;
+        StartCoroutine(BlockByLayer(VFXType.Merge, pos));
+        Destroy(other.gameObject);
         Char.Instance.dataMyTeam.RemoveAll(m => m == null);
         PanelManager.Instance.statsUnit.level = unit.stats.level;
         if (unit.stats.type == MonsterType.Melee && !Char.Instance.unlockUnitMelee[unit.stats.level - 1])
@@ -114,7 +120,6 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         else if (unit.stats.type == MonsterType.Ranged && !Char.Instance.unlockUnitRange[unit.stats.level - 1])
         {
             PanelManager.Instance.statsUnit.isMelee = false;
-            PanelManager.Instance.OpenPanel(PanelManager.Instance.unlockUnit);
             if (unit.stats.type == MonsterType.Melee)
             {
                 Char.Instance.unlockUnitMelee[unit.stats.level - 1] = true;
@@ -126,6 +131,15 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             PanelManager.Instance.OpenPanel(PanelManager.Instance.unlockUnit);
         }
     }
+    IEnumerator BlockByLayer(VFXType type, Vector3 position)
+    {
+        isBlockedByVFX = true;
+        VFXManager.Instance.Play(type, position);
+        yield return new WaitForSeconds(1f);
+        isBlockedByVFX = false;
+    }
+
+
 
     void SwapWith(MonsterHealth other)
     {

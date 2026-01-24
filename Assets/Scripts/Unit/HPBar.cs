@@ -14,7 +14,7 @@ public class HPBar : MonoBehaviour
         float targetWidth = maxWidth * ratio;
         float targetPosX = -(maxWidth - targetWidth) / 2f;
         fill.DOKill();
-        float duration = ratio < currentRatio ? 0.15f : 0.3f;
+        float duration = ratio < currentRatio ? 1f : 0.3f;
         fill.DOScaleX(targetWidth, duration).SetEase(Ease.OutCubic).SetUpdate(true);
         fill.DOLocalMoveX(targetPosX, duration).SetEase(Ease.OutCubic).SetUpdate(true);
         currentRatio = ratio;

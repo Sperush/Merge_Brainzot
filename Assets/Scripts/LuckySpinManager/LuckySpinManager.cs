@@ -167,9 +167,9 @@ public class LuckySpinManager : MonoBehaviour
             txtResult.text = $"+{text}";
             Debug.Log("Lucky Spin Reward: " + r.id);
         }
-
         luckySpinPanel.SetActive(false);
-        luckySpinRewardPanel.SetActive(true);
+        PanelManager.Instance.isOpenPanel = false;
+        PanelManager.Instance.OpenPanel(luckySpinRewardPanel);
         r.image.SetActive(true);
     }
 
@@ -200,8 +200,9 @@ public class LuckySpinManager : MonoBehaviour
     public void CloseLuckySpinRewardPanel()
     {
         wheel.transform.rotation = initialRotation;
-        luckySpinRewardPanel.SetActive(false);
         luckySpinPanel.SetActive(true);
+        PanelManager.Instance.isOpenPanel = true;
+        luckySpinRewardPanel.SetActive(false);
         rewards[currentIndex].image.SetActive(false);
     }
 }
