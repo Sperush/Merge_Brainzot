@@ -194,6 +194,22 @@ MonoBehaviour:
     m_Localized: Break 1 winning streak, lose these extra rewards
     m_Metadata:
       m_Items: []
+  - m_Id: 2295282327371776
+    m_Localized: GEMS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2295284047036416
+    m_Localized: BEST SELLER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297984490946560
+    m_Localized: Get More Gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2375395475734528
+    m_Localized: SPIN
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

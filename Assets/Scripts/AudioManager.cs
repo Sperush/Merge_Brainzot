@@ -2,6 +2,7 @@
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public enum GameSound
 {
@@ -59,6 +60,9 @@ public class AudioManager : MonoBehaviour
     [Header("Range Audio Clip")]
     public AudioClip[] rangeAudioClip;
 
+    [Header("UI")]
+    public Image img;
+    public Sprite[] sp;
     void Awake()
     {
         if (Instance == null)
@@ -164,6 +168,7 @@ public class AudioManager : MonoBehaviour
     public void ToggleMute()
     {
         isMuted = !isMuted;
+        img.sprite = sp[isMuted ? 1 : 0];
         Play(GameSound.clickButtonSound);
         SaveSettings();
     }

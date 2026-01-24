@@ -163,6 +163,22 @@ MonoBehaviour:
       extras"
     m_Metadata:
       m_Items: []
+  - m_Id: 2295282327371776
+    m_Localized: Gemas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2295284047036416
+    m_Localized: Mais Vendido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297984490946560
+    m_Localized: Obter Mais Gemas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2375395475734528
+    m_Localized: Girar
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

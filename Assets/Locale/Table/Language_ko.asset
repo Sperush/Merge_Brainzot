@@ -164,6 +164,22 @@ MonoBehaviour:
       \uBCF4\uC0C1\uC744 \uC783\uAC8C \uB429\uB2C8\uB2E4"
     m_Metadata:
       m_Items: []
+  - m_Id: 2295282327371776
+    m_Localized: "\uC82C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2295284047036416
+    m_Localized: "\uBCA0\uC2A4\uD2B8\uC140\uB7EC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297984490946560
+    m_Localized: "\uC82C \uB354 \uC5BB\uAE30"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2375395475734528
+    m_Localized: "\uB3CC\uB9AC\uAE30"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

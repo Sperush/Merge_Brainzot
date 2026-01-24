@@ -29,7 +29,13 @@ public class PanelManager : MonoBehaviour
 
     public GameObject moreGemsPanel;
     public GameObject BuyBoosterPanel;
+    [Header("UI collection")]
+    public Sprite[] sp;
+    public Image[] img;
 
+    [Header("UI summon")]
+    public Sprite[] sp1;
+    public Image[] img1;
     public static PanelManager Instance;
 
     [Header("Cài đặt")]
@@ -148,6 +154,8 @@ public class PanelManager : MonoBehaviour
     {
         if (collectionPanel != null)
         {
+            img[0].sprite = sp[0];
+            img[1].sprite = sp[1];
             OpenPanel(collectionPanel);
             rangeCollection.SetActive(true);
             meleeCollection.SetActive(false);
@@ -179,6 +187,8 @@ public class PanelManager : MonoBehaviour
     {
         if (rangeCollection != null)
         {
+            img[0].sprite = sp[0];
+            img[1].sprite = sp[1];
             rangeCollection.SetActive(true);
             meleeCollection.SetActive(false);
             UpdatePanelRange();
@@ -190,6 +200,8 @@ public class PanelManager : MonoBehaviour
     {
         if (rangeCollection != null)
         {
+            img[0].sprite = sp[1];
+            img[1].sprite = sp[0];
             rangeCollection.SetActive(false);
             meleeCollection.SetActive(true);
             UpdatePanelMelee();
@@ -218,6 +230,8 @@ public class PanelManager : MonoBehaviour
     {
         if (summonPanel != null)
         {
+            img1[0].sprite = sp1[0];
+            img1[1].sprite = sp1[1];
             OpenPanel(summonPanel);
             rangeSummon.SetActive(true);
             meleeSummon.SetActive(false);
@@ -234,6 +248,8 @@ public class PanelManager : MonoBehaviour
     {
         if (rangeSummon != null)
         {
+            img1[0].sprite = sp1[0];
+            img1[1].sprite = sp1[1];
             rangeSummon.SetActive(true);
             meleeSummon.SetActive(false);
             ResetScroll();
@@ -244,6 +260,8 @@ public class PanelManager : MonoBehaviour
     {
         if (rangeSummon != null)
         {
+            img1[0].sprite = sp1[1];
+            img1[1].sprite = sp1[0];
             rangeSummon.SetActive(false);
             meleeSummon.SetActive(true);
             ResetScroll();

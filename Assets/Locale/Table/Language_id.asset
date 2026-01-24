@@ -163,6 +163,22 @@ MonoBehaviour:
       ini
     m_Metadata:
       m_Items: []
+  - m_Id: 2295282327371776
+    m_Localized: Permata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2295284047036416
+    m_Localized: Terlaris
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2297984490946560
+    m_Localized: Dapatkan Lebih Banyak Permata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2375395475734528
+    m_Localized: Putar
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
