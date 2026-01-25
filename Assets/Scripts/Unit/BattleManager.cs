@@ -199,11 +199,12 @@ public class BattleManager : MonoBehaviour
     }
     public void EndGame(bool isWin)
     {
-        long gem = (Char.Instance.level-1) % 5 == 0 ? (Char.Instance.level - 1) / 5:0;
+        int gem = (Char.Instance.level-1) % 5 == 0 ? (Char.Instance.level - 1) / 5:0;
         long coin = CalulatorReward(isWin);
         txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coin));
         if(isWin) txtGemReward.SetText(Char.FormatMoney(gem));
         Char.Instance.AddCoins(coin);
+        Char.Instance.AddGems(gem);
         startPvP = false;
         ButtonList.SetActive(true);
         Booster.SetActive(false);
