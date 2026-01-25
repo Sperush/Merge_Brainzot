@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class StreakManager : MonoBehaviour
 {
@@ -36,7 +37,22 @@ public class StreakManager : MonoBehaviour
         sliderBgr.maxValue = maxStreak;
         sliderBgr.value = Mathf.Min(Char.Instance.coutStreak, maxStreak);
     }
-    public void resetStreak()
+    public void resetStreak(bool isDone)
+    {
+        if (!isDone)
+        {
+            resetNow();
+        } else
+        {
+            StartCoroutine(startReset());
+        }
+    }
+    IEnumerator startReset()
+    {
+        yield return new WaitForSeconds(2f);
+        resetNow();
+    }
+    public void resetNow()
     {
         Char.Instance.giftCollected = new List<bool>() { false, false, false };
         Char.Instance.coutStreak = 0;

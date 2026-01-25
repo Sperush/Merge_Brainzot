@@ -43,12 +43,14 @@ public class DangerWarning : MonoBehaviour
     }
     public void Show(TypeDanger type)
     {
-        StartCoroutine(RunWarningProcess(type));
+        if (PanelManager.Instance.isOpenPanel) StartCoroutine(RunWarningProcess(type));
+        else
+        {
+            runWarning(type);
+        }
     }
-    public IEnumerator RunWarningProcess(TypeDanger type)
+    public void runWarning(TypeDanger type)
     {
-        //yield return new WaitForSeconds(stayDelay);
-        yield return new WaitUntil(() => PanelManager.Instance.isOpenPanel == false);
         Color cl = img.color;
         // 1. Xử lý màu sắc
         if (type == TypeDanger.Normal)
@@ -56,7 +58,7 @@ public class DangerWarning : MonoBehaviour
             cl.a = 0f;
             img.color = cl;
             // Nếu là Normal thì có thể không cần hiện warning, hoặc return luôn
-            yield break;
+            return;
         }
         else if (type == TypeDanger.Hard) img.sprite = sprites[0];
         else if (type == TypeDanger.VeryHard) img.sprite = sprites[1];
@@ -69,22 +71,16 @@ public class DangerWarning : MonoBehaviour
         transform.position = defaultPos;
         transform.localScale = defaultScale;
         transform.eulerAngles = defaultRotation;
-
-        // Nếu có sequence cũ đang chạy thì kill ngay để tránh lỗi chồng chéo
-        if (warningSequence != null) warningSequence.Kill();
         // 3. Tạo Sequence (Chuỗi hành động)
         warningSequence = DOTween.Sequence();
-        warningSequence.AppendInterval(stayDelay);
-        warningSequence.AppendCallback(() => {
-            img.sortingOrder = 105;
-            dark.SetActive(true);
-        });
+        img.sortingOrder = 105;
+        dark.SetActive(true);
         // --- GIAI ĐOẠN 1: Dần về đích (Xuất hiện) ---
         // Dùng Join để các hành động diễn ra cùng lúc
         warningSequence.Append(transform.DOMove(Vector3.zero, moveDuration).SetEase(Ease.Linear));
         warningSequence.Join(transform.DOScale(defaultScale * scaleSize, scaleDuration).SetEase(Ease.Linear));
         warningSequence.Join(transform.DORotate(Vector3.zero, rotateDuration).SetEase(Ease.Linear));
-        
+
         // --- GIAI ĐOẠN 2: Chờ (Delay) ---
         warningSequence.AppendInterval(stayDelay);
         warningSequence.AppendCallback(() => {
@@ -102,5 +98,11 @@ public class DangerWarning : MonoBehaviour
             //img.sortingOrder = 10;
             //dark.SetActive(false);
         });
+    }
+    public IEnumerator RunWarningProcess(TypeDanger type)
+    {
+        //yield return new WaitForSeconds(stayDelay);
+        yield return new WaitUntil(() => PanelManager.Instance.isOpenPanel == false);
+        runWarning(type);
     }
 }

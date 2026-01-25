@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.UI;
 [Serializable]
 public class DataUnit //Dữ liệu của mỗi Unit
 {
@@ -74,12 +75,21 @@ public class Char : MonoBehaviour
     public string LastClaimTime = DateTime.MinValue.ToString();
     public int currentDayIndex;
     public bool canClaimToday;
+    public Image imgMusic;
+    public Image imgSound;
 
     public int activePointerId = -999;
     private void Awake()
     {
         GameLog.Log("session_start");
         Instance = this;
+        imgMusic.sprite = BackgroundMusic.Instance.MusicSprite[BackgroundMusic.Instance.audioMusic.mute ? 1:0];
+        imgSound.sprite = AudioManager.Instance.sp[AudioManager.Instance.isMuted ? 1 : 0];
+    }
+    public void ToggleMute(bool isMusic)
+    {
+        if (isMusic) BackgroundMusic.Instance.MuteMusic();
+        else AudioManager.Instance.ToggleMute();
     }
     void Start()
     {

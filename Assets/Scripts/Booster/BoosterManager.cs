@@ -26,7 +26,7 @@ public class BoosterManager : MonoBehaviour
         {
             m.GetComponent<MonsterAI>().Freeze(duration);
         }
-
+        VFXManager.Instance.Play(VFXType.Freeze, new Vector3(0f, -5.04f, 0f));
         AudioManager.Instance.Play(GameSound.freezeSound);
         // TODO: Screen effect / VFX
     }
@@ -55,9 +55,9 @@ public class BoosterManager : MonoBehaviour
         BombPlane plane = BombPlanePool.Instance.Get();
         plane.Init(() =>
         {
+            VFXManager.Instance.Play(VFXType.Bomp, Vector3.zero);
             ApplyBombDamage(damage);
         });
-
         AudioManager.Instance.Play(GameSound.planeSound);
         // TODO: Plane animation + explosion VFX
     }

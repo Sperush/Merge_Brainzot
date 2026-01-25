@@ -211,6 +211,10 @@ MonoBehaviour:
     m_Localized: Quay
     m_Metadata:
       m_Items: []
+  - m_Id: 2608878680817664
+    m_Localized: "Phi\xEAn b\u1EA3n {0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

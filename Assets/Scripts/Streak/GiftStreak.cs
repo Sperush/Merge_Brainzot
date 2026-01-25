@@ -23,13 +23,16 @@ public class GiftStreak : MonoBehaviour
     public ItemGift reward;
     public TMP_Text txt;
     public Button btn;
+    public Image img;
+    public Sprite[] sp;
     private void Start()
     {
         txt.SetText(milestone.ToString());
+        img.sprite = sp[Char.Instance.giftCollected[id] ? 1 : 0];
     }
     public void OpenGift()
     {
-        if (Char.Instance.coutStreak < milestone) return;
+        if (Char.Instance.giftCollected[id] || Char.Instance.coutStreak < milestone) return;
         switch (reward.item)
         {
             case Item.gem:
@@ -45,13 +48,13 @@ public class GiftStreak : MonoBehaviour
                 Char.Instance.AddBooster(TypeBooster.Freeze, reward.quantity);
                 break;
         }
-        btn.interactable = false;
         Char.Instance.giftCollected[id] = true;
-        if (!Char.Instance.giftCollected.Contains(false)) StreakManager.Instance.resetStreak();
+        img.sprite = sp[1];
+        if (!Char.Instance.giftCollected.Contains(false)) StreakManager.Instance.resetStreak(true);
         StreakManager.Instance.LoadRed();
     }
     public void Load()
     {
-        btn.interactable = !Char.Instance.giftCollected[id];
+        img.sprite = sp[Char.Instance.giftCollected[id] ? 1:0];
     }
 }

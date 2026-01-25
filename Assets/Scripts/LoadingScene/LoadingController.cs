@@ -3,11 +3,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening; // Tận dụng DOTween bạn vừa hỏi
+using DG.Tweening;
+using TMPro; // Tận dụng DOTween bạn vừa hỏi
 
 public class LoadingController : MonoBehaviour
 {
     [Header("Cài đặt UI")]
+    public TMP_Text version;
     public Slider loadingBar;
     public Transform characterSpawnPoint; // Vị trí nhân vật đứng
     public GameObject charObj;
@@ -18,6 +20,7 @@ public class LoadingController : MonoBehaviour
     {
         // 1. Random nhân vật
         ShowRandomCharacter();
+        version.SetText(Noti.Get("version", Application.version));
         // 2. Bắt đầu load scene
         StartCoroutine(LoadSceneAsync());
     }

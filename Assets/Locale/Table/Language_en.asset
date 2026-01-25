@@ -210,6 +210,10 @@ MonoBehaviour:
     m_Localized: SPIN
     m_Metadata:
       m_Items: []
+  - m_Id: 2608878680817664
+    m_Localized: Version {0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

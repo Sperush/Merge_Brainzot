@@ -190,7 +190,7 @@ public class BattleManager : MonoBehaviour
             });
             LoseTracker.OnLose();
             Debug.Log("Enemy Win");
-            Char.Instance.AddStreakBar(-Char.Instance.coutStreak);
+            StreakManager.Instance.resetStreak(false);
             AudioManager.Instance.Play(GameSound.loseSound);
             EndGame(false);
             return true;
@@ -308,7 +308,15 @@ public class BattleManager : MonoBehaviour
     //        }
     //    }
     //}
-    IEnumerator CheckDailyReward()
+    public void CheckDailyReward()
+    {
+        if (PanelManager.Instance.isOpenPanel) StartCoroutine(Check());
+        else if (Char.Instance.canClaimToday && Char.Instance.level > 2)
+        {
+            PanelManager.Instance.OpenPanel(PanelManager.Instance.dailyRewardPanel);
+        }
+    }
+    IEnumerator Check()
     {
         yield return new WaitUntil(() => PanelManager.Instance.isOpenPanel == false);
         if (Char.Instance.canClaimToday && Char.Instance.level > 2)
@@ -318,7 +326,7 @@ public class BattleManager : MonoBehaviour
     }
     public void LoadLevel(bool isLoadGame)
     {
-        StartCoroutine(CheckDailyReward());
+        CheckDailyReward();
         DangerWarning.Instance.Show((Char.Instance.level > 9 && Char.Instance.level % 5 == 0) ? TypeDanger.VeryHard : (Char.Instance.level > 9 && (Char.Instance.level + 1) % 5 == 0) ? TypeDanger.Hard : TypeDanger.Normal);
         LevelBgrManager.Instance.Load(isLoadGame);
         _levelStartTime = Time.time;

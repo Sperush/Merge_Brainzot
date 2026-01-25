@@ -24,8 +24,6 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     public void OnDrag(PointerEventData eventData)
     {
         if (eventData.pointerId != Char.Instance.activePointerId || BattleManager.Instance.startPvP || BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf) return;
-        VFXManager.Instance.StopAtPosition(VFXType.Merge, transform.position);
-        VFXManager.Instance.StopAtPosition(VFXType.Spawn, transform.position);
         transform.position = GetMouseWorldPos() + offset;
     }
 

@@ -35,7 +35,7 @@ public class BombPlane : MonoBehaviour
 
     void StartFly()
     {
-        float y = Camera.main.ViewportToWorldPoint(new Vector3(0, UnityEngine.Random.Range(0.75f, 0.18f), 10)).y;
+        float y = Camera.main.ViewportToWorldPoint(new Vector3(0, UnityEngine.Random.Range(0.3f, 0.5f), 10)).y;
         Vector3 start, end;
         start = Camera.main.ViewportToWorldPoint(new Vector3(-0.2f, 0.18f, 10));
         end = Camera.main.ViewportToWorldPoint(new Vector3(1.2f, 0.18f, 10));

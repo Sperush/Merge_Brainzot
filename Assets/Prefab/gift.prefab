@@ -167,7 +167,7 @@ RectTransform:
   m_GameObject: {fileID: 6473459950321429486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1909375, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 679570665407821994}
@@ -199,15 +199,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.2216981, b: 0.89464295, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 5337358656728551719, guid: df885f89ae7183e47a175928ca73ec30, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -231,12 +231,15 @@ MonoBehaviour:
   id: 0
   milestone: 2
   reward:
-    gem: 0
-    gold: 1000
-    booster1: 0
-    booster2: 0
+    item: 0
+    quantity: 0
+    img: {fileID: 0}
   txt: {fileID: 5925630019400064542}
   btn: {fileID: 7496016291462101108}
+  img: {fileID: 7069402117689890947}
+  sp:
+  - {fileID: 5337358656728551719, guid: df885f89ae7183e47a175928ca73ec30, type: 3}
+  - {fileID: -7298850550583490902, guid: df885f89ae7183e47a175928ca73ec30, type: 3}
 --- !u!114 &4856600693412682934
 MonoBehaviour:
   m_ObjectHideFlags: 0

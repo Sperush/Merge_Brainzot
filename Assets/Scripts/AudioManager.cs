@@ -61,7 +61,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] rangeAudioClip;
 
     [Header("UI")]
-    public Image img;
     public Sprite[] sp;
     void Awake()
     {
@@ -168,7 +167,7 @@ public class AudioManager : MonoBehaviour
     public void ToggleMute()
     {
         isMuted = !isMuted;
-        img.sprite = sp[isMuted ? 1 : 0];
+        Char.Instance.imgSound.sprite = sp[isMuted ? 1 : 0];
         Play(GameSound.clickButtonSound);
         SaveSettings();
     }
@@ -178,9 +177,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void FadeVolume(float targetVolume, float duration)
     {
-        DOTween.To(() => sfxVolume, v => sfxVolume = v, targetVolume, duration)
-            .SetEase(Ease.Linear)
-            .OnComplete(SaveSettings);
+        DOTween.To(() => sfxVolume, v => sfxVolume = v, targetVolume, duration).SetEase(Ease.Linear).OnComplete(SaveSettings);
     }
 
     /// <summary>
