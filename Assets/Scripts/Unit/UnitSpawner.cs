@@ -61,7 +61,7 @@ public class UnitSpawner : MonoBehaviour
                     MonsterHealth unit = unitObj.GetComponent<MonsterHealth>();
                     Char.Instance.dataMyTeam.Add(unit);
                     unit.LevelUp(level);
-                    AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
+                    AudioManager.Instance.PlayUnitSound(level + 1, unit.stats.type);
                     grid.Place(unit, x, y);
                     if(Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(false);
                     VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);
@@ -85,7 +85,7 @@ public class UnitSpawner : MonoBehaviour
                     MonsterHealth unit = unitObj.GetComponent<MonsterHealth>();
                     Char.Instance.dataMyTeam.Add(unit);
                     unit.LevelUp(level);
-                    AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
+                    AudioManager.Instance.PlayUnitSound(level+1, unit.stats.type);
                     grid.Place(unit, x, y);
                     if (Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(true);
                     VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);

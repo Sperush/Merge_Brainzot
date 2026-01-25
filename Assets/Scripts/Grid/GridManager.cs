@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using static UnityEngine.Rendering.DebugUI.Table;
 using UnityEngine.UIElements;
+using UnityEngine.Rendering;
 
 public class GridManager : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class GridManager : MonoBehaviour
     public void Place(MonsterHealth unit, int x, int y)  //đặt unit vào vị trí (x,y)
     {
         if (!IsEmpty(x, y)) return;
-        unit.GetComponent<SpriteRenderer>().sortingOrder = -y;
+        unit.GetComponent<SortingGroup>().sortingOrder = -y;
         grid[x, y] = unit;
         unit.SetGridPos(x, y);
         unit.transform.position = GetWorldPos(x, y);

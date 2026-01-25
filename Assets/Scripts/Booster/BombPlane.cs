@@ -12,7 +12,7 @@ public class BombPlane : MonoBehaviour
 
     private Vector3 endPos;
     private Vector3 dir;
-    public GameObject[] buttonGift;
+    public GameObject buttonGift;
     private bool hasEnteredBackground = false;
     public void Init(Action dropCallback, bool isgift = false)
     {
@@ -21,7 +21,7 @@ public class BombPlane : MonoBehaviour
         onDropBomb = dropCallback;
         dropped = false;
         hasEnteredBackground = false;
-        StartFly(UnityEngine.Random.value < 0.5);
+        StartFly();
     }
     public static bool IsInsideBackground(Vector3 pos)
     {
@@ -33,23 +33,12 @@ public class BombPlane : MonoBehaviour
         return !bgBounds.Contains(pos);
     }
 
-    void StartFly(bool isLeftToRight)
+    void StartFly()
     {
-        float y = Camera.main.ViewportToWorldPoint(new Vector3(0, UnityEngine.Random.Range(0.75f, 0.85f), 10)).y;
+        float y = Camera.main.ViewportToWorldPoint(new Vector3(0, UnityEngine.Random.Range(0.75f, 0.18f), 10)).y;
         Vector3 start, end;
-
-        if (isLeftToRight)
-        {
-            start = Camera.main.ViewportToWorldPoint(new Vector3(-0.2f, 0.8f, 10));
-            end = Camera.main.ViewportToWorldPoint(new Vector3(1.2f, 0.8f, 10));
-            transform.localScale = Vector3.one;
-        }
-        else
-        {
-            start = Camera.main.ViewportToWorldPoint(new Vector3(1.2f, 0.8f, 10));
-            end = Camera.main.ViewportToWorldPoint(new Vector3(-0.2f, 0.8f, 10));
-            transform.localScale = new Vector3(-1, 1, 1); // lật sprite
-        }
+        start = Camera.main.ViewportToWorldPoint(new Vector3(-0.2f, 0.18f, 10));
+        end = Camera.main.ViewportToWorldPoint(new Vector3(1.2f, 0.18f, 10));
         start.y = end.y = y;
         transform.position = start;
         endPos = end;
@@ -75,18 +64,13 @@ public class BombPlane : MonoBehaviour
         {
             if (isGift)
             {
-                buttonGift[transform.localScale.x == 1 ? 1 : 0].SetActive(true);
+                buttonGift.SetActive(true);
             }
             BombPlanePool.Instance.Release(this);
         }
     }
     bool HasReachedDropX()
     {
-        // Bay từ trái sang phải
-        if (dir.x > 0)
-            return transform.position.x >= targetDropX;
-
-        // Bay từ phải sang trái
-        return transform.position.x <= targetDropX;
+        return transform.position.x >= targetDropX;
     }
 }

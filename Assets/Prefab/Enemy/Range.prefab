@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: -2755056493500798928}
   - component: {fileID: 1932192664758145213}
   - component: {fileID: 4680543719672247251}
+  - component: {fileID: 6101977116787026962}
   m_Layer: 7
   m_Name: Range
   m_TagString: Enemy
@@ -441,3 +442,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9427892, y: 1.2066386}
   m_EdgeRadius: 0
+--- !u!210 &6101977116787026962
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8332007673813886209}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0

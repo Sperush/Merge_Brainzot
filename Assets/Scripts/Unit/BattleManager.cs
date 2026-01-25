@@ -38,7 +38,7 @@ public class BattleManager : MonoBehaviour
     public BattleState currentState = BattleState.Idle;
     public int activeBulletCount = 0;
     public BombPlane plane;
-    public GameObject[] buttonGift;
+    public GameObject buttonGift;
     private float _levelStartTime;
     private long lastCoinReward;
     private float _stateTimer;
@@ -199,7 +199,7 @@ public class BattleManager : MonoBehaviour
     }
     public void EndGame(bool isWin)
     {
-        long gem = Char.Instance.level % 5 == 0 ? Char.Instance.level/5:0;
+        long gem = (Char.Instance.level-1) % 5 == 0 ? (Char.Instance.level - 1) / 5:0;
         long coin = CalulatorReward(isWin);
         txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coin));
         if(isWin) txtGemReward.SetText(Char.FormatMoney(gem));
@@ -211,8 +211,7 @@ public class BattleManager : MonoBehaviour
         PanelManager.Instance.isOpenPanel = false;
         PanelManager.Instance.OpenPanel(isWin ? winPanel : losePanel);
         float duration = Time.time - _levelStartTime;
-        buttonGift[0].SetActive(false);
-        buttonGift[1].SetActive(false);
+        buttonGift.SetActive(false);
         if (Char.Instance.level > 3 && AdsConfig.Instance.adsConfig.InterEnable && (!isWin || duration > AdsConfig.Instance.adsConfig.MinGameplaySec))
         {
             //StartCoroutine(InterstitialAds.Instance.ShowAdsOnStart());

@@ -2,6 +2,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -45,7 +46,7 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             || (TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge && !TutorialController.Instance.isSucessPos(new Vector2(unit.gridX, unit.gridY), new Vector2(x, y))))  //nếu vị trí nằm ngoài grid thì trả về chỗ cũ
         {
             SnapBack();
-            if(TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge || TutorialController.Instance.currentState == TutorialController.TutorialState.Phase1_dragUnit) unit.GetComponent<SpriteRenderer>().sortingOrder = 95;
+            if(TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge || TutorialController.Instance.currentState == TutorialController.TutorialState.Phase1_dragUnit) unit.GetComponent<SortingGroup>().sortingOrder = 95;
             return;
         }
 
@@ -91,7 +92,7 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         });
         unit.LevelUp(1);
         AudioManager.Instance.PlayUnitSound(unit.stats.level, unit.stats.type);
-        unit.GetComponent<SpriteRenderer>().sortingOrder = -other.gridY;
+        unit.GetComponent<SortingGroup>().sortingOrder = -other.gridY;
         BattleManager.Instance.playerTeam.Remove(other.gameObject);
         if (TutorialController.Instance != null)
         {

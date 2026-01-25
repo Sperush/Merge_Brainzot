@@ -32,6 +32,7 @@ public class Button2D : MonoBehaviour, IPointerClickHandler
                 break;
             case ButtonType.Gift:
                 if (BattleManager.Instance.startPvP) return;
+                GiftManager.Instance.Load();
                 PanelManager.Instance.OpenPanel(PanelManager.Instance.giftPanel);
                 AudioManager.Instance.Play(GameSound.clickButtonSound);
                 BattleManager.Instance.plane.speed = 0;

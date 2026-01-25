@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -4125358627283974148}
   - component: {fileID: 4826705724963595282}
   - component: {fileID: 6223354445588274637}
+  - component: {fileID: -7347258147990135625}
   m_Layer: 7
   m_Name: Melee
   m_TagString: Enemy
@@ -212,6 +213,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.84788024, y: 1.2294745}
   m_EdgeRadius: 0
+--- !u!210 &-7347258147990135625
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747127205807759293}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &7061723603817554508
 GameObject:
   m_ObjectHideFlags: 0

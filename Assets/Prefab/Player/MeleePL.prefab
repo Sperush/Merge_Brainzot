@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4826705724963595282}
   - component: {fileID: 5568918496463615813}
   - component: {fileID: 6223354445588274637}
+  - component: {fileID: 7992751417142646557}
   m_Layer: 6
   m_Name: MeleePL
   m_TagString: Player
@@ -225,6 +226,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.90870744, y: 1.2337465}
   m_EdgeRadius: 0
+--- !u!210 &7992751417142646557
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747127205807759293}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &6961742265410148596
 GameObject:
   m_ObjectHideFlags: 0

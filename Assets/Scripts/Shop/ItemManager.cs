@@ -64,11 +64,11 @@ public class ItemManager : MonoBehaviour
         PanelManager.Instance.hideSummonPanel();
         if (isMelee)
         {
-            UnitSpawner.Instance.SpawnMeleeUnit(level);
+            UnitSpawner.Instance.SpawnMeleeUnit(level-1);
         }
         else
         {
-            UnitSpawner.Instance.SpawnRangeUnit(level);
+            UnitSpawner.Instance.SpawnRangeUnit(level-1);
         }
     }
 

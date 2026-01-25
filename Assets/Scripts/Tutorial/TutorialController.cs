@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening; // Cần thiết
 using System.Collections;
+using UnityEngine.Rendering;
 
 public class TutorialController : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class TutorialController : MonoBehaviour
     public GameObject btnBuyRangeObj;
     public GameObject btnBattleObj;
     public GameObject goldDisplayUI;
-    public GameObject goldtxtUI;
 
     private int originalOrder;
 
@@ -107,21 +107,19 @@ public class TutorialController : MonoBehaviour
             case TutorialState.Phase1_BuyMelee:
                 HighlightUI(btnBuyMeleeObj, Noti.Get("buy_melee"));
                 ShowHandAt(btnBuyMeleeObj.transform.position);
-                if (btnBuyMeleeObj.GetComponent<SpriteRenderer>())
-                    btnBuyMeleeObj.GetComponent<SpriteRenderer>().sortingOrder = 101;
+                if (btnBuyMeleeObj.GetComponent<SortingGroup>())
+                    btnBuyMeleeObj.GetComponent<SortingGroup>().sortingOrder = 101;
                 break;
             case TutorialState.Phase1_CheckGold:
-                if (btnBuyMeleeObj.GetComponent<SpriteRenderer>())
-                    btnBuyMeleeObj.GetComponent<SpriteRenderer>().sortingOrder = -10;
+                if (btnBuyMeleeObj.GetComponent<SortingGroup>())
+                    btnBuyMeleeObj.GetComponent<SortingGroup>().sortingOrder = -10;
                 RestoreUI(btnBuyMeleeObj);
                 HighlightUI(goldDisplayUI, Noti.Get("need_gold_buy"));
-                goldtxtUI.GetComponent<MeshRenderer>().sortingOrder = 95;
                 handPointer.gameObject.SetActive(false);
                 Invoke(nameof(MoveToBuyRange), 2.5f);
                 break;
             case TutorialState.Phase1_BuyRange:
                 RestoreUI(goldDisplayUI);
-                goldtxtUI.GetComponent<MeshRenderer>().sortingOrder = -10;
                 HighlightUI(btnBuyRangeObj, Noti.Get("buy_range"));
                 ShowHandAt(btnBuyRangeObj.transform.position);
                 break;
@@ -180,8 +178,8 @@ public class TutorialController : MonoBehaviour
         {
             unit1 = startUnit;
             unit2 = endUnit;
-            unit1.GetComponent<SpriteRenderer>().sortingOrder = 95;
-            unit2.GetComponent<SpriteRenderer>().sortingOrder = 95;
+            unit1.GetComponent<SortingGroup>().sortingOrder = 95;
+            unit2.GetComponent<SortingGroup>().sortingOrder = 95;
 
             handPointer.gameObject.SetActive(true);
 
@@ -237,7 +235,7 @@ public class TutorialController : MonoBehaviour
         Vector3 posA = GridManager.Instance.GetWorldPos(4,0);
         Vector3 posB = GridManager.Instance.GetWorldPos(2,0);
         unit1 = GridManager.Instance.GetUnit(4, 0).transform;
-        unit1.GetComponent<SpriteRenderer>().sortingOrder = 95;
+        unit1.GetComponent<SortingGroup>().sortingOrder = 95;
         // Reset vị trí về A
         handPointer.position = posA;
         // --- SỬA LỖI DOTWEEN Ở ĐÂY ---
@@ -270,8 +268,8 @@ public class TutorialController : MonoBehaviour
             KillCurrentTween();
 
             // 4. Reset trạng thái
-            if (unit1 != null) unit1.GetComponent<SpriteRenderer>().sortingOrder = -unit1.GetComponent<MonsterHealth>().gridY;
-            if (unit2 != null) unit2.GetComponent<SpriteRenderer>().sortingOrder = -unit2.GetComponent<MonsterHealth>().gridY;
+            if (unit1 != null) unit1.GetComponent<SortingGroup>().sortingOrder = -unit1.GetComponent<MonsterHealth>().gridY;
+            if (unit2 != null) unit2.GetComponent<SortingGroup>().sortingOrder = -unit2.GetComponent<MonsterHealth>().gridY;
             tutorialCanvas.SetActive(false);
         }
     }
@@ -289,7 +287,7 @@ public class TutorialController : MonoBehaviour
             KillCurrentTween();
 
             // 4. Reset trạng thái
-            if (unit1 != null) unit1.GetComponent<SpriteRenderer>().sortingOrder = -unit1.GetComponent<MonsterHealth>().gridY;
+            if (unit1 != null) unit1.GetComponent<SortingGroup>().sortingOrder = -unit1.GetComponent<MonsterHealth>().gridY;
 
             SetState(TutorialState.Phase1_ClickBattle);
         }
@@ -329,10 +327,10 @@ public class TutorialController : MonoBehaviour
         instructionText.text = text;
         darkMaskSprite.SetActive(true);
 
-        SpriteRenderer maskSR = darkMaskSprite.GetComponent<SpriteRenderer>();
+        SortingGroup maskSR = darkMaskSprite.GetComponent<SortingGroup>();
         if (maskSR != null) maskSR.sortingOrder = 10;
 
-        SpriteRenderer targetSR = target.GetComponent<SpriteRenderer>();
+        SortingGroup targetSR = target.GetComponent<SortingGroup>();
         if (targetSR != null)
         {
             originalOrder = targetSR.sortingOrder;
@@ -343,7 +341,7 @@ public class TutorialController : MonoBehaviour
     void RestoreUI(GameObject target)
     {
         if (target == null) return;
-        SpriteRenderer targetSR = target.GetComponent<SpriteRenderer>();
+        SortingGroup targetSR = target.GetComponent<SortingGroup>();
         if (targetSR != null) targetSR.sortingOrder = originalOrder;
         darkMaskSprite.SetActive(false);
     }

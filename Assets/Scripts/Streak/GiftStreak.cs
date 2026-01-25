@@ -29,6 +29,7 @@ public class GiftStreak : MonoBehaviour
     }
     public void OpenGift()
     {
+        if (Char.Instance.coutStreak < milestone) return;
         switch (reward.item)
         {
             case Item.gem:
@@ -51,6 +52,6 @@ public class GiftStreak : MonoBehaviour
     }
     public void Load()
     {
-        btn.interactable = Char.Instance.coutStreak >= milestone && !Char.Instance.giftCollected[id];
+        btn.interactable = !Char.Instance.giftCollected[id];
     }
 }
