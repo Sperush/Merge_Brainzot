@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 public enum VFXType
 {
@@ -79,6 +79,23 @@ public class VFXManager : MonoBehaviour
         return vfxList.Find(x => x.type == type).prefab;
     }
 
+    public void StopAtPosition(VFXType type, Vector3 position, float radius = 0.5f)
+    {
+        if (!pool.ContainsKey(type)) return;
+
+        foreach (var vfx in pool[type])
+        {
+            // Kiểm tra nếu VFX đang chạy và ở gần vị trí được chỉ định
+            if (vfx.gameObject.activeSelf)
+            {
+                if (Vector3.Distance(vfx.transform.position, position) < radius)
+                {
+                    vfx.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    vfx.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
     System.Collections.IEnumerator ReturnToPool(VFXType type, ParticleSystem vfx)
     {
         yield return new WaitForSeconds(vfx.main.duration);
