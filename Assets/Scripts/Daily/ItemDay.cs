@@ -93,7 +93,7 @@ public class ItemDay : MonoBehaviour
                     break;
             }
         }
-        Char.Instance.LastClaimTime = DateTime.Now.Date.ToString();
+        Char.Instance.LastClaimTime = DateTime.UtcNow.Ticks.ToString();
         //Char.Instance.currentDayIndex++;
         Char.Instance.canClaimToday = false;
         UpdateUI();

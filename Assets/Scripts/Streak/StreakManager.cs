@@ -41,7 +41,7 @@ public class StreakManager : MonoBehaviour
     {
         if (!isDone)
         {
-            resetNow();
+            resetNow(false);
         } else
         {
             StartCoroutine(startReset());
@@ -50,12 +50,12 @@ public class StreakManager : MonoBehaviour
     IEnumerator startReset()
     {
         yield return new WaitForSeconds(2f);
-        resetNow();
+        resetNow(true);
     }
-    public void resetNow()
+    public void resetNow(bool isDone)
     {
         Char.Instance.giftCollected = new List<bool>() { false, false, false };
-        Char.Instance.coutStreak = 0;
+        Char.Instance.coutStreak = isDone ? Char.Instance.coutStreak%10:0;
         LoadBar();
         Load();
     }

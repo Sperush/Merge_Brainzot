@@ -111,32 +111,50 @@ public class Char : MonoBehaviour
 
     private void CheckStatus()
     {
+        DateTime now = DateTime.UtcNow;
+        DateTime today = now.Date;
         DateTime lastClaimDate = DateTime.MinValue;
-        if (!string.IsNullOrEmpty(LastClaimTime)) lastClaimDate = DateTime.Parse(LastClaimTime);
-        DateTime today = DateTime.Now.Date;
-        double daysDiff = (today - lastClaimDate).TotalDays;
+        bool hasClaimBefore = false;
+        if (!string.IsNullOrEmpty(LastClaimTime) && long.TryParse(LastClaimTime, out long ticks))
+        {
+            lastClaimDate = new DateTime(ticks, DateTimeKind.Utc);
+            hasClaimBefore = true;
+        }
+        // Chống chỉnh giờ máy
+        if (hasClaimBefore && lastClaimDate > now)
+        {
+            Debug.LogWarning("Time cheat detected");
+            canClaimToday = false;
+            return;
+        }
+        // Lần đầu chơi
+        if (!hasClaimBefore)
+        {
+            currentDayIndex = 0;
+            canClaimToday = true;
+            return;
+        }
+        double daysDiff = (today - lastClaimDate.Date).TotalDays;
         if (daysDiff < 1)
         {
-            // Đã nhận hôm nay rồi
+            // Đã nhận hôm nay
             canClaimToday = false;
         }
-        else if (daysDiff >= 1 && daysDiff < 2)
+        else if (daysDiff < 2)
         {
+            // Ngày tiếp theo
             currentDayIndex++;
-            // Đúng là ngày tiếp theo (Hôm qua nhận, hôm nay vào lại)
             canClaimToday = true;
         }
         else
         {
             currentDayIndex = 0;
             canClaimToday = true;
-            Debug.Log("Đã reset về ngày 1 do đứt chuỗi hoặc lần đầu chơi");
+            Debug.Log("Đã reset về ngày 1 do đứt chuỗi");
         }
-        if (currentDayIndex > 6)
-        {
-            currentDayIndex = 0;
-        }
+        if (currentDayIndex > 6) currentDayIndex = 0;
     }
+
     public void Save(string path) //Lưu lại dữ liệu của người chơi
     {
         SaveData saveData = new SaveData();
