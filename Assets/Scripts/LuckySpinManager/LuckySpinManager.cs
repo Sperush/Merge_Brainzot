@@ -23,6 +23,7 @@ public class LuckySpinManager : MonoBehaviour
     public GameObject btnSpinAds;
     public GameObject luckySpinPanel;
     public GameObject luckySpinRewardPanel;
+    public GameObject vfx;
 
     public float regenTime = 300f; // 5 phút = 300 giây
     [Header("Fake Near Win")]
@@ -193,8 +194,14 @@ public class LuckySpinManager : MonoBehaviour
 
     void UpdateUI()
     {
-        //btnSpinFree.SetActive(freeSpinLeft > 0);
-        //btnSpinAds.SetActive(freeSpinLeft <= 0);
+        if (Char.Instance.freeSpinLeft > 0)
+        {
+            vfx.SetActive(true);
+        }
+        else
+        {
+            vfx.SetActive(false);
+        }
     }
 
     public void CloseLuckySpinRewardPanel()

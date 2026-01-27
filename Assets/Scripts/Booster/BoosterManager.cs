@@ -13,6 +13,7 @@ public class BoosterManager : MonoBehaviour
     public GameObject[] booster;
     public TMP_Text[] txtCount;
     public static BoosterManager Instance;
+    public ItemBoosterManager[] itemBoosters;
     public bool isOpenPanel;
     private void Awake()
     {

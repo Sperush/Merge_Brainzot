@@ -29,6 +29,7 @@ public class PanelManager : MonoBehaviour
 
     public GameObject moreGemsPanel;
     public GameObject BuyBoosterPanel;
+
     [Header("UI collection")]
     public Sprite[] sp;
     public Image[] img;

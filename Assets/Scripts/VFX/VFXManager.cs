@@ -7,7 +7,8 @@ public enum VFXType
     Hit,
     Spawn,
     Bomp,
-    Freeze
+    Freeze,
+    LuckySpinHalo,
 }
 
 public class VFXManager : MonoBehaviour

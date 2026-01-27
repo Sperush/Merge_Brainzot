@@ -289,13 +289,17 @@ public class Char : MonoBehaviour
         coins = Min(coins, long.MaxValue);
         txtCoins.SetText(FormatMoney(coins));
     }
-    public bool SubBooster(TypeBooster type) //Trừ coin của người chơi
+    public bool SubBooster(TypeBooster type) //Trừ booster của người chơi
     {
         if (type == TypeBooster.Freeze)
         {
             if (boosterFreeze <= 0)
             {
                 BoosterManager.Instance.isOpenPanel = true;
+                foreach (var m in BoosterManager.Instance.itemBoosters)
+                {
+                    m.Init(true);
+                }
                 PanelManager.Instance.OpenPanel(PanelManager.Instance.BuyBoosterPanel);
                 return false;
             }
@@ -307,6 +311,10 @@ public class Char : MonoBehaviour
             if (boosterBomp <= 0)
             {
                 BoosterManager.Instance.isOpenPanel = true;
+                foreach (var m in BoosterManager.Instance.itemBoosters)
+                {
+                    m.Init(false);
+                }
                 PanelManager.Instance.OpenPanel(PanelManager.Instance.BuyBoosterPanel);
                 return false;
             }
