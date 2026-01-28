@@ -134,10 +134,16 @@ public class BattleManager : MonoBehaviour
 
         return cfg.baseGroup[indexInGroup] + groupIndex * cfg.groupIncrease;
     }
+    public float GetDifficultyMul(int level)
+    {
+        if (level % 5 == 0) return 1.4f;
+        if ((level + 1) % 5 == 0) return 1.1f;
+        return 1f;
+    }
     public long CalulatorReward(bool isWin)
     {
         var rewardCfg = BattleConfig.Instance.reward;
-        double reward = (UnitSpawner.Instance.costMelee + UnitSpawner.Instance.costRange) / 2.0 * (isWin ? rewardCfg.winMultiplier : rewardCfg.loseMultiplier) * GetDifficulty(Char.Instance.level);
+        double reward = (UnitSpawner.Instance.costMelee + UnitSpawner.Instance.costRange) / 2.0 * (isWin ? rewardCfg.winMultiplier : rewardCfg.loseMultiplier) * GetDifficultyMul(Char.Instance.level);
         ////FAIL SAFE REWARD
         //if (!isWin && LoseTracker.IsFailSafeActive())
         //{
@@ -163,25 +169,7 @@ public class BattleManager : MonoBehaviour
     }
     public bool CheckBattleEnd() //Kiểm tra xem team nào thắng team nào thua
     {
-        if (!enemyTeam.Exists(m => m.activeSelf))
-        {
-            GameLog.Log("battle_win", new
-            {
-                level = Char.Instance.level,
-                loseStreak = LoseTracker.loseStreak,
-                mergeCount = MergeTracker.mergeCount
-            });
-            LoseTracker.OnWin();
-            Debug.Log("Player Win");
-            AudioManager.Instance.Play(GameSound.victorySound);
-            Char.Instance.level++;
-            Char.Instance.AddStreakBar(1);
-            EndGame(true);
-            VFXManager.Instance.Play(VFXType.WinFirework, winPanel.transform.localPosition);
-            if (Char.Instance.level <= 2) Char.Instance.Save(Application.persistentDataPath + "/save.json");
-            return true;
-        }
-        else if (!playerTeam.Exists(m => m.activeSelf))
+        if (!playerTeam.Exists(m => m.activeSelf))
         {
             GameLog.Log("battle_lose", new
             {
@@ -194,15 +182,35 @@ public class BattleManager : MonoBehaviour
             AudioManager.Instance.Play(GameSound.loseSound);
             EndGame(false);
             return true;
+        } else if (!enemyTeam.Exists(m => m.activeSelf))
+        {
+            GameLog.Log("battle_win", new
+            {
+                level = Char.Instance.level,
+                loseStreak = LoseTracker.loseStreak,
+                mergeCount = MergeTracker.mergeCount
+            });
+            LoseTracker.OnWin();
+            Debug.Log("Player Win");
+            AudioManager.Instance.Play(GameSound.victorySound);
+            Char.Instance.AddStreakBar(1);
+            EndGame(true);
+            VFXManager.Instance.Play(VFXType.WinFirework, winPanel.transform.localPosition);
+            if (Char.Instance.level <= 2) Char.Instance.Save(Application.persistentDataPath + "/save.json");
+            return true;
         }
         return false;
     }
     public void EndGame(bool isWin)
     {
-        int gem = (Char.Instance.level-1) % 5 == 0 ? (Char.Instance.level - 1) / 5:0;
+        int gem = Char.Instance.level % 5 == 0 ? Char.Instance.level / 5:0;
         long coin = CalulatorReward(isWin);
         txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coin));
-        if(isWin) txtGemReward.SetText(Char.FormatMoney(gem));
+        if (isWin)
+        {
+            Char.Instance.level++;
+            txtGemReward.SetText(Char.FormatMoney(gem));
+        }
         Char.Instance.AddCoins(coin);
         Char.Instance.AddGems(gem);
         startPvP = false;

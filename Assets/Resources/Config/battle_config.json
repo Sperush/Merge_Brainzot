@@ -1,7 +1,7 @@
 {
   "reward": {
-    "winMultiplier": 2.8,
-    "loseMultiplier": 1.3
+    "winMultiplier": 2.4,
+    "loseMultiplier": 1.1
   },
   "difficulty": {
     "manualLevels": {
