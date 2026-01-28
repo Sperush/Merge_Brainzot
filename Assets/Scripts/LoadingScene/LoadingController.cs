@@ -38,10 +38,6 @@ public class LoadingController : MonoBehaviour
             // Reset vị trí về 0 so với cha để căn giữa
             charObj.transform.localPosition = Vector3.zero;
 
-            // BONUS: Dùng DOTween làm nhân vật nhún nhảy (Idle animation)
-            charObj.transform.DOScale(new Vector3(1.1f, 0.9f, 1f), 0.5f)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetEase(Ease.InOutSine);
         }
     }
     IEnumerator LoadSceneAsync()
