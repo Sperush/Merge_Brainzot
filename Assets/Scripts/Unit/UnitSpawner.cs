@@ -10,8 +10,6 @@ public class UnitSpawner : MonoBehaviour
     public TMP_Text txtCostMelee;
     public TMP_Text txtCostRange;
     public BattleManager battleManager;
-    public GameObject rangeUnitPrefab;
-    public GameObject meleeUnitPrefab;
     public static UnitSpawner Instance;
 
 
@@ -56,12 +54,12 @@ public class UnitSpawner : MonoBehaviour
             {
                 if (grid.IsEmpty(x, y))
                 {
-                    GameObject unitObj = Instantiate(rangeUnitPrefab);
-                    battleManager.playerTeam.Add(unitObj);
+                    GameObject unitObj = Instantiate(Char.Instance.GetUnitPrefabs(level, false));
                     MonsterHealth unit = unitObj.GetComponent<MonsterHealth>();
+                    battleManager.playerTeam.Add(unitObj);
                     Char.Instance.dataMyTeam.Add(unit);
-                    unit.LevelUp(level);
-                    AudioManager.Instance.PlayUnitSound(level + 1, unit.stats.type);
+                    unit.SetStats(level);
+                    AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
                     grid.Place(unit, x, y);
                     if(Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(false);
                     VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);
@@ -80,12 +78,12 @@ public class UnitSpawner : MonoBehaviour
             {
                 if (grid.IsEmpty(x, y))
                 {
-                    GameObject unitObj = Instantiate(meleeUnitPrefab);
-                    battleManager.playerTeam.Add(unitObj);
+                    GameObject unitObj = Instantiate(Char.Instance.GetUnitPrefabs(level, true));
                     MonsterHealth unit = unitObj.GetComponent<MonsterHealth>();
+                    battleManager.playerTeam.Add(unitObj);
                     Char.Instance.dataMyTeam.Add(unit);
-                    unit.LevelUp(level);
-                    AudioManager.Instance.PlayUnitSound(level+1, unit.stats.type);
+                    unit.SetStats(level);
+                    AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
                     grid.Place(unit, x, y);
                     if (Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(true);
                     VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);

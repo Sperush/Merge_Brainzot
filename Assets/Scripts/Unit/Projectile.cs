@@ -6,17 +6,8 @@ public class Projectile : MonoBehaviour
     public float lifeTime = 3f;
     public float speed;
     public GameObject enemy;
-    private bool isRegistered = false;
     private Vector2 direction;
     private bool useCustomDir = false;
-    public void Awake()
-    {
-        if (BattleManager.Instance != null)
-        {
-            BattleManager.Instance.activeBulletCount++;
-            isRegistered = true;
-        }
-    }
     void Update()
     {
         if (enemy == null || !enemy.activeSelf || !BattleManager.Instance.startPvP || BombPlane.IsOutOfBackground(transform.position))
@@ -53,10 +44,6 @@ public class Projectile : MonoBehaviour
     }
     public void Delete()
     {
-        if (isRegistered && BattleManager.Instance != null)
-        {
-            BattleManager.Instance.activeBulletCount--;
-        }
         Destroy(gameObject);
     }
     public void SetAngle(float angle)

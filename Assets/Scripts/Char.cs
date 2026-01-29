@@ -65,8 +65,8 @@ public class Char : MonoBehaviour
     public List<bool> unlockUnitRange = new List<bool>() { true, false, false, false, false, false, false, false };
     public List<bool> giftCollected = new List<bool>() { false, false, false };
     public static Char Instance;
-    public GameObject meleePrefabs;
-    public GameObject rangePrefabs;
+    public GameObject[] meleePrefabs;
+    public GameObject[] rangePrefabs;
     public string[] nameUnitMelee;
     public string[] nameUnitRange;
     public List<ItemManager> itemMelee;
@@ -85,6 +85,10 @@ public class Char : MonoBehaviour
         Instance = this;
         imgMusic.sprite = BackgroundMusic.Instance.MusicSprite[BackgroundMusic.Instance.audioMusic.mute ? 1:0];
         imgSound.sprite = AudioManager.Instance.sp[AudioManager.Instance.isMuted ? 1 : 0];
+    }
+    public GameObject GetUnitPrefabs(int level, bool isMelee)
+    {
+        return isMelee ? meleePrefabs[level - 1] : rangePrefabs[level - 1];
     }
     public void ToggleMute(bool isMusic)
     {
@@ -239,11 +243,11 @@ public class Char : MonoBehaviour
         foreach (var m in saveData.dataMyTeam.units)
         {
             MonsterType tp = (MonsterType)Enum.Parse(typeof(MonsterType), m.type); ;
-            GameObject obj = Instantiate(tp == MonsterType.Melee? meleePrefabs: rangePrefabs);
+            GameObject obj = Instantiate(GetUnitPrefabs(m.level, tp == MonsterType.Melee));
             MonsterHealth mh = obj.GetComponent<MonsterHealth>();
             mh.SetGridPos(m.gridX, m.gridY);
             mh.stats.type = tp;
-            mh.LevelUp(m.level - 1);
+            mh.SetStats(m.level);
             mh.stats.attackSpeed = m.attackSpeed;
             mh.stats.attackRange = m.attackRange;
             mh.stats.moveSpeed = m.moveSpeed;

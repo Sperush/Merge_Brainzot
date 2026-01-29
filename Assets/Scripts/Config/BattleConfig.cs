@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class BattleConfig
 {
+    public float AttackRangeSpeed;
     public RewardConfig reward;
     public DifficultyConfig difficulty;
 

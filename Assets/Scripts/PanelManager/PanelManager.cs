@@ -107,7 +107,7 @@ public class PanelManager : MonoBehaviour
                 isOpenPanel = false;
                 // Sau khi thu nhỏ xong -> Tắt toàn bộ Container (biến mất cả nền đen)
                 panel.SetActive(false);
-                if(Char.Instance.level > 2 || BattleManager.Instance.startPvP) darkPanel.SetActive(false);
+                if(Char.Instance.level > 2) darkPanel.SetActive(false);
                 BoosterManager.Instance.isOpenPanel = false;
             });
         if (TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge)

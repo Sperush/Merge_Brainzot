@@ -2295,8 +2295,6 @@ MonoBehaviour:
   enemyTeam: []
   arrUnitReady: []
   arrRange: []
-  meleeEnemyPrefabs: {fileID: 4747127205807759293, guid: f96813442063546488f17de3bfac209e, type: 3}
-  rangeEnemyPrefabs: {fileID: 8332007673813886209, guid: 6a33cca9b59a2fb49a61ba5f2ccf9818, type: 3}
   winPanel: {fileID: 642913043}
   losePanel: {fileID: 1235057345}
   ButtonList: {fileID: 242558676}
@@ -2304,17 +2302,29 @@ MonoBehaviour:
   - {fileID: 310560975}
   - {fileID: 928106420}
   txtGemReward: {fileID: 874997385}
-  rangeEnemyPrefab: {fileID: 8332007673813886209, guid: 6a33cca9b59a2fb49a61ba5f2ccf9818, type: 3}
-  meleeEnemyPrefab: {fileID: 4747127205807759293, guid: f96813442063546488f17de3bfac209e, type: 3}
+  rangeEnemyPrefab:
+  - {fileID: 4980327653004021228, guid: ce847b3c15880b4448d1c410d7fbee5c, type: 3}
+  - {fileID: 4980327653004021228, guid: 3d2c595a9e7b4c844aed687ddf322d74, type: 3}
+  - {fileID: 4980327653004021228, guid: 50a7c9b0a2f63f64ba5df5723e6632f0, type: 3}
+  - {fileID: 4980327653004021228, guid: d6d56c47d88d62f4fac724647a0ec6e7, type: 3}
+  - {fileID: 4980327653004021228, guid: e7039cb28ac7dbe4e84f86c84ccd5511, type: 3}
+  - {fileID: 4980327653004021228, guid: 0268308038aba9646a0c96a912768ec2, type: 3}
+  - {fileID: 4980327653004021228, guid: 7d7b570daeba5f44fa904bf74c3abbf9, type: 3}
+  meleeEnemyPrefab:
+  - {fileID: 901735259054736125, guid: f96813442063546488f17de3bfac209e, type: 3}
+  - {fileID: 901735259054736125, guid: 392f9a564907986428550c861e6c65fe, type: 3}
+  - {fileID: 901735259054736125, guid: 291405c1007635b4093562f743335057, type: 3}
+  - {fileID: 901735259054736125, guid: bc4b03f7bc795744cbc19b3d49cada39, type: 3}
+  - {fileID: 901735259054736125, guid: 5e8304b188116d34ab6f08ae396cc706, type: 3}
+  - {fileID: 901735259054736125, guid: 8121736a68ed6e84aa210fb74761fd5f, type: 3}
+  - {fileID: 901735259054736125, guid: 666b8a8018adb7940bcec247b528579c, type: 3}
   Booster: {fileID: 1697161020}
   btnReward:
   - {fileID: 131900118}
   - {fileID: 1818119479}
-  animationDelay: 0.2
   reloadTime: 0.5
   maxWaitTime: 5
   currentState: 0
-  activeBulletCount: 0
   plane: {fileID: 1670789331284696001}
   buttonGift: {fileID: 737845773}
 --- !u!4 &90523042
@@ -46832,7 +46842,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934720788}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -74493,8 +74503,8 @@ MonoBehaviour:
   txtCostMelee: {fileID: 1774412629}
   txtCostRange: {fileID: 1332896496}
   battleManager: {fileID: 90523041}
-  rangeUnitPrefab: {fileID: 8332007673813886209, guid: a4f8af3414410db49a97615b8fa30579, type: 3}
-  meleeUnitPrefab: {fileID: 4747127205807759293, guid: fb66d71dfdf0b3f488acb910418365fc, type: 3}
+  rangeUnitPrefab: {fileID: 4980327653004021228, guid: 2d7a41cc4f5cecd43894949e41fd08a4, type: 3}
+  meleeUnitPrefab: {fileID: 4012822197540477179, guid: 528fc6ecb0df8904b9ebe2a4f7da4c14, type: 3}
 --- !u!4 &1842589296
 Transform:
   m_ObjectHideFlags: 0
@@ -78009,8 +78019,22 @@ MonoBehaviour:
   unlockUnitMelee: 0100000000000000
   unlockUnitRange: 0100000000000000
   giftCollected: 000000
-  meleePrefabs: {fileID: 4747127205807759293, guid: fb66d71dfdf0b3f488acb910418365fc, type: 3}
-  rangePrefabs: {fileID: 8332007673813886209, guid: a4f8af3414410db49a97615b8fa30579, type: 3}
+  meleePrefabs:
+  - {fileID: 901735259054736125, guid: ebdffcea628181343983d3bd32d39833, type: 3}
+  - {fileID: 901735259054736125, guid: e92d975e5509ecc449e32cd545133b12, type: 3}
+  - {fileID: 901735259054736125, guid: 9c966cdc7ecc5f946a5dd41e178725d1, type: 3}
+  - {fileID: 901735259054736125, guid: 4b1ff82a00829424daaf66ce9cf35802, type: 3}
+  - {fileID: 901735259054736125, guid: 3e44fe864febfac4d8384aecf05f2359, type: 3}
+  - {fileID: 901735259054736125, guid: 89ddbd075d730654bb85816277cf823e, type: 3}
+  - {fileID: 901735259054736125, guid: 65e29cc7b979ef941bebf2c42be56d35, type: 3}
+  rangePrefabs:
+  - {fileID: 4980327653004021228, guid: 4d59568ec8b3ec44b99960ba794e8907, type: 3}
+  - {fileID: 4980327653004021228, guid: 8f7f7a02e7703c74f9ab30066e4ccc5e, type: 3}
+  - {fileID: 4980327653004021228, guid: 132e278a3e0ca8b488b12ede459bf45e, type: 3}
+  - {fileID: 4980327653004021228, guid: 3640a3afa4dfa7348ab2efd2d54834ec, type: 3}
+  - {fileID: 4980327653004021228, guid: ab0b35d12e3373f43b90f310c215c1fc, type: 3}
+  - {fileID: 4980327653004021228, guid: 193f935774ece954c94b54c0c32ac696, type: 3}
+  - {fileID: 4980327653004021228, guid: 3dadd66a68c88804e80c7e5318a6512e, type: 3}
   nameUnitMelee:
   - Tung Tung Tung Sahur
   - Capuccino Assassino
