@@ -23,17 +23,6 @@
                 "moveSpeed": 0.0,
                 "gridX": 1,
                 "gridY": 3
-            },
-            {
-                "type": "Melee",
-                "level": 1,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 4,
-                "gridY": 3
             }
         ]
     }

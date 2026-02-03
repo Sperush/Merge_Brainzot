@@ -4,25 +4,14 @@
         "units": [
             {
                 "type": "Melee",
-                "level": 5,
+                "level": 6,
                 "maxHP": 0.0,
                 "attackDamage": 0.0,
                 "attackSpeed": 0.0,
                 "attackRange": 0.0,
                 "moveSpeed": 0.0,
-                "gridX": 2,
-                "gridY": 3
-            },
-            {
-                "type": "Ranged",
-                "level": 5,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 2,
-                "gridY": 5
+                "gridX": 1,
+                "gridY": 4
             },
             {
                 "type": "Ranged",
@@ -32,7 +21,7 @@
                 "attackSpeed": 0.0,
                 "attackRange": 0.0,
                 "moveSpeed": 0.0,
-                "gridX": 4,
+                "gridX": 2,
                 "gridY": 5
             },
             {
@@ -43,30 +32,8 @@
                 "attackSpeed": 0.0,
                 "attackRange": 0.0,
                 "moveSpeed": 0.0,
-                "gridX": 4,
-                "gridY": 3
-            },
-            {
-                "type": "Melee",
-                "level": 2,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 0,
-                "gridY": 3
-            },
-            {
-                "type": "Ranged",
-                "level": 2,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 0,
-                "gridY": 5
+                "gridX": 3,
+                "gridY": 4
             }
         ]
     }

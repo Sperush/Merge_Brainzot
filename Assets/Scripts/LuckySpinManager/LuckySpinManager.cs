@@ -2,6 +2,8 @@
 using TMPro;
 using DG.Tweening;
 using System;
+using System.Runtime.ConstrainedExecution;
+using JetBrains.Annotations;
 
 public class LuckySpinManager : MonoBehaviour
 {
@@ -36,6 +38,8 @@ public class LuckySpinManager : MonoBehaviour
 
     int currentIndex = 0;
     float timerSpin;
+    string type;
+
     void Start()
     {
         UpdateUI();
@@ -45,12 +49,12 @@ public class LuckySpinManager : MonoBehaviour
     void Update()
     {
         timerSpin += Time.deltaTime;
-
+        UpdateSpinLeft();
         if (timerSpin >= regenTime)
         {
             timerSpin = 0f;
             Char.Instance.freeSpinLeft++;
-            UpdateUI();
+            //UpdateUI();
         }
 
         UpdateCooldownUI();
@@ -91,7 +95,7 @@ public class LuckySpinManager : MonoBehaviour
             {
                 isSpinning = false;
                 GiveReward(rewardIndex);
-                UpdateUI();
+                UpdateSpinLeft();
             });
     }
 
@@ -133,41 +137,31 @@ public class LuckySpinManager : MonoBehaviour
     {
         SpinReward r = rewards[index];
 
-        if (r.id == "no_reward")
+        Debug.Log("uia");
+        txtOoop.text = $"";
+        txtCongratulation.text = $"Congratulation!";
+        txtReward.text = $"Nhấn vào màn hình để nhận thưởng";
+
+        switch (r.id)
         {
-            Debug.Log("noo");
-            txtOoop.text = $"Ooops!";
-            txtCongratulation.text = $"";
-            txtReward.text = $"Chúc bạn may mắn lần sau";
-            txtResult.text = $"";
-        }
-        else
-        {
-            if (r.id == "coins")
-            {
+            case "no_reward":
+                Debug.Log("noo");
+                txtOoop.text = $"Ooops!";
+                txtCongratulation.text = $"";
+                txtReward.text = $"Chúc bạn may mắn lần sau";
+                txtResult.text = $"";
+                break;
+            case "coins":
                 Char.Instance.AddCoins(r.amount);
-            }
-            if (r.id == "gems")
-            {
+                txtResult.text = $"+{SetCoinsText(r.amount)}";
+                break;
+            default:
                 Char.Instance.AddGems(r.amount);
-            }
-            Debug.Log("uia");
-            txtOoop.text = $"";
-            txtCongratulation.text = $"Congratulation!";
-            txtReward.text = $"Nhấn vào màn hình để nhận thưởng";
-            int value = r.amount;
-            string text;
-            if (value >= 1_000_000_000)
-                text = (value / 1_000_000_000).ToString() + "B";
-            else if (value >= 1_000_000)
-                text = (value / 1_000_000).ToString() + "M";
-            else if (value >= 1_000)
-                text = (value / 1_000).ToString() + "K";
-            else
-                text = value.ToString();
-            txtResult.text = $"+{text}";
-            Debug.Log("Lucky Spin Reward: " + r.id);
+                txtResult.text = $"+{r.amount}";
+                break;
         }
+
+        Debug.Log("Lucky Spin Reward: " + r.id);
         luckySpinPanel.SetActive(false);
         PanelManager.Instance.isOpenPanel = false;
         PanelManager.Instance.OpenPanel(luckySpinRewardPanel);
@@ -192,7 +186,7 @@ public class LuckySpinManager : MonoBehaviour
         
     }
 
-    void UpdateUI()
+    void UpdateSpinLeft()
     {
         if (Char.Instance.freeSpinLeft > 0)
         {
@@ -202,6 +196,40 @@ public class LuckySpinManager : MonoBehaviour
         {
             vfx.SetActive(false);
         }
+    }
+
+    void UpdateUI()
+    {
+        for (int i = 0; i < rewards.Length; i++)
+        {
+            type = rewards[i].id;
+            switch(type)
+            {
+                case "no_reward":
+                    rewards[i].rewardText.SetText("No reward");
+                    break;
+                case "coins":
+                    rewards[i].rewardText.SetText($"+{SetCoinsText(rewards[i].amount)}");
+                    break;
+                default:
+                    rewards[i].rewardText.SetText($"+{rewards[i].amount}");
+                    break;
+            }
+        }
+    }
+
+    string SetCoinsText(int value)
+    {
+        string text;
+        if (value >= 1_000_000_000)
+            text = (value / 1_000_000_000).ToString() + "B";
+        else if (value >= 1_000_000)
+            text = (value / 1_000_000).ToString() + "M";
+        else if (value >= 1_000)
+            text = (value / 1_000).ToString() + "K";
+        else
+            text = value.ToString();
+        return text;
     }
 
     public void CloseLuckySpinRewardPanel()

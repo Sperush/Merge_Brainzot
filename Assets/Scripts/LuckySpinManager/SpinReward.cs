@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 [System.Serializable]
 public class SpinReward
@@ -6,6 +7,7 @@ public class SpinReward
     public string id;        // coin, gem, unit, ...
     public GameObject image;
     public int amount;
+    public TMP_Text rewardText;
     [Range(0f, 1f)]
     public float weight;     // tỉ lệ trúng (gian lận ở đây)
 }

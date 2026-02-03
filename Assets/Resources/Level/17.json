@@ -4,13 +4,13 @@
         "units": [
             {
                 "type": "Ranged",
-                "level": 5,
+                "level": 3,
                 "maxHP": 0.0,
                 "attackDamage": 0.0,
                 "attackSpeed": 0.0,
                 "attackRange": 0.0,
                 "moveSpeed": 0.0,
-                "gridX": 2,
+                "gridX": 4,
                 "gridY": 5
             },
             {
@@ -21,41 +21,8 @@
                 "attackSpeed": 0.0,
                 "attackRange": 0.0,
                 "moveSpeed": 0.0,
-                "gridX": 4,
+                "gridX": 3,
                 "gridY": 3
-            },
-            {
-                "type": "Melee",
-                "level": 3,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 0,
-                "gridY": 3
-            },
-            {
-                "type": "Ranged",
-                "level": 3,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 0,
-                "gridY": 5
-            },
-            {
-                "type": "Ranged",
-                "level": 3,
-                "maxHP": 0.0,
-                "attackDamage": 0.0,
-                "attackSpeed": 0.0,
-                "attackRange": 0.0,
-                "moveSpeed": 0.0,
-                "gridX": 4,
-                "gridY": 5
             },
             {
                 "type": "Melee",
@@ -65,8 +32,52 @@
                 "attackSpeed": 0.0,
                 "attackRange": 0.0,
                 "moveSpeed": 0.0,
-                "gridX": 2,
+                "gridX": 1,
                 "gridY": 3
+            },
+            {
+                "type": "Melee",
+                "level": 4,
+                "maxHP": 0.0,
+                "attackDamage": 0.0,
+                "attackSpeed": 0.0,
+                "attackRange": 0.0,
+                "moveSpeed": 0.0,
+                "gridX": 2,
+                "gridY": 4
+            },
+            {
+                "type": "Ranged",
+                "level": 4,
+                "maxHP": 0.0,
+                "attackDamage": 0.0,
+                "attackSpeed": 0.0,
+                "attackRange": 0.0,
+                "moveSpeed": 0.0,
+                "gridX": 0,
+                "gridY": 5
+            },
+            {
+                "type": "Ranged",
+                "level": 2,
+                "maxHP": 0.0,
+                "attackDamage": 0.0,
+                "attackSpeed": 0.0,
+                "attackRange": 0.0,
+                "moveSpeed": 0.0,
+                "gridX": 3,
+                "gridY": 5
+            },
+            {
+                "type": "Ranged",
+                "level": 1,
+                "maxHP": 0.0,
+                "attackDamage": 0.0,
+                "attackSpeed": 0.0,
+                "attackRange": 0.0,
+                "moveSpeed": 0.0,
+                "gridX": 1,
+                "gridY": 5
             }
         ]
     }

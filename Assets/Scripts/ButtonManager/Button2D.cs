@@ -41,13 +41,11 @@ public class Button2D : MonoBehaviour, IPointerClickHandler
             case ButtonType.SpawnMelee:
                 if (BattleManager.Instance.startPvP || GridManager.Instance.isFull() || (Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel && !Char.Instance.SubCoins((int)UnitSpawner.Instance.costMelee))) return;
                 UnitSpawner.Instance.SpawnMeleeUnit(0);
-                AudioManager.Instance.Play(GameSound.buyMeleeSound);
                 isSuccess = true;
                 break;
             case ButtonType.SpawnRange:
                 if (BattleManager.Instance.startPvP! || GridManager.Instance.isFull() || (Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel && !Char.Instance.SubCoins((int)UnitSpawner.Instance.costRange))) return;
                 UnitSpawner.Instance.SpawnRangeUnit(0);
-                AudioManager.Instance.Play(GameSound.buyRangeSound);
                 isSuccess = true;
                 break;
             case ButtonType.Battle:

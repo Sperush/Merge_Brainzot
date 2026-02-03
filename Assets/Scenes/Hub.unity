@@ -2138,16 +2138,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94bf6b0c51bb35a4199fa5933a9cc7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  unitClip: {fileID: 8300000, guid: cfd3782771335d840b1e148533c9d5b5, type: 3}
   fightClip: {fileID: 8300000, guid: 906715be299484b47bbf657830bf0923, type: 3}
   coinClip: {fileID: 8300000, guid: cfd3782771335d840b1e148533c9d5b5, type: 3}
-  buyMeleeClip: {fileID: 8300000, guid: b7400625ae69e2e47bda1c725bec5c43, type: 3}
-  buyRangeClip: {fileID: 8300000, guid: 395d647c064a11d4d92c7b0e1bdf87ca, type: 3}
-  meleeAttackClip: {fileID: 8300000, guid: 289a86e6f3368cc41810bc552bb34750, type: 3}
-  rangeAttackClip: {fileID: 8300000, guid: 289a86e6f3368cc41810bc552bb34750, type: 3}
+  meleeAttackClip: {fileID: 8300000, guid: 3dddbad600f25814e94f43875101fd75, type: 3}
+  rangeAttackClip: {fileID: 8300000, guid: 0588e2c1763fc894cb42f8ddc048a727, type: 3}
   victoryClip: {fileID: 8300000, guid: cfd3782771335d840b1e148533c9d5b5, type: 3}
   loseClip: {fileID: 8300000, guid: a288ac4aca7d81142a7188d95417f893, type: 3}
-  clickButtonClip: {fileID: 8300000, guid: 385abb309af8339439d422ce46edce15, type: 3}
+  clickButtonClip: {fileID: 8300000, guid: 4d079253a55d359438aad2aa33fe7355, type: 3}
   snapClip: {fileID: 8300000, guid: 1150c94e78ff9414f82a05458c966052, type: 3}
   bombBoosterClip: {fileID: 8300000, guid: cfd3782771335d840b1e148533c9d5b5, type: 3}
   freezeBoosterClip: {fileID: 8300000, guid: 906715be299484b47bbf657830bf0923, type: 3}
@@ -2156,13 +2153,21 @@ MonoBehaviour:
   sfxVolume: 1
   isMuted: 0
   meleeAudioClip:
-  - {fileID: 8300000, guid: b7400625ae69e2e47bda1c725bec5c43, type: 3}
-  - {fileID: 8300000, guid: b7400625ae69e2e47bda1c725bec5c43, type: 3}
-  - {fileID: 8300000, guid: b7400625ae69e2e47bda1c725bec5c43, type: 3}
+  - {fileID: 8300000, guid: 4f48121203cb4ae4fa299ba42c5d7bbf, type: 3}
+  - {fileID: 8300000, guid: c29447fb4e1e88044a0f94cb4664e293, type: 3}
+  - {fileID: 8300000, guid: d9fc4da5007fde84b9db2bb522499907, type: 3}
+  - {fileID: 8300000, guid: fa8dc4647a1424d45b04e1347e09e42d, type: 3}
+  - {fileID: 8300000, guid: 6c177af529ce59c4db12d0739401feda, type: 3}
+  - {fileID: 8300000, guid: 046db7a143c9a7b4584415bf2620e8e2, type: 3}
+  - {fileID: 8300000, guid: ca76216bfef90c24cb429eae582442bd, type: 3}
   rangeAudioClip:
-  - {fileID: 8300000, guid: 395d647c064a11d4d92c7b0e1bdf87ca, type: 3}
-  - {fileID: 8300000, guid: 395d647c064a11d4d92c7b0e1bdf87ca, type: 3}
-  - {fileID: 8300000, guid: 395d647c064a11d4d92c7b0e1bdf87ca, type: 3}
+  - {fileID: 8300000, guid: 67e912101c27fd046a32c92f7796539c, type: 3}
+  - {fileID: 8300000, guid: ed8f5521d75e8d14a84720d31f84eb89, type: 3}
+  - {fileID: 8300000, guid: dc4a539c11f58bb409842dee9e6d4284, type: 3}
+  - {fileID: 8300000, guid: a5e0c3f9676158940bffd7f9f40a31b0, type: 3}
+  - {fileID: 8300000, guid: 5c0a806a26e9af54e85ae084f9b448ea, type: 3}
+  - {fileID: 8300000, guid: b415542ef0d96ac498046f1fdde765f5, type: 3}
+  - {fileID: 8300000, guid: 3b21002c7b8501f42b619ca8af6311d0, type: 3}
   sp:
   - {fileID: -5117575335990432404, guid: d859bdf9516e8fe4fa128d6b364f5c17, type: 3}
   - {fileID: -235195218814564403, guid: d2261044713852248956cd0b8e94a6dc, type: 3}

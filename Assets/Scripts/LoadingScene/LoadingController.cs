@@ -14,7 +14,7 @@ public class LoadingController : MonoBehaviour
     public Transform characterSpawnPoint; // Vị trí nhân vật đứng
     public GameObject charObj;
     [Header("Dữ liệu")]
-    public List<GameObject> characterPrefabs; // Kéo thả các nhân vật (Ninja, Samurai...) vào đây
+    public List<GameObject> characterPrefabs; // Kéo thả các nhân vật vào đây
 
     void Start()
     {

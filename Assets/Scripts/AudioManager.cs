@@ -6,11 +6,8 @@ using UnityEngine.UI;
 
 public enum GameSound
 {
-    unitSound,
     fightSound,
     coinSound,
-    buyMeleeSound,
-    buyRangeSound,
     meleeAttackSound,
     rangeAttackSound,
     loseSound,
@@ -27,11 +24,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     [Header("Audio Clips")]
-    public AudioClip unitClip;
     public AudioClip fightClip;
     public AudioClip coinClip;
-    public AudioClip buyMeleeClip;
-    public AudioClip buyRangeClip;
     public AudioClip meleeAttackClip;
     public AudioClip rangeAttackClip;
     public AudioClip victoryClip;
@@ -77,11 +71,8 @@ public class AudioManager : MonoBehaviour
             }
 
             // Map enum -> clip
-            soundMap[GameSound.unitSound] = unitClip;
             soundMap[GameSound.fightSound] = fightClip;
             soundMap[GameSound.coinSound] = coinClip;
-            soundMap[GameSound.buyMeleeSound] = buyMeleeClip;
-            soundMap[GameSound.buyRangeSound] = buyRangeClip;
             soundMap[GameSound.meleeAttackSound] = meleeAttackClip;
             soundMap[GameSound.rangeAttackSound] = rangeAttackClip;
             soundMap[GameSound.victorySound] = victoryClip;
