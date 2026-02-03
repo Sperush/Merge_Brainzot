@@ -1,7 +1,7 @@
 {
   "melee": {
-    "laneTolerance": 0.2,
-    "xTolerance": 0.35
+    "laneTolerance": 0.3,
+    "xTolerance": 0.1
   },
   "range": {
     "projectileForce": 4

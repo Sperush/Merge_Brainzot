@@ -19,7 +19,7 @@ public class GridManager : MonoBehaviour
     public float cellSize = 1.6f;       //khoảng cách giữa tâm các ô
     public Vector2 origin = new Vector2(-3.2f, -4.0f);      //tọa độ ô (0,0)
 
-    private MonsterHealth[,] grid;   //mảng 2 chiều grid
+    public MonsterHealth[,] grid;   //mảng 2 chiều grid
 
     void Awake()
     {

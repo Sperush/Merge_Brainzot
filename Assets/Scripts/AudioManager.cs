@@ -16,7 +16,9 @@ public enum GameSound
     snapSound,
     bombSound,
     freezeSound,
-    planeSound
+    planeSound,
+    buyMeleeSound,
+    buyRangeSound
 }
 
 public class AudioManager : MonoBehaviour
@@ -90,7 +92,6 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 
     public void Play(GameSound sound, float volum = -1f)
     {

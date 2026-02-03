@@ -65,12 +65,14 @@ public class Char : MonoBehaviour
     public List<bool> unlockUnitRange = new List<bool>() { true, false, false, false, false, false, false, false };
     public List<bool> giftCollected = new List<bool>() { false, false, false };
     public static Char Instance;
-    public GameObject meleePrefabs;
-    public GameObject rangePrefabs;
+    public GameObject[] meleePrefabs;
+    public GameObject[] rangePrefabs;
     public string[] nameUnitMelee;
     public string[] nameUnitRange;
     public List<ItemManager> itemMelee;
     public List<ItemManager> itemRange;
+    public List<ItemManager> myitemMelee;
+    public List<ItemManager> myitemRange;
     public int coutStreak;
     public string LastClaimTime = DateTime.MinValue.ToString();
     public int currentDayIndex;
@@ -86,6 +88,13 @@ public class Char : MonoBehaviour
         imgMusic.sprite = BackgroundMusic.Instance.MusicSprite[BackgroundMusic.Instance.audioMusic.mute ? 1:0];
         imgSound.sprite = AudioManager.Instance.sp[AudioManager.Instance.isMuted ? 1 : 0];
     }
+    public GameObject GetUnitPrefabs(int level, bool isMelee)
+    {
+        var arr = isMelee ? meleePrefabs : rangePrefabs;
+        level = Mathf.Clamp(level - 1, 0, arr.Length - 1);
+        return arr[level];
+    }
+
     public void ToggleMute(bool isMusic)
     {
         if (isMusic) BackgroundMusic.Instance.MuteMusic();
@@ -238,15 +247,10 @@ public class Char : MonoBehaviour
         if (level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UnitSpawner.Instance.LoadCost(saveData.costMelee, saveData.costRange);
         foreach (var m in saveData.dataMyTeam.units)
         {
-            MonsterType tp = (MonsterType)Enum.Parse(typeof(MonsterType), m.type); ;
-            GameObject obj = Instantiate(tp == MonsterType.Melee? meleePrefabs: rangePrefabs);
+            GameObject obj = Instantiate(GetUnitPrefabs(m.level, m.type == MonsterType.Melee.ToString()));
             MonsterHealth mh = obj.GetComponent<MonsterHealth>();
             mh.SetGridPos(m.gridX, m.gridY);
-            mh.stats.type = tp;
-            mh.LevelUp(m.level - 1);
-            mh.stats.attackSpeed = m.attackSpeed;
-            mh.stats.attackRange = m.attackRange;
-            mh.stats.moveSpeed = m.moveSpeed;
+            mh.SetStats(m.level);
             dataMyTeam.Add(mh);
             BattleManager.Instance.playerTeam.Add(obj);
             GridManager.Instance.Place(mh, mh.gridX, mh.gridY);
@@ -271,11 +275,30 @@ public class Char : MonoBehaviour
         });
         if (level > 2) Save(Application.persistentDataPath + "/save.json");
     }
-    public bool SubCoins(long a) //Trừ coin của người chơi
+    public bool SubCoins(long a, bool isMelee=true) //Trừ coin của người chơi
     {
         if (a > coins)
         {
-            Noti.Instance.Show("not_enough_gold");
+            //RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
+            //{
+            //    if (isSuccess)
+            //    {
+            //        if (isMelee)
+            //        {
+            //            UnitSpawner.Instance.SpawnMeleeUnit(1);
+            //            UnitSpawner.Instance.SpawnMeleeUnit(1);
+            //        }
+            //        else
+            //        {
+            //            UnitSpawner.Instance.SpawnRangeUnit(1)
+            //            UnitSpawner.Instance.SpawnRangeUnit(1);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
+            //    }
+            //});
             return false;
         }
         coins -= a;

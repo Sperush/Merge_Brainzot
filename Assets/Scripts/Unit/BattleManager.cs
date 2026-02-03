@@ -8,8 +8,7 @@ public enum BattleState
 {
     Idle,           // Đang nghỉ/Chờ
     Prepare,        // Đang giương cung/Múa (Animation)
-    Firing,         // Đang sinh đạn
-    WaitingForImpact// Chờ đạn bay trúng hết
+    Firing         // Đang sinh đạn
 }
 public class BattleManager : MonoBehaviour
 {
@@ -19,29 +18,26 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> arrUnitReady = new List<GameObject>();
     public List<MonsterAI> arrRange = new List<MonsterAI>();
     public static BattleManager Instance;
-    public GameObject meleeEnemyPrefabs;
-    public GameObject rangeEnemyPrefabs;
     public GameObject winPanel;
     public GameObject losePanel;
     public GameObject ButtonList;
     public TMP_Text[] txtCoinReward;
     public TMP_Text txtGemReward;
-    public GameObject rangeEnemyPrefab;
-    public GameObject meleeEnemyPrefab;
+    public GameObject[] rangeEnemyPrefab;
+    public GameObject[] meleeEnemyPrefab;
     public GameObject Booster;
     public Button[] btnReward;
     [Header("Config")]
-    public float animationDelay = 0.4f; // Thời gian chờ animation đánh (tay vung lên)
     public float reloadTime = 0.8f;     // Thời gian nghỉ giữa các đợt
     public float maxWaitTime = 5.0f;    // [QUAN TRỌNG] Thời gian chờ tối đa (để chống kẹt đạn)
     [Header("Status")]
     public BattleState currentState = BattleState.Idle;
-    public int activeBulletCount = 0;
     public BombPlane plane;
     public GameObject buttonGift;
     private float _levelStartTime;
     private long lastCoinReward;
     private float _stateTimer;
+
     private void Awake()
     {
         Instance = this;
@@ -56,69 +52,16 @@ public class BattleManager : MonoBehaviour
     {
         if (startPvP && isOkPvP() && !CheckBattleEnd() && !BoosterManager.Instance.isOpenPanel)
         {
-            switch (currentState)
+            // Hết thời gian nghỉ -> Chuyển sang chuẩn bị bắn
+            _stateTimer -= Time.deltaTime;
+            if (_stateTimer <= 0)
             {
-                case BattleState.Idle:
-                    // Hết thời gian nghỉ -> Chuyển sang chuẩn bị bắn
-                    _stateTimer -= Time.deltaTime;
-                    if (_stateTimer <= 0)
-                    {
-                        StartCoroutine(AttackRoutine());
-                    }
-                    break;
-
-                case BattleState.WaitingForImpact:
-                    // Logic chờ đạn:
-                    // 1. Nếu đạn đã hết (activeBulletCount == 0) -> Xong
-                    // 2. HOẶC chờ quá lâu (stateTimer < 0) -> Xong (Force qua lượt mới để ko bị lag game)
-
-                    _stateTimer -= Time.deltaTime;
-                    if (activeBulletCount <= 0 || _stateTimer <= 0)
-                    {
-                        // Về lại trạng thái nghỉ để nạp đạn
-                        currentState = BattleState.Idle;
-                        _stateTimer = reloadTime;
-                    }
-                    break;
+                foreach (var unit in arrRange)
+                {
+                    if (unit != null && unit.gameObject.activeSelf) unit.PlayAttackAnimation(); // Hàm chỉ chạy anim
+                }
+                _stateTimer = BattleConfig.Instance.AttackRangeSpeed;
             }
-        }
-    }
-    IEnumerator AttackRoutine()
-    {
-        // GIAI ĐOẠN 1: PREPARE (Múa)
-        currentState = BattleState.Prepare;
-        //foreach (var unit in arrRange)
-        //{
-        //    if (unit != null && unit.gameObject.activeSelf) unit.PlayAttackAnimation(); // Hàm chỉ chạy anim
-        //}
-
-        yield return new WaitForSeconds(animationDelay);
-        // GIAI ĐOẠN 2: FIRING (Bắn)
-        currentState = BattleState.Firing;
-        // Reset đếm đạn về 0 để bắt đầu đếm đợt mới
-        activeBulletCount = 0;
-        int shootersCount = 0;
-        for (int i = arrRange.Count - 1; i >= 0; i--)
-        {
-            MonsterAI unit = arrRange[i];
-            if (unit != null && unit.gameObject.activeSelf && !unit.isFrozen && unit.HasTarget() && unit.projectile == null)
-            {
-                unit.ForceAttack(); // Bắn
-                shootersCount++;
-            }
-        }
-        // GIAI ĐOẠN 3: WAITING (Chờ đạn bay)
-        // Nếu không có ai bắn (do chết hết hoặc ko có target) thì nghỉ luôn
-        if (shootersCount == 0)
-        {
-            currentState = BattleState.Idle;
-            _stateTimer = 0.5f;
-        }
-        else
-        {
-            currentState = BattleState.WaitingForImpact;
-            // Đặt thời gian chờ tối đa (Safety Net)
-            _stateTimer = maxWaitTime;
         }
     }
     public float GetDifficulty(int level)
@@ -229,32 +172,70 @@ public class BattleManager : MonoBehaviour
     }
     public void resetlevel() //Thua nên bấm nút sẽ chơi lại màn đấy
     {
-        GridManager.Instance.CLear(4,5);
-        arrUnitReady.Clear();
-        foreach (var m in enemyTeam)
-        {
-            m.SetActive(true);
-            MonsterAI ai = m.GetComponent<MonsterAI>();
-            ai.enabled = false;
-            ai.isReady = false;
-            Destroy(ai.projectile);
-            m.GetComponent<MonsterHealth>().ResetStatus();
-        }
+        GridManager.Instance.CLear(4, 2);
         foreach (var m in playerTeam)
         {
-            m.SetActive(true);
-            MonsterAI ai = m.GetComponent<MonsterAI>();
-            ai.enabled = false;
-            ai.isReady = false;
-            Destroy(ai.projectile);
-            m.GetComponent<MonsterHealth>().ResetStatus();
+            if (m == null) continue;
+            SafeResetUnit(m);
         }
+        LoadLevel(false);
         PanelManager.Instance.ClosePanel(losePanel);
         plane.Init(() =>{}, true);
         AudioManager.Instance.Play(GameSound.coinSound);
     }
+    public void SafeResetUnit(GameObject m, bool isDel=false)
+    {
+        StartCoroutine(SafeResetUnitDelayed(m, isDel));
+    }
+    IEnumerator SafeResetUnitDelayed(GameObject m, bool isDel)
+    {
+        if (m == null) yield break;
+
+        var ai = m.GetComponent<MonsterAI>();
+        var anim = ai.animator;
+        var skins = m.GetComponentsInChildren<UnityEngine.U2D.Animation.SpriteSkin>();
+        ai.enabled = false;
+
+        // 🛑 1. STOP ALL JOB SOURCES
+        if (anim != null)
+            anim.enabled = false;
+
+        foreach (var s in skins)
+            if (s != null)
+                s.enabled = false;
+
+        // 🕒 2. CHỜ JOB FLUSH
+        yield return null;
+        if (!isDel && !m.activeSelf) m.SetActive(true);
+        // 🧹 3. CLEAN LOGIC
+        ai.ResetAIState();
+
+        if (!isDel)
+            ai.monsterHealth.ResetStatus();
+
+        if (ai.projectile != null)
+            Destroy(ai.projectile);
+
+        // 🧨 4A. DESTROY FLOW
+        if (isDel)
+        {
+            Destroy(m);
+            yield break;
+        }
+
+        // ♻️ 4B. RESET / POOL FLOW
+        foreach (var s in skins)
+            if (s != null)
+                s.enabled = true;
+
+        anim.enabled = true;
+        anim.Rebind();
+        anim.Update(0f);
+    }
+
     public void StartBattle() //Bắt đầu Fight
     {
+        arrUnitReady.Clear();
         playerTeam.RemoveAll(m => m == null);
         if (!playerTeam.Exists(m => m.activeSelf)) return;
         foreach (var m in playerTeam)
@@ -275,16 +256,11 @@ public class BattleManager : MonoBehaviour
     public void ChangeLevelUp() //Thắng nên bấm nút sẽ chuyển tới level tiếp theo
     {
         MergeTracker.Reset();
-        GridManager.Instance.CLear(4,5);
-        arrUnitReady.Clear();
+        GridManager.Instance.CLear(4, 2);
         foreach (var m in playerTeam)
         {
-            m.SetActive(true);
-            MonsterAI ai = m.GetComponent<MonsterAI>();
-            ai.enabled = false;
-            ai.isReady = false;
-            Destroy(ai.projectile);
-            m.GetComponent<MonsterHealth>().ResetStatus();
+            if (m == null) continue;
+            SafeResetUnit(m);
         }
         LoadLevel(false);
         PanelManager.Instance.ClosePanel(winPanel);
@@ -334,46 +310,73 @@ public class BattleManager : MonoBehaviour
     }
     public void LoadLevel(bool isLoadGame)
     {
+        StartCoroutine(LoadLevelRoutine(isLoadGame));
+    }
+
+    IEnumerator LoadLevelRoutine(bool isLoadGame)
+    {
         CheckDailyReward();
+        UnitSpawner.Instance.OnCost();
         DangerWarning.Instance.Show((Char.Instance.level > 9 && Char.Instance.level % 5 == 0) ? TypeDanger.VeryHard : (Char.Instance.level > 9 && (Char.Instance.level + 1) % 5 == 0) ? TypeDanger.Hard : TypeDanger.Normal);
         LevelBgrManager.Instance.Load(isLoadGame);
         _levelStartTime = Time.time;
-        GridManager grid = GridManager.Instance;
 
-        // Clear enemy cũ
-        grid.CLearEnemy(4, 3);
+        // 1️⃣ CLEAR GRID
+
+        // 2️⃣ RESET ENEMY CŨ (AN TOÀN)
         foreach (var m in enemyTeam)
         {
             if (m == null) continue;
-            MonsterAI ai = m.GetComponent<MonsterAI>();
-            Destroy(ai.projectile);
-            Destroy(m.gameObject);
+            SafeResetUnit(m, true);
         }
+        GridManager.Instance.CLearEnemy(4,3);
         enemyTeam.Clear();
-        Char.Instance.txtLevel.SetText(Noti.Get("level_format", Char.Instance.level));
-        // Load JSON từ Resources
+
+        // ⏱️ CHỜ JOB XƯƠNG + DESTROY XONG
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        // 3️⃣ LOAD JSON
+        Char.Instance.txtLevel.SetText(
+            Noti.Get("level_format", Char.Instance.level)
+        );
+
         string path = "Level/" + Char.Instance.level;
         TextAsset jsonFile = Resources.Load<TextAsset>(path);
 
         if (jsonFile == null)
         {
             Debug.LogError($"❌ Không tìm thấy file level: Resources/{path}.json");
-            return;
+            yield break;
         }
-
-        DataSave dataSave = JsonUtility.FromJson<DataSave>(jsonFile.text);
-
+        SpawnEnemy(JsonUtility.FromJson<DataSave>(jsonFile.text));
+        // 4️⃣ SPAWN ENEMY MỚI
+    }
+    public void SpawnEnemy(DataSave dataSave)
+    {
         foreach (var m in dataSave.enemyTeam.units)
         {
-            GameObject prefab = m.type == MonsterType.Melee.ToString() ? meleeEnemyPrefab : rangeEnemyPrefab;
+            GameObject prefab = GetUnitPrefabs(
+                m.level,
+                m.type == MonsterType.Melee.ToString()
+            );
+
             GameObject obj = Instantiate(prefab);
+
             MonsterHealth mh = obj.GetComponent<MonsterHealth>();
-            mh.stats.type = (MonsterType)System.Enum.Parse(typeof(MonsterType), m.type);
             mh.SetGridPos(m.gridX, m.gridY);
-            mh.LevelUp(m.level - 1);
-            grid.Place(mh, mh.gridX, mh.gridY);
+            mh.SetStats(m.level);
+
+            GridManager.Instance.Place(mh, mh.gridX, mh.gridY);
             enemyTeam.Add(obj);
         }
+    }
+
+    public GameObject GetUnitPrefabs(int level, bool isMelee)
+    {
+        var arr = isMelee ? meleeEnemyPrefab : rangeEnemyPrefab;
+        level = Mathf.Clamp(level - 1, 0, arr.Length - 1);
+        return arr[level];
     }
 
 }

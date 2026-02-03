@@ -25,7 +25,7 @@ public class BossManager : MonoBehaviour
         bm.enemyTeam.Clear();
 
         // spawn boss
-        GameObject bossObj = Instantiate(bm.meleeEnemyPrefab);
+        GameObject bossObj = Instantiate(bm.GetUnitPrefabs(1, true));
         MonsterHealth mh = bossObj.GetComponent<MonsterHealth>();
 
         ApplyBossStats(mh, data);

@@ -30,6 +30,7 @@ public class BombPlanePool : MonoBehaviour
 
     public void Release(BombPlane plane)
     {
+        plane.GetComponent<Animator>().enabled = false;
         plane.gameObject.SetActive(false);
         pool.Enqueue(plane);
     }

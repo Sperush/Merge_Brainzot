@@ -17,12 +17,40 @@ public class BombPlane : MonoBehaviour
     public void Init(Action dropCallback, bool isgift = false)
     {
         gameObject.SetActive(true);
+
         isGift = isgift;
         onDropBomb = dropCallback;
         dropped = false;
         hasEnteredBackground = false;
+
+        StartCoroutine(ResetVisuals()); // tên rõ nghĩa hơn
         StartFly();
     }
+    IEnumerator ResetVisuals()
+    {
+        var anim = GetComponent<Animator>();
+        var skins = GetComponentsInChildren<UnityEngine.U2D.Animation.SpriteSkin>();
+
+        // stop jobs
+        if (anim != null) anim.enabled = false;
+        foreach (var s in skins)
+            if (s != null) s.enabled = false;
+
+        yield return null;
+        yield return null; // an toàn với job
+
+        // resume
+        foreach (var s in skins)
+            if (s != null) s.enabled = true;
+
+        if (anim != null)
+        {
+            anim.enabled = true;
+            anim.Rebind();
+            anim.Update(0f);
+        }
+    }
+
     public static bool IsInsideBackground(Vector3 pos)
     {
         return LevelBgrManager.Instance.bgr.bounds.Contains(pos);

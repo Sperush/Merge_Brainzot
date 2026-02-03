@@ -7,7 +7,6 @@ public class MonsterHealth : MonoBehaviour
     public int gridX; //Tọa độ x của Unit trong grid
     public int gridY; //Tọa độ y của Unit trong grid
     [Header("Visual")]
-    public SpriteRenderer spriteRenderer;
     public Sprite[] visuals;
     public MonsterStats stats;
     public MonsterAI monsterAI;
@@ -16,15 +15,13 @@ public class MonsterHealth : MonoBehaviour
     public Transform textSpawnPoint;
     public int damageInSecond=0; //Giá dame nhận được trong 1 giây
     public float timeShowDameTxt = 1f; //Delay hiển thị dame
-
+    public bool isDead => stats.currentHP <= 0;
+    public bool isDie;
     public float yOffset = 0.2f;
     void Awake()
     {
         stats.currentHP = stats.maxHP;
         hpBar.SetHP(1f);
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        UpdateVisual();
     }
     private void Update()
     {
@@ -36,7 +33,12 @@ public class MonsterHealth : MonoBehaviour
         damageInSecond += dmg;
         stats.currentHP -= dmg;
         if (hpBar != null) hpBar.SetHP((stats.currentHP * 1.0f) / (stats.maxHP * 1.0f));
-        if (stats.currentHP <= 0) Die();
+        if (stats.currentHP <= 0 && !isDie)
+        {
+            monsterAI.animator.SetTrigger("isDie");
+            hpBar.gameObject.SetActive(false);
+            isDie = true;
+        }
         if (CompareTag("Enemy") && timeShowDameTxt <= 0 && BattleManager.Instance.startPvP)
         {
             ShowDamage(damageInSecond);
@@ -51,20 +53,11 @@ public class MonsterHealth : MonoBehaviour
         timeShowDameTxt = 1f;
         damageInSecond = 0;
     }
-    void Die()
-    {
-        gameObject.SetActive(false);
-    }
 
     public void LevelUp(int count) //Nâng cấp level của Unit
     {
         stats.level += count;
-        SetStats(stats.level);
-        UpdateVisual();
-        Bounds b = spriteRenderer.bounds;
-        Vector2 pos = transform.position;
-        pos.y = b.max.y + yOffset;
-        hpBar.transform.position = pos;
+        
     }
     public void SetStats(int level)
     {
@@ -101,10 +94,6 @@ public class MonsterHealth : MonoBehaviour
         hpBar.SetHP(1f);
     }
 
-    public void UpdateVisual() //Cập nhật visual cho phù hợp với level Unit
-    {
-        spriteRenderer.sprite = visuals[stats.level - 1];
-    }
     public void SetGridPos(int x, int y) //Lưu vị trí của Unit
     {
         gridX = x;
@@ -113,12 +102,14 @@ public class MonsterHealth : MonoBehaviour
     public void ResetStatus() //Trả về trạng thái chuẩn bị
     {
         SetStats(stats.level);
-        MonsterAI ai = GetComponent<MonsterAI>();
-        ai.currentTarget = null;
-        ai.attackTimer = 0f;
+        monsterAI.currentTarget = null;
         GridManager.Instance.Place(this, gridX, gridY);
-        spriteRenderer.flipX = false;
+        Vector3 scal = monsterAI.visual.localScale;
+        scal.x = Mathf.Abs(scal.x);
+        monsterAI.visual.localScale = scal;
         damageInSecond = 0;
         timeShowDameTxt = 1f;
+        hpBar.gameObject.SetActive(true);
+        isDie = false;
     }
 }

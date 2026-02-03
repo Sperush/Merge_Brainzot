@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -83,54 +84,51 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
         // MERGE
         GridManager.Instance.Remove(other.gridX, other.gridY);
+        GridManager.Instance.Remove(unit.gridX, unit.gridY);
         MergeTracker.OnMerge();
         GameLog.Log("unit_merge", new
         {
             mergeCount = MergeTracker.mergeCount,
             timeToFirstMerge = MergeTracker.timeToFirstMerge
         });
-        unit.LevelUp(1);
-        AudioManager.Instance.PlayUnitSound(unit.stats.level, unit.stats.type);
-        unit.GetComponent<SortingGroup>().sortingOrder = -other.gridY;
+
+        GameObject unitObj = Instantiate(Char.Instance.GetUnitPrefabs(unit.stats.level+1, unit.stats.type == MonsterType.Melee));
+        MonsterHealth mh = unitObj.GetComponent<MonsterHealth>();
+        BattleManager.Instance.playerTeam.Add(unitObj);
+        Char.Instance.dataMyTeam.Add(mh);
+        mh.SetStats(mh.stats.level);
+        AudioManager.Instance.PlayUnitSound(mh.stats.level, unit.stats.type);
+        GridManager.Instance.Place(mh, other.gridX, other.gridY);
+
+        unitObj.GetComponent<SortingGroup>().sortingOrder = -other.gridY;
         BattleManager.Instance.playerTeam.Remove(other.gameObject);
+        BattleManager.Instance.playerTeam.Remove(unit.gameObject);
         if (TutorialController.Instance != null)
         {
             TutorialController.Instance.OnMergeCompleted();
         }
-        GridManager.Instance.Place(unit, other.gridX, other.gridY);
-        Vector3 pos = unit.transform.position;
+        Vector3 pos = unitObj.transform.position;
         pos.y += 0.3f;
-        VFXManager.Instance.Play(VFXType.Merge, pos);
+        PanelManager.Instance.statsUnit.level = mh.stats.level;
+        TryUnlockUnit(mh);
+
         Destroy(other.gameObject);
+        Destroy(unit.gameObject);
+        VFXManager.Instance.Play(VFXType.Merge, pos);
         Char.Instance.dataMyTeam.RemoveAll(m => m == null);
-        PanelManager.Instance.statsUnit.level = unit.stats.level;
-        if (unit.stats.type == MonsterType.Melee && !Char.Instance.unlockUnitMelee[unit.stats.level - 1])
-        {
-            PanelManager.Instance.statsUnit.isMelee = true;
-            if (unit.stats.type == MonsterType.Melee)
-            {
-                Char.Instance.unlockUnitMelee[unit.stats.level - 1] = true;
-            }
-            else
-            {
-                Char.Instance.unlockUnitRange[unit.stats.level - 1] = true;
-            }
-            PanelManager.Instance.OpenPanel(PanelManager.Instance.unlockUnit);
-        }
-        else if (unit.stats.type == MonsterType.Ranged && !Char.Instance.unlockUnitRange[unit.stats.level - 1])
-        {
-            PanelManager.Instance.statsUnit.isMelee = false;
-            if (unit.stats.type == MonsterType.Melee)
-            {
-                Char.Instance.unlockUnitMelee[unit.stats.level - 1] = true;
-            }
-            else
-            {
-                Char.Instance.unlockUnitRange[unit.stats.level - 1] = true;
-            }
-            PanelManager.Instance.OpenPanel(PanelManager.Instance.unlockUnit);
-        }
     }
+    void TryUnlockUnit(MonsterHealth mh)
+    {
+        int index = mh.stats.level - 1;
+        if (index < 0) return;
+        bool isMelee = mh.stats.type == MonsterType.Melee;
+        List<bool> unlockArray = isMelee ? Char.Instance.unlockUnitMelee : Char.Instance.unlockUnitRange;
+        if (index >= unlockArray.Count || unlockArray[index]) return;
+        unlockArray[index] = true;
+        PanelManager.Instance.statsUnit.isMelee = isMelee;
+        PanelManager.Instance.OpenPanel(PanelManager.Instance.unlockUnit);
+    }
+
     void SwapWith(MonsterHealth other)
     {
         GridManager grid = GridManager.Instance;

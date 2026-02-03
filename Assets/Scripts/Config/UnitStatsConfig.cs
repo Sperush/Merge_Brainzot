@@ -41,7 +41,7 @@ public class UnitCurve
 {
     public int[] damage;
     public int[] hp;
-    public int[] attackSpeed;
-    public int[] attackRange;
-    public int[] moveSpeed;
+    public float[] attackSpeed;
+    public float[] attackRange;
+    public float[] moveSpeed;
 }

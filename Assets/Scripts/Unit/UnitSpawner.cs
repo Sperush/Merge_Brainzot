@@ -2,6 +2,7 @@
 using TMPro;
 using Unity.Mathematics.Geometry;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitSpawner : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class UnitSpawner : MonoBehaviour
     public TMP_Text txtCostMelee;
     public TMP_Text txtCostRange;
     public BattleManager battleManager;
-    public GameObject rangeUnitPrefab;
-    public GameObject meleeUnitPrefab;
     public static UnitSpawner Instance;
-
+    public Sprite[] sp;
+    public SpriteRenderer[] img;
+    public GameObject[] buyadsMelee;
+    public GameObject[] buyadsRange;
 
     private void Awake()
     {
@@ -21,7 +23,6 @@ public class UnitSpawner : MonoBehaviour
         var shop = EconomyConfig.Instance.unitShop;
         costMelee = shop.startCost.melee;
         costRange = shop.startCost.range;
-        OnCost();
     }
 
     public void LoadCost(long cM, long cR) //Làm mới giá tiền mua Unit
@@ -32,10 +33,33 @@ public class UnitSpawner : MonoBehaviour
     }
     public void OnCost() //Hien giá tiền mua Unit
     {
-        if (!txtCostMelee.gameObject.activeSelf) txtCostMelee.gameObject.SetActive(true);
-        if (!txtCostRange.gameObject.activeSelf) txtCostRange.gameObject.SetActive(true);
-        txtCostMelee.SetText(Char.FormatMoney(costMelee));
-        txtCostRange.SetText(Char.FormatMoney(costRange));
+        if (Char.Instance.level > 1)
+        {
+            bool isEnoughM = Char.Instance.coins >= costMelee;
+            bool isEnoughR = Char.Instance.coins >= costRange;
+            if (!txtCostMelee.gameObject.activeSelf) txtCostMelee.gameObject.SetActive(true);
+            if (!txtCostRange.gameObject.activeSelf) txtCostRange.gameObject.SetActive(true);
+            txtCostMelee.SetText(isEnoughM ? Char.FormatMoney(costMelee) : "FREE");
+            txtCostRange.SetText(isEnoughR ? Char.FormatMoney(costRange) : "FREE");
+            img[0].sprite = sp[isEnoughM ? 0 : 1];
+            img[1].sprite = sp[isEnoughR ? 0 : 1];
+            img[2].sprite = sp[isEnoughM ? 2 : 3];
+            img[3].sprite = sp[isEnoughR ? 2 : 3];
+            buyadsMelee[0].SetActive(isEnoughM);
+            buyadsMelee[1].SetActive(!isEnoughM);
+            buyadsRange[0].SetActive(isEnoughR);
+            buyadsRange[1].SetActive(!isEnoughR);
+        } else
+        {
+            if (!txtCostMelee.gameObject.activeSelf) txtCostMelee.gameObject.SetActive(true);
+            if (!txtCostRange.gameObject.activeSelf) txtCostRange.gameObject.SetActive(true);
+            txtCostMelee.SetText("FREE");
+            txtCostRange.SetText("FREE");
+            img[0].sprite = sp[0];
+            img[1].sprite = sp[0];
+            img[2].sprite = sp[2];
+            img[3].sprite = sp[2];
+        }
     }
     public void UpgradeCost(bool isMelee)
     {
@@ -56,12 +80,12 @@ public class UnitSpawner : MonoBehaviour
             {
                 if (grid.IsEmpty(x, y))
                 {
-                    GameObject unitObj = Instantiate(rangeUnitPrefab);
-                    battleManager.playerTeam.Add(unitObj);
+                    GameObject unitObj = Instantiate(Char.Instance.GetUnitPrefabs(level, false));
                     MonsterHealth unit = unitObj.GetComponent<MonsterHealth>();
+                    battleManager.playerTeam.Add(unitObj);
                     Char.Instance.dataMyTeam.Add(unit);
-                    unit.LevelUp(level);
-                    AudioManager.Instance.PlayUnitSound(level + 1, unit.stats.type);
+                    unit.SetStats(level);
+                    AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
                     grid.Place(unit, x, y);
                     if(Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(false);
                     VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);
@@ -80,12 +104,12 @@ public class UnitSpawner : MonoBehaviour
             {
                 if (grid.IsEmpty(x, y))
                 {
-                    GameObject unitObj = Instantiate(meleeUnitPrefab);
-                    battleManager.playerTeam.Add(unitObj);
+                    GameObject unitObj = Instantiate(Char.Instance.GetUnitPrefabs(level, true));
                     MonsterHealth unit = unitObj.GetComponent<MonsterHealth>();
+                    battleManager.playerTeam.Add(unitObj);
                     Char.Instance.dataMyTeam.Add(unit);
-                    unit.LevelUp(level);
-                    AudioManager.Instance.PlayUnitSound(level+1, unit.stats.type);
+                    unit.SetStats(level);
+                    AudioManager.Instance.PlayUnitSound(level, unit.stats.type);
                     grid.Place(unit, x, y);
                     if (Char.Instance.level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UpgradeCost(true);
                     VFXManager.Instance.Play(VFXType.Spawn, unit.transform.position);

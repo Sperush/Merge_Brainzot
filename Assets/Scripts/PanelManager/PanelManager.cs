@@ -47,7 +47,43 @@ public class PanelManager : MonoBehaviour
     private Vector3 initialScale;
     public ScrollRect[] scolls;
     public bool isOpenPanel;
+    public CanvasGroup uiBlocker;
 
+    public void UpdatePanelMelee()
+    {
+        foreach(var m in Char.Instance.itemMelee)
+        {
+            m.gameObject.SetActive(Char.Instance.unlockUnitMelee[m.level-1]);
+            if(m.gameObject.activeSelf) m.Load();
+        }
+    }
+    public void UpdatePanelRange()
+    {
+        foreach (var m in Char.Instance.itemRange)
+        {
+            m.gameObject.SetActive(Char.Instance.unlockUnitRange[m.level-1]);
+            if (m.gameObject.activeSelf) m.Load();
+        }
+    }
+    public void UpdatePanelMyMelee()
+    {
+        foreach (var m in Char.Instance.myitemMelee)
+        {
+            m.Load();
+        }
+    }
+    public void UpdatePanelMyRange()
+    {
+        foreach (var m in Char.Instance.myitemRange)
+        {
+            m.Load();
+        }
+    }
+    void BlockUI(bool block)
+    {
+        uiBlocker.blocksRaycasts = !block;
+        uiBlocker.interactable = !block;
+    }
     // Gọi hàm này để MỞ Panel
     public void OpenPanel(GameObject panel)
     {
@@ -98,6 +134,7 @@ public class PanelManager : MonoBehaviour
     // Gọi hàm này để ĐÓNG Panel
     public void ClosePanel(GameObject panel)
     {
+        BlockUI(true);
         AudioManager.Instance.Play(GameSound.clickButtonSound);
         // Thu nhỏ về 0
         panel.transform.DOScale(Vector3.zero, duration) // Đóng thì nên nhanh hơn mở 1 chút
@@ -106,9 +143,10 @@ public class PanelManager : MonoBehaviour
             {
                 isOpenPanel = false;
                 // Sau khi thu nhỏ xong -> Tắt toàn bộ Container (biến mất cả nền đen)
+                if(Char.Instance.level > 2 || streakPanel.activeSelf) darkPanel.SetActive(false);
                 panel.SetActive(false);
-                if(Char.Instance.level > 2 || BattleManager.Instance.startPvP) darkPanel.SetActive(false);
                 BoosterManager.Instance.isOpenPanel = false;
+                BlockUI(false);
             });
         if (TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge)
         {
@@ -160,21 +198,7 @@ public class PanelManager : MonoBehaviour
             OpenPanel(collectionPanel);
             rangeCollection.SetActive(true);
             meleeCollection.SetActive(false);
-            UpdatePanelRange();
-        }
-    }
-    public void UpdatePanelMelee()
-    {
-        foreach(var m in Char.Instance.itemMelee)
-        {
-            m.parent.SetActive(Char.Instance.unlockUnitMelee[m.level - 1]);
-        }
-    }
-    public void UpdatePanelRange()
-    {
-        foreach (var m in Char.Instance.itemRange)
-        {
-            m.parent.SetActive(Char.Instance.unlockUnitRange[m.level - 1]);
+            UpdatePanelMyRange();
         }
     }
     public void hideCollectionPanel()
@@ -182,6 +206,19 @@ public class PanelManager : MonoBehaviour
         if (collectionPanel != null)
         {
             ClosePanel(collectionPanel);
+        }
+    }
+    public void showMeleeCollection()
+    {
+        if (meleeCollection != null)
+        {
+            img[0].sprite = sp[1];
+            img[1].sprite = sp[0];
+            rangeCollection.SetActive(false);
+            meleeCollection.SetActive(true);
+            ResetScroll();
+            UpdatePanelMyMelee();
+            AudioManager.Instance.Play(GameSound.clickButtonSound);
         }
     }
     public void showRangeCollection()
@@ -192,21 +229,8 @@ public class PanelManager : MonoBehaviour
             img[1].sprite = sp[1];
             rangeCollection.SetActive(true);
             meleeCollection.SetActive(false);
-            UpdatePanelRange();
             ResetScroll();
-            AudioManager.Instance.Play(GameSound.clickButtonSound);
-        }
-    }
-    public void showMeleeCollection()
-    {
-        if (rangeCollection != null)
-        {
-            img[0].sprite = sp[1];
-            img[1].sprite = sp[0];
-            rangeCollection.SetActive(false);
-            meleeCollection.SetActive(true);
-            UpdatePanelMelee();
-            ResetScroll();
+            UpdatePanelMyRange();
             AudioManager.Instance.Play(GameSound.clickButtonSound);
         }
     }
@@ -236,6 +260,7 @@ public class PanelManager : MonoBehaviour
             OpenPanel(summonPanel);
             rangeSummon.SetActive(true);
             meleeSummon.SetActive(false);
+            UpdatePanelRange();
         }
     }
     public void hideSummonPanel()
@@ -254,6 +279,7 @@ public class PanelManager : MonoBehaviour
             rangeSummon.SetActive(true);
             meleeSummon.SetActive(false);
             ResetScroll();
+            UpdatePanelRange();
             AudioManager.Instance.Play(GameSound.clickButtonSound);
         }
     }
@@ -267,6 +293,7 @@ public class PanelManager : MonoBehaviour
             meleeSummon.SetActive(true);
             ResetScroll();
             AudioManager.Instance.Play(GameSound.clickButtonSound);
+            UpdatePanelMelee();
         }
     }
 

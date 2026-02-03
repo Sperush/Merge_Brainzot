@@ -17,14 +17,9 @@ public class ItemManager : MonoBehaviour
     public Image spriteRenderer;
     public Sprite[] visualsMelee;
     public Sprite[] visualsRange;
-    public GameObject parent;
+    public GameObject statsUnit;
     private void Awake()
     {
-        if (txtCost == null)
-        {
-            if (isMelee) Char.Instance.itemMelee.Add(this);
-            else Char.Instance.itemRange.Add(this);
-        }
         nameItem = isMelee ? Char.Instance.nameUnitMelee[level - 1] : Char.Instance.nameUnitRange[level - 1];
         Load();
     }
@@ -34,7 +29,7 @@ public class ItemManager : MonoBehaviour
         if (txtCost != null) txtCost.SetText(cost.ToString());
         if (txtDame != null) txtDame.SetText(dame.ToString());
         if (txtHp != null) txtHp.SetText(hp.ToString());
-        if (txtName != null) txtName.SetText(nameItem);
+        if (txtName != null) txtName.SetText((isMelee && !Char.Instance.unlockUnitMelee[level-1]) || (!isMelee && !Char.Instance.unlockUnitRange[level - 1]) ? "Locked":nameItem);
     }
     public void UpdateVisual() //Cập nhật visual cho phù hợp với level Unit
     {
@@ -55,6 +50,16 @@ public class ItemManager : MonoBehaviour
             dame = cfg.range.damage[index];
             hp = cfg.range.hp[index];
         }
+        if ((isMelee && !Char.Instance.unlockUnitMelee[index]) || (!isMelee && !Char.Instance.unlockUnitRange[index]))
+        {
+            spriteRenderer.color = Color.black;
+            statsUnit.SetActive(false);
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
+            statsUnit.SetActive(true);
+        }
         UpdateVisual();
     }
 
@@ -64,11 +69,11 @@ public class ItemManager : MonoBehaviour
         PanelManager.Instance.hideSummonPanel();
         if (isMelee)
         {
-            UnitSpawner.Instance.SpawnMeleeUnit(level-1);
+            UnitSpawner.Instance.SpawnMeleeUnit(level);
         }
         else
         {
-            UnitSpawner.Instance.SpawnRangeUnit(level-1);
+            UnitSpawner.Instance.SpawnRangeUnit(level);
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Projectile : MonoBehaviour
 {
@@ -6,20 +7,17 @@ public class Projectile : MonoBehaviour
     public float lifeTime = 3f;
     public float speed;
     public GameObject enemy;
-    private bool isRegistered = false;
     private Vector2 direction;
     private bool useCustomDir = false;
-    public void Awake()
-    {
-        if (BattleManager.Instance != null)
-        {
-            BattleManager.Instance.activeBulletCount++;
-            isRegistered = true;
-        }
-    }
+    public SpriteRenderer img;
+    private bool hasEnteredBackground = false;
     void Update()
     {
-        if (enemy == null || !enemy.activeSelf || !BattleManager.Instance.startPvP || BombPlane.IsOutOfBackground(transform.position))
+        if (!hasEnteredBackground && IsInsideBackground(transform.position))
+        {
+            hasEnteredBackground = true;
+        }
+        if (enemy == null || !enemy.activeSelf || !BattleManager.Instance.startPvP || (hasEnteredBackground && BombPlane.IsOutOfBackground(transform.position)))
         {
             Delete();
             return;
@@ -42,6 +40,10 @@ public class Projectile : MonoBehaviour
             }
         }
     }
+    public static bool IsInsideBackground(Vector3 pos)
+    {
+        return LevelBgrManager.Instance.bgr.bounds.Contains(pos);
+    }
     void HitTarget()
     {
         MonsterHealth hp = enemy.GetComponent<MonsterHealth>();
@@ -53,10 +55,6 @@ public class Projectile : MonoBehaviour
     }
     public void Delete()
     {
-        if (isRegistered && BattleManager.Instance != null)
-        {
-            BattleManager.Instance.activeBulletCount--;
-        }
         Destroy(gameObject);
     }
     public void SetAngle(float angle)

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterAI : MonoBehaviour
 {
@@ -16,16 +17,16 @@ public class MonsterAI : MonoBehaviour
     public GameObject projectilePrefab;
     public float projectileForce = 10f; //Tốc độ bay của đạn
 
-    public float attackTimer;  //Delay đánh
-    public Transform currentTarget;
+    public MonsterHealth currentTarget;
     public GameObject projectile;
-
+    public Animator animator;
+    public Transform visual;
     public Transform visualRoot;
-    public SpriteRenderer sprite;
+    public Sprite imgProjectile;
 
     void Update()
     {
-        if (isFrozen || BoosterManager.Instance.isOpenPanel) return;
+        if (isFrozen || BoosterManager.Instance.isOpenPanel || monsterHealth.isDead) return;
         var cfg = AIConfig.Instance;
         if (monsterHealth.stats.type == MonsterType.Melee)
         {
@@ -36,14 +37,13 @@ public class MonsterAI : MonoBehaviour
         {
             if (projectileForce != cfg.range.projectileForce) projectileForce = cfg.range.projectileForce;
         }
-        if (currentTarget == null || !currentTarget.gameObject.activeSelf)
+        if (currentTarget == null || currentTarget.isDead)
         {
             FindNearestTarget();
             return;
         }
-        if (currentTarget == null || !currentTarget.gameObject.activeSelf)
+        if (currentTarget == null || currentTarget.isDead || monsterHealth.isDead)
             return;
-        if (attackTimer > 0) attackTimer -= Time.deltaTime;
         if (monsterHealth.stats.type == MonsterType.Melee)
         {
             HandleMelee();
@@ -69,19 +69,30 @@ public class MonsterAI : MonoBehaviour
 
         isFrozen = false;
     }
+    public void ResetAIState()
+    {
+        currentTarget = null;
+        isReady = false;
+    }
 
     void HandleMelee() //AI của Unit cận chiến gồm: di chuyển và tấn công và xoay hướng
     {
-        if (currentTarget == null || !currentTarget.gameObject.activeSelf) return;
+        if (currentTarget == null || currentTarget.isDead || monsterHealth.isDead) return;
 
         Vector2 myPos = transform.position;
-        Vector2 targetPos = currentTarget.position;
+        Vector2 targetPos = currentTarget.transform.position;
 
         float attackRange = monsterHealth.stats.attackRange;
         float moveSpeed = monsterHealth.stats.moveSpeed;
 
         float sideDir = targetPos.x > myPos.x ? -1f : 1f;
-        sprite.flipX = targetPos.x < myPos.x;
+        Vector3 scal = visual.localScale;
+        bool isFlip = targetPos.x < myPos.x;
+        if (isFlip && scal.x > 0 || !isFlip && scal.x < 0)
+        {
+            scal.x = -scal.x;
+        }
+        visual.localScale = scal;
         Vector2 desiredPos = new Vector2(
             targetPos.x + sideDir * attackRange,
             targetPos.y
@@ -95,18 +106,21 @@ public class MonsterAI : MonoBehaviour
         // ===== CASE 1: KHÔNG CÙNG LANE =====
         if (!sameLane)
         {
+            animator.SetBool("isRunning", true);
             MoveTo(desiredPos, moveSpeed);
             return;
         }
         // ===== CASE 2: QUÁ XA =====
         if (distanceX > attackRange + xTolerance)
         {
+            animator.SetBool("isRunning", true);
             MoveTo(desiredPos, moveSpeed);
             return;
         }
         // ===== CASE 3: QUÁ GẦN -> LÙI SANG BÊN =====
         if (distanceX < attackRange - xTolerance)
         {
+            animator.SetBool("isRunning", true);
             float dirX;
 
             // 🔒 TRƯỜNG HỢP TRÙNG X (hoặc rất gần)
@@ -145,18 +159,16 @@ public class MonsterAI : MonoBehaviour
             transform.position = GridManager.Instance.ClampToGrid(backPos);
             return;
         }
-
-
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Run")) animator.SetBool("isRunning", false);
         // ===== CASE 4: ĐÚNG KHOẢNG CÁCH -> ĐÁNH =====
         if (!isReady && !BattleManager.Instance.arrUnitReady.Exists(m => m == gameObject))
         {
             BattleManager.Instance.arrUnitReady.Add(gameObject);
             isReady = true;
         }
-        if (attackTimer <= 0f && currentTarget != null && currentTarget.gameObject.activeSelf && BattleManager.Instance.isOkPvP())
+        if (currentTarget != null && currentTarget.gameObject.activeSelf && BattleManager.Instance.isOkPvP() && !monsterHealth.isDead)
         {
-            AttackMelee();
-            attackTimer = monsterHealth.stats.attackSpeed;
+            PlayAttackAnimation();
         }
     }
 
@@ -172,60 +184,53 @@ public class MonsterAI : MonoBehaviour
             BattleManager.Instance.arrUnitReady.Add(gameObject);
             isReady = true;
         }
-        if (HasTarget())
+        if (HasTarget() && !monsterHealth.isDead)
         {
-            sprite.flipX = currentTarget.position.x < transform.position.x;
+            Vector3 scal = visual.localScale;
+            bool isFlip = currentTarget.transform.position.x < transform.position.x;
+            if (isFlip && scal.x > 0 || !isFlip && scal.x < 0)
+            {
+                scal.x = -scal.x;
+            }
+            visual.localScale = scal;
         }
-        //if (attackTimer <= 0 && projectile == null && currentTarget != null && currentTarget.gameObject.activeSelf && BattleManager.Instance.isOkPvP())
-        //{
-        //    sprite.flipX = currentTarget.position.x < transform.position.x;
-        //    Shoot();
-        //    attackTimer = monsterHealth.stats.attackSpeed;
-        //}
     }
 
     void FindNearestTarget() //Tìm kiếm địch gần nhất
     {
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, AIConfig.Instance.targeting.searchRadius, enemyLayer);
-        float minDist = Mathf.Infinity;
-        Transform nearest = null;
+        float minDist = float.MaxValue;
+        MonsterHealth nearest = null;
+        MonsterHealth mh;
+        Vector3 myPos = transform.position;
         foreach (var col in cols)
         {
-            float d = Vector2.Distance(transform.position, col.transform.position);
-            if (d < minDist)
+            mh = col.GetComponent<MonsterHealth>();
+            if (mh.isDead) continue;
+            Vector3 diff = col.transform.position - myPos;
+            float sqrDist = diff.sqrMagnitude;
+            if (sqrDist < minDist)
             {
-                minDist = d;
-                nearest = col.transform;
+                minDist = sqrDist;
+                nearest = mh;
             }
         }
         currentTarget = nearest;
     }
-    
-    void AttackMelee() //Hàm tấn công của Unit cận chiến
-    {
-        MonsterHealth hp = currentTarget.GetComponent<MonsterHealth>();
-        AudioManager.Instance.Play(GameSound.meleeAttackSound);
-        if (hp != null)
-        {
-            hp.TakeDamage(monsterHealth.stats.attackDamage);
-        }
-    }
     public bool HasTarget()
     {
-        if (currentTarget == null || !currentTarget.gameObject.activeSelf)
+        if (currentTarget == null || currentTarget.isDead)
         {
             FindNearestTarget();
         }
         return currentTarget != null;
     }
-    public void ForceAttack() //Hàm bắn của Unit đánh xa
+    public void PlayAttackAnimation()
     {
-        GameObject proj = Instantiate(projectilePrefab, attackPoint.position, Quaternion.identity);
-        projectile = proj;
-        Projectile p = proj.GetComponent<Projectile>();
-        p.enemy = currentTarget.gameObject;
-        p.damage = monsterHealth.stats.attackDamage;
-        p.speed = projectileForce;
-        AudioManager.Instance.Play(GameSound.rangeAttackSound);
+        if (!monsterHealth.isDead && currentTarget != null && !currentTarget.isDead && !animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        {
+            animator.SetTrigger("attack");
+        }
     }
+
 }

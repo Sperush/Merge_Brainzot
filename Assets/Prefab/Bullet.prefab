@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.6268, y: -2.226, z: 0}
-  m_LocalScale: {x: 0.18186198, y: 0.18186198, z: 0.18186198}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.051382087, y: 0.051382087, z: 0.051382087}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,8 +84,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.9056604, g: 0.36311856, b: 0.8276986, a: 1}
+  m_Sprite: {fileID: -1786020561346971493, guid: 78ab0cfe8081c814899f62f82e7dca8b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,7 +108,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 7
   lifeTime: 3
+  speed: 0
   enemy: {fileID: 0}
+  img: {fileID: 459587072700166602}
+  isPiercing: 0
 --- !u!50 &370022958500896183
 Rigidbody2D:
   serializedVersion: 5

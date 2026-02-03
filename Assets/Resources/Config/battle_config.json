@@ -10,5 +10,6 @@
     },
     "baseGroup": [ 0.62, 0.72, 0.92, 1.12, 1.32 ],
     "groupIncrease": 0.02
-  }
+  },
+  "AttackRangeSpeed":  0.8
 }

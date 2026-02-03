@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 public enum VFXType
 {
@@ -59,16 +60,9 @@ public class VFXManager : MonoBehaviour
         if (!pool.ContainsKey(type)) return;
 
         var q = pool[type];
-        ParticleSystem vfx;
-
-        if (q.Count > 0)
-        {
-            vfx = q.Dequeue();
-        }
-        else
-        {
-            vfx = Instantiate(GetPrefab(type));
-        }
+        ParticleSystem vfx = q.Count > 0
+            ? q.Dequeue()
+            : Instantiate(GetPrefab(type), transform);
 
         vfx.transform.position = position;
         vfx.gameObject.SetActive(true);
@@ -76,16 +70,26 @@ public class VFXManager : MonoBehaviour
 
         StartCoroutine(ReturnToPool(type, vfx));
     }
+    float GetVFXLifeTime(ParticleSystem ps)
+    {
+        var main = ps.main;
+        return main.duration + main.startLifetime.constantMax;
+    }
+
 
     ParticleSystem GetPrefab(VFXType type)
     {
         return vfxList.Find(x => x.type == type).prefab;
     }
-    System.Collections.IEnumerator ReturnToPool(VFXType type, ParticleSystem vfx)
+    IEnumerator ReturnToPool(VFXType type, ParticleSystem vfx)
     {
-        yield return new WaitForSeconds(vfx.main.duration);
+        yield return new WaitForSeconds(GetVFXLifeTime(vfx));
+
+        if (vfx == null) yield break;
+
         vfx.gameObject.SetActive(false);
         pool[type].Enqueue(vfx);
     }
+
 }
 
