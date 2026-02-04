@@ -23,10 +23,11 @@ public class MonsterAI : MonoBehaviour
     public Transform visual;
     public Transform visualRoot;
     public Sprite imgProjectile;
-
+    public GameObject objFreeze;
+    private bool isUpCached;
     void Update()
     {
-        if (isFrozen || BoosterManager.Instance.isOpenPanel || monsterHealth.isDead) return;
+        if (!canAttack()) return;
         var cfg = AIConfig.Instance;
         if (monsterHealth.stats.type == MonsterType.Melee)
         {
@@ -53,6 +54,10 @@ public class MonsterAI : MonoBehaviour
             HandleRanged();
         }
     }
+    public bool canAttack()
+    {
+        return !isFrozen && !BoosterManager.Instance.isOpenPanel && !monsterHealth.isDead;
+    }
     public void Freeze(float duration)
     {
         if (!gameObject.activeSelf) return;
@@ -63,10 +68,10 @@ public class MonsterAI : MonoBehaviour
     IEnumerator FreezeCoroutine(float duration)
     {
         isFrozen = true;
-
+        objFreeze.SetActive(true);
         // Optional: animation / effect
         yield return new WaitForSeconds(duration);
-
+        objFreeze.SetActive(false);
         isFrozen = false;
     }
     public void ResetAIState()
@@ -77,7 +82,7 @@ public class MonsterAI : MonoBehaviour
 
     void HandleMelee() //AI của Unit cận chiến gồm: di chuyển và tấn công và xoay hướng
     {
-        if (currentTarget == null || currentTarget.isDead || monsterHealth.isDead) return;
+        if (currentTarget == null || currentTarget.isDead || monsterHealth.isDead || animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
 
         Vector2 myPos = transform.position;
         Vector2 targetPos = currentTarget.transform.position;
@@ -186,6 +191,12 @@ public class MonsterAI : MonoBehaviour
         }
         if (HasTarget() && !monsterHealth.isDead)
         {
+            bool isUp = transform.position.y < currentTarget.transform.position.y;
+            if (isUp != isUpCached)
+            {
+                isUpCached = isUp;
+                animator.SetBool("isUp", isUp);
+            }
             Vector3 scal = visual.localScale;
             bool isFlip = currentTarget.transform.position.x < transform.position.x;
             if (isFlip && scal.x > 0 || !isFlip && scal.x < 0)

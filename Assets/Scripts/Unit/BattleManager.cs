@@ -37,6 +37,9 @@ public class BattleManager : MonoBehaviour
     private float _levelStartTime;
     private long lastCoinReward;
     private float _stateTimer;
+    public long coinReward = 0;
+    public int gemReward = 0;
+    public GameObject[] gemWin;
 
     private void Awake()
     {
@@ -58,7 +61,7 @@ public class BattleManager : MonoBehaviour
             {
                 foreach (var unit in arrRange)
                 {
-                    if (unit != null && unit.gameObject.activeSelf) unit.PlayAttackAnimation(); // Hàm chỉ chạy anim
+                    if (unit != null && unit.gameObject.activeSelf && unit.canAttack()) unit.PlayAttackAnimation(); // Hàm chỉ chạy anim
                 }
                 _stateTimer = BattleConfig.Instance.AttackRangeSpeed;
             }
@@ -146,16 +149,24 @@ public class BattleManager : MonoBehaviour
     }
     public void EndGame(bool isWin)
     {
-        int gem = Char.Instance.level % 5 == 0 ? Char.Instance.level / 5:0;
-        long coin = CalulatorReward(isWin);
-        txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coin));
+        bool isCan = Char.Instance.level % 5 == 0;
+        gemReward = isCan ? Char.Instance.level / 5:0;
+        coinReward = CalulatorReward(isWin);
+        txtGemReward.SetText(Char.FormatMoney(gemReward));
         if (isWin)
         {
+            if (isCan)
+            {
+                gemWin[0].SetActive(true);
+                gemWin[1].SetActive(true);
+            } else
+            {
+                gemWin[0].SetActive(false);
+                gemWin[1].SetActive(false);
+            }
             Char.Instance.level++;
-            txtGemReward.SetText(Char.FormatMoney(gem));
         }
-        Char.Instance.AddCoins(coin);
-        Char.Instance.AddGems(gem);
+        txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coinReward));
         startPvP = false;
         ButtonList.SetActive(true);
         Booster.SetActive(false);
@@ -168,9 +179,13 @@ public class BattleManager : MonoBehaviour
         {
             //StartCoroutine(InterstitialAds.Instance.ShowAdsOnStart());
         }
-        //Time.timeScale = 0f;
     }
     public void resetlevel() //Thua nên bấm nút sẽ chơi lại màn đấy
+    {
+        Char.Instance.AddCoins(coinReward);
+        ResetLV();
+    }
+    public void ResetLV()
     {
         GridManager.Instance.CLear(4, 2);
         foreach (var m in playerTeam)
@@ -180,7 +195,7 @@ public class BattleManager : MonoBehaviour
         }
         LoadLevel(false);
         PanelManager.Instance.ClosePanel(losePanel);
-        plane.Init(() =>{}, true);
+        plane.Init(() => { }, true);
         AudioManager.Instance.Play(GameSound.coinSound);
     }
     public void SafeResetUnit(GameObject m, bool isDel=false)
@@ -255,6 +270,12 @@ public class BattleManager : MonoBehaviour
     }
     public void ChangeLevelUp() //Thắng nên bấm nút sẽ chuyển tới level tiếp theo
     {
+        Char.Instance.AddCoins(coinReward);
+        Char.Instance.AddGems(gemReward);
+        ChangeLV();
+    }
+    public void ChangeLV()
+    {
         MergeTracker.Reset();
         GridManager.Instance.CLear(4, 2);
         foreach (var m in playerTeam)
@@ -265,7 +286,8 @@ public class BattleManager : MonoBehaviour
         LoadLevel(false);
         PanelManager.Instance.ClosePanel(winPanel);
         AudioManager.Instance.Play(GameSound.coinSound);
-        if (Char.Instance.level == 2) {
+        if (Char.Instance.level == 2)
+        {
             TutorialController.Instance.StartPhase2_Merge();
             UnitSpawner.Instance.OnCost();
         }

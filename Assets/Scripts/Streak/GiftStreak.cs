@@ -32,7 +32,7 @@ public class GiftStreak : MonoBehaviour
     }
     public void OpenGift()
     {
-        if (Char.Instance.giftCollected[id] || Char.Instance.coutStreak < milestone) return;
+        if (Char.Instance.giftCollected[id] || StreakManager.Instance.slider.value < milestone) return;
         switch (reward.item)
         {
             case Item.gem:

@@ -1,8 +1,11 @@
-﻿using NUnit.Framework;
+﻿using DG.Tweening;
+using GIE;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.UI;
@@ -28,6 +31,7 @@ public class SaveData //Dữ liệu cần lưu
     public int boosterFreeze;
     public int boosterBomp;
     public int coutStreak;
+    public int giftCycle;
     public long costMelee;
     public long costRange;
     public int freeSpinLeft;
@@ -74,6 +78,7 @@ public class Char : MonoBehaviour
     public List<ItemManager> myitemMelee;
     public List<ItemManager> myitemRange;
     public int coutStreak;
+    public int giftCycle;
     public string LastClaimTime = DateTime.MinValue.ToString();
     public int currentDayIndex;
     public bool canClaimToday;
@@ -179,6 +184,7 @@ public class Char : MonoBehaviour
         saveData.giftCollected = giftCollected;
         saveData.currentDayIndex = currentDayIndex;
         saveData.LastClaimTime = LastClaimTime;
+        saveData.giftCycle = giftCycle;
         List<DataUnit> data = new List<DataUnit>();
         foreach(var m in dataMyTeam)
         {
@@ -244,6 +250,7 @@ public class Char : MonoBehaviour
         unlockUnitRange = saveData.unlockUnitRange;
         LastClaimTime = saveData.LastClaimTime;
         currentDayIndex = saveData.currentDayIndex;
+        giftCycle = saveData.giftCycle;
         if (level >= EconomyConfig.Instance.unitShop.increaseAfterLevel) UnitSpawner.Instance.LoadCost(saveData.costMelee, saveData.costRange);
         foreach (var m in saveData.dataMyTeam.units)
         {
@@ -275,6 +282,15 @@ public class Char : MonoBehaviour
         });
         if (level > 2) Save(Application.persistentDataPath + "/save.json");
     }
+    public int mItemNumber = 10;
+    //public void OnClickMoney(RectTransform from_where=null)
+    //{
+    //    if (BattleManager.Instance.winPanel.activeSelf && (level-1) % 5 == 0) GetItemEffect.mInstance.GetItem(TypeItem.Gems, mItemNumber, from_where, null);
+    //}
+    //public void OnClickGems(RectTransform from_where = null)
+    //{
+    //    GetItemEffect.mInstance.GetItem(TypeItem.Gems, mItemNumber, from_where, null);
+    //}
     public bool SubCoins(long a, bool isMelee=true) //Trừ coin của người chơi
     {
         if (a > coins)
@@ -283,16 +299,16 @@ public class Char : MonoBehaviour
             //{
             //    if (isSuccess)
             //    {
-            //        if (isMelee)
-            //        {
-            //            UnitSpawner.Instance.SpawnMeleeUnit(1);
-            //            UnitSpawner.Instance.SpawnMeleeUnit(1);
-            //        }
-            //        else
-            //        {
-            //            UnitSpawner.Instance.SpawnRangeUnit(1)
-            //            UnitSpawner.Instance.SpawnRangeUnit(1);
-            //        }
+            if (isMelee)
+            {
+                UnitSpawner.Instance.SpawnMeleeUnit(1);
+                UnitSpawner.Instance.SpawnMeleeUnit(1);
+            }
+            else
+            {
+                UnitSpawner.Instance.SpawnRangeUnit(1);
+                UnitSpawner.Instance.SpawnRangeUnit(1);
+            }
             //    }
             //    else
             //    {
@@ -306,11 +322,28 @@ public class Char : MonoBehaviour
         txtCoins.SetText(FormatMoney(coins));
         return true;
     }
+
+    private Tween tween;
     public void AddCoins(long a) //Thêm coin của người chơi
     {
-        coins += a;
+        if (a <= 0) return;
+        long startCoins = coins;
+        long endCoins = coins + a;
+        float flyTime = GetItemEffect.mInstance.GetItem(TypeItem.Coins, mItemNumber);
+        Play(startCoins, endCoins, flyTime);
+        coins = endCoins;
         coins = Min(coins, long.MaxValue);
         txtCoins.SetText(FormatMoney(coins));
+    }
+    public void Play(long start, long end, float duration, bool isGem=false)
+    {
+        TMP_Text txt = isGem ? txtGems : txtCoins;
+        tween?.Kill();
+        tween = DOTween.To(() => start,x =>
+        {
+            start = x;
+            txt.SetText(FormatMoney(start));
+        }, end, duration).SetEase(Ease.Linear);
     }
     public bool SubBooster(TypeBooster type) //Trừ booster của người chơi
     {
@@ -410,7 +443,12 @@ public class Char : MonoBehaviour
     }
     public void AddGems(int a) //Thêm gem của người chơi
     {
-        gems += a;
+        if (a <= 0) return;
+        long startGems = gems;
+        int endGems = gems + a;
+        float flyTime = GetItemEffect.mInstance.GetItem(TypeItem.Gems, mItemNumber);
+        Play(startGems, endGems, flyTime, true);
+        gems = endGems;
         gems = Mathf.Min(gems, int.MaxValue);
         txtGems.SetText(gems.ToString());
     }

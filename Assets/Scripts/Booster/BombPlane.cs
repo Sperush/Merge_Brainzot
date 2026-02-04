@@ -88,7 +88,8 @@ public class BombPlane : MonoBehaviour
         }
 
         // Kết thúc đường bay
-        if (hasEnteredBackground  && (IsOutOfBackground(transform.position) || (!BattleManager.Instance.startPvP && !isGift)))
+        if ((transform.position - endPos).x < 0.05f)
+        //if (hasEnteredBackground  && (IsOutOfBackground(transform.position) || (!BattleManager.Instance.startPvP && !isGift)))
         {
             if (isGift)
             {

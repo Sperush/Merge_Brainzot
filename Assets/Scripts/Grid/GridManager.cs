@@ -30,7 +30,7 @@ public class GridManager : MonoBehaviour
 
     public Vector3 GetWorldPos(int x, int y)        
     {
-        return new Vector3(origin.x + x * cellSize, origin.y + y * cellSize, 0);
+        return new Vector3(origin.x + x * cellSize, origin.y + y * cellSize-0.3f, 0);
     }
 
     public bool IsValid(int x, int y)   //kiểm tra xem ô có nằm trong grid không

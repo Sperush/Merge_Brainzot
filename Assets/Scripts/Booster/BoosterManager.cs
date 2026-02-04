@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
+using System.Collections;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 public enum TypeBooster
 {
     Freeze,
@@ -14,6 +17,7 @@ public class BoosterManager : MonoBehaviour
     public TMP_Text[] txtCount;
     public static BoosterManager Instance;
     public ItemBoosterManager[] itemBoosters;
+    public Image imgFreeze;
     public bool isOpenPanel;
     private void Awake()
     {
@@ -27,10 +31,22 @@ public class BoosterManager : MonoBehaviour
         {
             m.GetComponent<MonsterAI>().Freeze(duration);
         }
-        VFXManager.Instance.Play(VFXType.Freeze, new Vector3(0f, -5.04f, 0f));
+        imgFreeze.gameObject.SetActive(true);
+        imgFreeze.DOKill();
+        Color c = imgFreeze.color;
+        c.a = 0.3f;
+        imgFreeze.color = c;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(imgFreeze.DOFade(1f, duration - 0.6f));
+        //seq.AppendInterval();
+        seq.Append(imgFreeze.DOFade(0.3f, 0.3f));
+        seq.OnComplete(() =>
+        {
+            imgFreeze.gameObject.SetActive(false);
+        });
         AudioManager.Instance.Play(GameSound.freezeSound);
-        // TODO: Screen effect / VFX
     }
+
     int GetStrongestMeleeMaxHP()
     {
         int maxHP = 0;

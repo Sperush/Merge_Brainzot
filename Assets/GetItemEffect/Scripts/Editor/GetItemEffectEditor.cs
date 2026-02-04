@@ -1,36 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using GIE;
 using UnityEditorInternal;
+using GIE;
 
 [CustomEditor(typeof(GetItemEffect))]
 public class GetItemEffectEditor : Editor
 {
     private ReorderableList reorderablelist;
     GetItemEffect getItem;
-    bool showProperties_explostion;
+
+    // Biến trạng thái cho Foldout
+    bool showProperties_explosion;
     bool showProperties_jump;
     bool showProperties_fly;
+
     private void OnEnable()
     {
-        SerializedProperty prop = serializedObject.FindProperty("mGetItem");
         getItem = (GetItemEffect)target;
+        SerializedProperty prop = serializedObject.FindProperty("mGetItem");
+
         reorderablelist = new ReorderableList(serializedObject, prop, true, true, true, true);
 
         reorderablelist.drawHeaderCallback = (Rect rect) =>
         {
-            GUI.Label(rect, "GetItem");
+            GUI.Label(rect, "Items Configuration");
         };
-        reorderablelist.elementHeight = 120;
+
+        // Chiều cao item phải khớp với GetPropertyHeight trong Drawer
+        reorderablelist.elementHeight = (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 4 + 15;
+
         reorderablelist.drawElementCallback = (rect, index, isActive, isFocused) =>
         {
-            //根据index获取对应元素 
             SerializedProperty item = reorderablelist.serializedProperty.GetArrayElementAtIndex(index);
-            rect.height -= 4;
-            rect.y += 2;
-            EditorGUI.PropertyField(rect, item, new GUIContent("Index " + index));
+            // Dùng PropertyField để gọi xuống CustomPropertyDrawer bên trên
+            EditorGUI.PropertyField(rect, item, new GUIContent("Item " + index), true);
         };
     }
 
@@ -38,33 +41,53 @@ public class GetItemEffectEditor : Editor
     {
         serializedObject.Update();
 
+        // 1. Vẽ List Items
         reorderablelist.DoLayoutList();
 
-        showProperties_explostion = EditorGUILayout.Foldout(showProperties_explostion, "Explosion");
-        if (showProperties_explostion)
-        {
-            getItem.mExplostionRadius = EditorGUILayout.Vector2Field("mExplostionRadius", getItem.mExplostionRadius);
-            getItem.mExplostionSpeed = EditorGUILayout.FloatField("mExplostionSpeed", getItem.mExplostionSpeed);
-            getItem.mExplostionFlySpeed = EditorGUILayout.FloatField("mExplostionFlySpeed", getItem.mExplostionFlySpeed);
-        }
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Effect Settings", EditorStyles.boldLabel);
 
-        showProperties_jump = EditorGUILayout.Foldout(showProperties_jump, "Jump");
+        // 2. Vẽ Explosion Settings
+        // Lưu ý: Đã sửa tên biến từ Explostion -> Explosion
+        showProperties_explosion = EditorGUILayout.BeginFoldoutHeaderGroup(showProperties_explosion, "Explosion");
+        if (showProperties_explosion)
+        {
+            using (new EditorGUI.IndentLevelScope())
+            {
+                // Sử dụng PropertyField thay vì vẽ tay để hỗ trợ Undo/Redo tốt hơn
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mExplosionRadius"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mExplosionSpeed"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mExplosionFlySpeed"));
+            }
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        // 3. Vẽ Jump Settings
+        showProperties_jump = EditorGUILayout.BeginFoldoutHeaderGroup(showProperties_jump, "Jump");
         if (showProperties_jump)
         {
-            getItem.mJumpRadius = EditorGUILayout.Vector2Field("mJumpRadius", getItem.mJumpRadius);
-            getItem.mJumpHeight = EditorGUILayout.Vector2Field("mJumpHeight", getItem.mJumpHeight);
-            getItem.mJumpToFlyDuration = EditorGUILayout.FloatField("mJumpToFlyDuration", getItem.mJumpToFlyDuration);
-            getItem.mJumpSpeed = EditorGUILayout.FloatField("mJumpSpeed", getItem.mJumpSpeed);
-            getItem.mJumpFlySpeed = EditorGUILayout.FloatField("mJumpFlySpeed", getItem.mJumpFlySpeed);
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mJumpRadius"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mJumpHeight"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mJumpToFlyDuration"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mJumpSpeed"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mJumpFlySpeed"));
+            }
         }
+        EditorGUILayout.EndFoldoutHeaderGroup();
 
-
-        showProperties_fly = EditorGUILayout.Foldout(showProperties_fly, "Fly");
+        // 4. Vẽ Fly Settings
+        showProperties_fly = EditorGUILayout.BeginFoldoutHeaderGroup(showProperties_fly, "Fly");
         if (showProperties_fly)
         {
-            getItem.mFlyRadius = EditorGUILayout.Vector2Field("mFlyRadius", getItem.mFlyRadius);
-            getItem.mFlySpeed = EditorGUILayout.FloatField("mFlySpeed", getItem.mFlySpeed);
+            using (new EditorGUI.IndentLevelScope())
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mFlyRadius"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("mFlySpeed"));
+            }
         }
+        EditorGUILayout.EndFoldoutHeaderGroup();
 
         serializedObject.ApplyModifiedProperties();
     }

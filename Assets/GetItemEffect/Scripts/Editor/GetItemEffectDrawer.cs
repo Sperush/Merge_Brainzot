@@ -1,47 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 using GIE;
 
+// --- PROPERTY DRAWER CHO CLASS ITEM ---
 [CustomPropertyDrawer(typeof(Item))]
 public class GetItemEffectDrawer : PropertyDrawer
 {
+    // Xác định chiều cao của mỗi phần tử trong list
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        // 4 dòng property + khoảng cách padding
+        return (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 4 + 10;
+    }
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         using (new EditorGUI.PropertyScope(position, label, property))
         {
-            EditorGUIUtility.labelWidth = 100;
-            position.height = EditorGUIUtility.singleLineHeight;
-            Rect name = new Rect(position)
-            {
-                width = position.width,
-            };
-            Rect template = new Rect(name)
-            {
-                y = name.y + EditorGUIUtility.singleLineHeight + 5
-            };
-            Rect towhere = new Rect(template)
-            {
-                y = template.y + EditorGUIUtility.singleLineHeight + 5
-            };
-            Rect number = new Rect(towhere)
-            {
-                y = towhere.y + EditorGUIUtility.singleLineHeight + 5
-            };
-            SerializedProperty nameProperty = property.FindPropertyRelative("mItemName");
-            SerializedProperty templateProperty = property.FindPropertyRelative("mItemTemplate");
-            SerializedProperty towhereProperty = property.FindPropertyRelative("mItemToWhere");
-            SerializedProperty numberProperty = property.FindPropertyRelative("mCacheNumber");
+            // Tìm các property con
+            var nameProp = property.FindPropertyRelative("mItemName");
+            var templateProp = property.FindPropertyRelative("mItemTemplate");
+            var toWhereProp = property.FindPropertyRelative("mItemToWhere");
+            var numberProp = property.FindPropertyRelative("mCacheNumber");
 
-            nameProperty.stringValue = EditorGUI.TextField(name, nameProperty.displayName, nameProperty.stringValue);
+            // Tính toán vị trí
+            float lineHeight = EditorGUIUtility.singleLineHeight;
+            float spacing = EditorGUIUtility.standardVerticalSpacing;
+            float currentY = position.y + 5; // Padding top
 
-            templateProperty.objectReferenceValue = EditorGUI.ObjectField(template,templateProperty.displayName, templateProperty.objectReferenceValue, typeof(GetItem), true);
+            Rect rect = new Rect(position.x, currentY, position.width, lineHeight);
 
-            towhereProperty.objectReferenceValue = EditorGUI.ObjectField(towhere,towhereProperty.displayName, towhereProperty.objectReferenceValue, typeof(RectTransform), true);
+            // Vẽ Name
+            EditorGUI.PropertyField(rect, nameProp);
 
-            numberProperty.intValue = EditorGUI.IntSlider(number, numberProperty.displayName, numberProperty.intValue, 0, 50);
+            // Vẽ Template
+            rect.y += lineHeight + spacing;
+            EditorGUI.PropertyField(rect, templateProp);
 
+            // Vẽ To Where
+            rect.y += lineHeight + spacing;
+            EditorGUI.PropertyField(rect, toWhereProp);
+
+            // Vẽ Cache Number (Dùng IntSlider cho trực quan)
+            rect.y += lineHeight + spacing;
+            numberProp.intValue = EditorGUI.IntSlider(rect, new GUIContent(numberProp.displayName), numberProp.intValue, 0, 100);
         }
     }
 }

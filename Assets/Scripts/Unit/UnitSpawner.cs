@@ -33,7 +33,7 @@ public class UnitSpawner : MonoBehaviour
     }
     public void OnCost() //Hien giá tiền mua Unit
     {
-        if (Char.Instance.level > 1)
+        if (Char.Instance.level > 2)
         {
             bool isEnoughM = Char.Instance.coins >= costMelee;
             bool isEnoughR = Char.Instance.coins >= costRange;

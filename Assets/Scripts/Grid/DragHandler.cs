@@ -40,7 +40,7 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         GridManager grid = GridManager.Instance;
 
         int x = Mathf.RoundToInt((transform.position.x - grid.origin.x) / grid.cellSize);   //tính tọa độ (x,y) của vị trí mới
-        int y = Mathf.RoundToInt((transform.position.y - grid.origin.y) / grid.cellSize);
+        int y = Mathf.RoundToInt((transform.position.y - grid.origin.y+0.2f) / grid.cellSize);
 
         if (!grid.IsValid(x, y) || y > 2 || (TutorialController.Instance.currentState == TutorialController.TutorialState.Phase1_dragUnit && (x != 2 || y != 0))
             || (TutorialController.Instance.currentState == TutorialController.TutorialState.Phase2_DragMerge && !TutorialController.Instance.isSucessPos(new Vector2(unit.gridX, unit.gridY), new Vector2(x, y))))  //nếu vị trí nằm ngoài grid thì trả về chỗ cũ

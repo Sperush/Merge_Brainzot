@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 33c446d282c4ca9459fd575f65c99a92
+AssetOrigin:
+  serializedVersion: 1
+  productId: 346746
+  packageName: FREE - Bold VFX Pack DEMO
+  packageVersion: 1.0
+  assetPath: Assets/BoldVFXPackDemo/Content/Atlas/Sprites/FX_Shimmer.png
+  uploadId: 824408
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -154,10 +161,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 346746
-  packageName: FREE - Bold VFX Pack DEMO
-  packageVersion: 1.0
-  assetPath: Assets/BoldVFXPackDemo/Content/Atlas/Sprites/FX_Shimmer.png
-  uploadId: 824408
