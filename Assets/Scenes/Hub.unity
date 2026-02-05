@@ -1449,8 +1449,8 @@ MonoBehaviour:
   audioMusic: {fileID: 1520133554}
   musicClip: []
   MusicSprite:
-  - {fileID: -2489678457345042098, guid: 5a77da1a894e2da4db6fd6583fa52c94, type: 3}
-  - {fileID: 3939163741572802632, guid: fe50c31d9e483d24da31d9394a15b061, type: 3}
+  - {fileID: -8805081494478335897, guid: b4a534496ad5599409d5a17e2dabd55f, type: 3}
+  - {fileID: -3274116107473507201, guid: 9afa0b645faf69648aa776d8351596ac, type: 3}
 --- !u!1 &1550587916
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,8 +2176,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a5e0c3f9676158940bffd7f9f40a31b0, type: 3}
   - {fileID: 8300000, guid: 3b21002c7b8501f42b619ca8af6311d0, type: 3}
   sp:
-  - {fileID: -5117575335990432404, guid: d859bdf9516e8fe4fa128d6b364f5c17, type: 3}
-  - {fileID: -235195218814564403, guid: d2261044713852248956cd0b8e94a6dc, type: 3}
+  - {fileID: 37220150661109677, guid: 90414e3771929414387e102e90fe53a3, type: 3}
+  - {fileID: -3429285414663759950, guid: 46438eaa94e422d4f9aa160597422845, type: 3}
 --- !u!4 &2140825451
 Transform:
   m_ObjectHideFlags: 0

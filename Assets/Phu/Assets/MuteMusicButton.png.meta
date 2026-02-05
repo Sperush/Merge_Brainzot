@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 008d7387d1f7fee4c83ef2fdb9fa3c67
+guid: 9afa0b645faf69648aa776d8351596ac
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7165280747866315319
-    second: no_ads_0
+      213: -3274116107473507201
+    second: MuteMusicButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,6 +110,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -126,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: no_ads_0
+      name: MuteMusicButton_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 23
-        width: 242
-        height: 249
+        x: 18
+        y: 18
+        width: 464
+        height: 464
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 73a548c70e0307360800000000000000
-      internalID: 7165280747866315319
+      spriteID: f7c28ac4fb00092d0800000000000000
+      internalID: -3274116107473507201
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      no_ads_0: 7165280747866315319
+      MuteMusicButton_0: -3274116107473507201
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
