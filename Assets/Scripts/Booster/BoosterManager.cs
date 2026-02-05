@@ -83,7 +83,7 @@ public class BoosterManager : MonoBehaviour
             VFXManager.Instance.Play(VFXType.Bomp, Vector3.zero);
             ApplyBombDamage(damage);
         });
-        AudioManager.Instance.Play(GameSound.planeSound);
+        AudioManager.Instance.Play(GameSound.bombSound);
         // TODO: Plane animation + explosion VFX
     }
     void ApplyBombDamage(int damage)

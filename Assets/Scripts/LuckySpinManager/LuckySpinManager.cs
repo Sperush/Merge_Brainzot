@@ -80,7 +80,6 @@ public class LuckySpinManager : MonoBehaviour
 
     void StartSpin()
     {
-        PanelManager.Instance.BlockUI(true);
         isSpinning = true;
         txtResult.text = "";
 
@@ -153,12 +152,16 @@ public class LuckySpinManager : MonoBehaviour
                 txtResult.text = $"";
                 break;
             case "coins":
-                Char.Instance.AddCoins(r.amount);
                 txtResult.text = $"+{SetCoinsText(r.amount)}";
                 break;
-            default:
-                Char.Instance.AddGems(r.amount);
+            case "gems":
                 txtResult.text = $"+{r.amount}";
+                break;
+            case "freeze":
+                txtResult.text = $"+{SetCoinsText(r.amount)}";
+                break;
+            case "bomb":
+                txtResult.text = $"+{SetCoinsText(r.amount)}";
                 break;
         }
 
@@ -184,7 +187,7 @@ public class LuckySpinManager : MonoBehaviour
         {
             txtCooldown.text = $"";
         }
-        
+
     }
 
     void UpdateSpinLeft()
@@ -204,7 +207,7 @@ public class LuckySpinManager : MonoBehaviour
         for (int i = 0; i < rewards.Length; i++)
         {
             type = rewards[i].id;
-            switch(type)
+            switch (type)
             {
                 case "no_reward":
                     rewards[i].rewardText.SetText("No reward");
@@ -212,7 +215,13 @@ public class LuckySpinManager : MonoBehaviour
                 case "coins":
                     rewards[i].rewardText.SetText($"+{SetCoinsText(rewards[i].amount)}");
                     break;
-                default:
+                case "gems":
+                    rewards[i].rewardText.SetText($"+{rewards[i].amount}");
+                    break;
+                case "freeze":
+                    rewards[i].rewardText.SetText($"+{rewards[i].amount}");
+                    break;
+                case "bomb":
                     rewards[i].rewardText.SetText($"+{rewards[i].amount}");
                     break;
             }
@@ -233,8 +242,35 @@ public class LuckySpinManager : MonoBehaviour
         return text;
     }
 
+    public void CloseLuckySpinPanel()
+    {
+        if (isSpinning) return;
+        PanelManager.Instance.isOpenPanel = true;
+        PanelManager.Instance.ClosePanel(PanelManager.Instance.luckySpinPanel);
+    }
+
     public void CloseLuckySpinRewardPanel()
     {
+        SpinReward r = rewards[currentIndex];
+        switch (r.id)
+        {
+            case "no_reward":
+                Debug.Log("hihihaha");
+                break;
+            case "coins":
+                Char.Instance.AddCoins(r.amount);
+                break;
+            case "gems":
+                Char.Instance.AddGems(r.amount);
+                break;
+            case "freeze":
+                Char.Instance.AddBooster(TypeBooster.Freeze, r.amount);
+                break;
+            case "bomb":
+                Char.Instance.AddBooster(TypeBooster.Bomp, r.amount);
+                break;
+        }
+
         wheel.transform.rotation = initialRotation;
         luckySpinPanel.SetActive(true);
         PanelManager.Instance.isOpenPanel = true;

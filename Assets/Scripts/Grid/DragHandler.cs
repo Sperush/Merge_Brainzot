@@ -127,6 +127,7 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         unlockArray[index] = true;
         PanelManager.Instance.statsUnit.isMelee = isMelee;
         PanelManager.Instance.OpenPanel(PanelManager.Instance.unlockUnit);
+        AudioManager.Instance.Play(GameSound.unlockNewUnit);
     }
 
     void SwapWith(MonsterHealth other)

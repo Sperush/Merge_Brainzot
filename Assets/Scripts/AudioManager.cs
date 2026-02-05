@@ -16,9 +16,11 @@ public enum GameSound
     snapSound,
     bombSound,
     freezeSound,
-    planeSound,
+    //planeSound,
     buyMeleeSound,
-    buyRangeSound
+    buyRangeSound,
+    unlockNewUnit,
+    unlockNewMap,
 }
 
 public class AudioManager : MonoBehaviour
@@ -36,7 +38,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip snapClip;
     public AudioClip bombBoosterClip;
     public AudioClip freezeBoosterClip;
-    public AudioClip bombPlaneFlyClip;
+    //public AudioClip bombPlaneFlyClip;
+    public AudioClip unlockNewUnitClip;
+    public AudioClip unlockNewMapClip;
 
 
     [Header("Audio Source Pool")]
@@ -83,7 +87,9 @@ public class AudioManager : MonoBehaviour
             soundMap[GameSound.snapSound] = snapClip;
             soundMap[GameSound.freezeSound] = freezeBoosterClip;
             soundMap[GameSound.bombSound] = bombBoosterClip;
-            soundMap[GameSound.planeSound] = bombPlaneFlyClip;
+            //soundMap[GameSound.planeSound] = bombPlaneFlyClip;
+            soundMap[GameSound.unlockNewUnit] = unlockNewUnitClip;
+            soundMap[GameSound.unlockNewMap] = unlockNewMapClip;
 
             LoadSettings();
         }
