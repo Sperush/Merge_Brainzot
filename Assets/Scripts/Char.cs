@@ -295,26 +295,26 @@ public class Char : MonoBehaviour
     {
         if (a > coins)
         {
-            //RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
-            //{
-            //    if (isSuccess)
-            //    {
-            if (isMelee)
+            RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
             {
-                UnitSpawner.Instance.SpawnMeleeUnit(1);
-                UnitSpawner.Instance.SpawnMeleeUnit(1);
-            }
-            else
-            {
-                UnitSpawner.Instance.SpawnRangeUnit(1);
-                UnitSpawner.Instance.SpawnRangeUnit(1);
-            }
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
-            //    }
-            //});
+                if (isSuccess)
+                {
+                    if (isMelee)
+                    {
+                        UnitSpawner.Instance.SpawnMeleeUnit(1);
+                        UnitSpawner.Instance.SpawnMeleeUnit(1);
+                    }
+                    else
+                    {
+                        UnitSpawner.Instance.SpawnRangeUnit(1);
+                        UnitSpawner.Instance.SpawnRangeUnit(1);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
+                }
+            });
             return false;
         }
         coins -= a;

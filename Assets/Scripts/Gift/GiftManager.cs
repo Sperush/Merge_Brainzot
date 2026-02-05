@@ -19,22 +19,22 @@ public class GiftManager : MonoBehaviour
     }
     public void onCollect()
     {
-        //RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
-        //{
-        //    if (isSuccess)
-        //    {
-        //        Char.Instance.AddCoins(coin * AdsConfig.Instance.adsConfig.RewardMultiplier);
-        //        Debug.Log("Đã cộng tiền thành công!");
-        //        giftbutton.SetActive(false);
-        //        BattleManager.Instance.plane.gameObject.SetActive(false);
-        //        coin = 0;
-        //        closePanel();
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
-        //    }
-        //});
+        RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
+        {
+            if (isSuccess)
+            {
+                Char.Instance.AddCoins(coin * AdsConfig.Instance.adsConfig.RewardMultiplier);
+                Debug.Log("Đã cộng tiền thành công!");
+                giftbutton.SetActive(false);
+                BattleManager.Instance.plane.gameObject.SetActive(false);
+                coin = 0;
+                closePanel();
+            }
+            else
+            {
+                Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
+            }
+        });
     }
     public void closePanel()
     {

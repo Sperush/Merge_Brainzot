@@ -26,6 +26,7 @@ public class LuckySpinManager : MonoBehaviour
     public GameObject luckySpinPanel;
     public GameObject luckySpinRewardPanel;
     public GameObject vfx;
+    public GameObject hideButton;
 
     public float regenTime = 300f; // 5 phút = 300 giây
     [Header("Fake Near Win")]
@@ -97,6 +98,7 @@ public class LuckySpinManager : MonoBehaviour
                 GiveReward(rewardIndex);
                 UpdateSpinLeft();
             });
+        hideButton.SetActive(false);
     }
 
     // ===================== REWARD LOGIC =====================
@@ -276,5 +278,6 @@ public class LuckySpinManager : MonoBehaviour
         PanelManager.Instance.isOpenPanel = true;
         luckySpinRewardPanel.SetActive(false);
         rewards[currentIndex].image.SetActive(false);
+        hideButton.SetActive(true);
     }
 }

@@ -91,7 +91,10 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
             mergeCount = MergeTracker.mergeCount,
             timeToFirstMerge = MergeTracker.timeToFirstMerge
         });
-
+        other.monsterAI.animator.enabled = false;
+        unit.monsterAI.animator.enabled = false;
+        other.gameObject.SetActive(false);
+        unit.gameObject.SetActive(false);
         GameObject unitObj = Instantiate(Char.Instance.GetUnitPrefabs(unit.stats.level+1, unit.stats.type == MonsterType.Melee));
         MonsterHealth mh = unitObj.GetComponent<MonsterHealth>();
         BattleManager.Instance.playerTeam.Add(unitObj);
@@ -111,12 +114,18 @@ public class DragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         pos.y += 0.3f;
         PanelManager.Instance.statsUnit.level = mh.stats.level;
         TryUnlockUnit(mh);
+        BattleManager.Instance.StartCoroutine(DestroyAfterFrame(other.gameObject, unit.gameObject, pos));
+    }
 
-        Destroy(other.gameObject);
-        Destroy(unit.gameObject);
+    IEnumerator DestroyAfterFrame(GameObject a, GameObject b, Vector3 pos)
+    {
+        yield return new WaitForEndOfFrame();
+        Destroy(a);
+        Destroy(b);
         VFXManager.Instance.Play(VFXType.Merge, pos);
         Char.Instance.dataMyTeam.RemoveAll(m => m == null);
     }
+
     void TryUnlockUnit(MonsterHealth mh)
     {
         int index = mh.stats.level - 1;

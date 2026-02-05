@@ -1,103 +1,103 @@
-//using UnityEngine;
-//using Unity.Services.LevelPlay;
-////using Firebase.Analytics;
-//public class BannerAds : MonoBehaviour
-//{
-//    public static BannerAds Instance { get; private set; }
-//    [SerializeField] private string bannerAdUnitId;
-//    private LevelPlayBannerAd bannerAd;
+using UnityEngine;
+using Unity.Services.LevelPlay;
+//using Firebase.Analytics;
+public class BannerAds : MonoBehaviour
+{
+    public static BannerAds Instance { get; private set; }
+    [SerializeField] private string bannerAdUnitId;
+    private LevelPlayBannerAd bannerAd;
 
-//    private void Awake()
-//    {
-//        // If there is an instance, and it's not me, delete myself.
-//        if (Instance != null && Instance != this)
-//        {
-//            Destroy(this);
-//        }
-//        else
-//        {
-//            Instance = this;
-//        }
-//    }
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
-//    public void EnableAds()
-//    {
-//        bannerAd = new LevelPlayBannerAd(bannerAdUnitId);
+    public void EnableAds()
+    {
+        bannerAd = new LevelPlayBannerAd(bannerAdUnitId);
 
-//        bannerAd.OnAdLoaded += BannerOnAdLoadedEvent;
-//        bannerAd.OnAdLoadFailed += BannerOnAdLoadFailedEvent;
-//        bannerAd.OnAdDisplayed += BannerOnAdDisplayedEvent;
-//        bannerAd.OnAdDisplayFailed += BannerOnAdDisplayFailedEvent;
-//        bannerAd.OnAdClicked += BannerOnAdClickedEvent;
-//        bannerAd.OnAdCollapsed += BannerOnAdCollapsedEvent;
-//        bannerAd.OnAdLeftApplication += BannerOnAdLeftApplicationEvent;
-//        bannerAd.OnAdExpanded += BannerOnAdExpandedEvent;
-        
-//        LoadBanner();
-//    }
+        bannerAd.OnAdLoaded += BannerOnAdLoadedEvent;
+        bannerAd.OnAdLoadFailed += BannerOnAdLoadFailedEvent;
+        bannerAd.OnAdDisplayed += BannerOnAdDisplayedEvent;
+        bannerAd.OnAdDisplayFailed += BannerOnAdDisplayFailedEvent;
+        bannerAd.OnAdClicked += BannerOnAdClickedEvent;
+        bannerAd.OnAdCollapsed += BannerOnAdCollapsedEvent;
+        bannerAd.OnAdLeftApplication += BannerOnAdLeftApplicationEvent;
+        bannerAd.OnAdExpanded += BannerOnAdExpandedEvent;
 
-//    public void LoadBanner()
-//    {
-//        bannerAd.LoadAd();
-//    }
+        LoadBanner();
+    }
 
-//    public void ShowBanner()
-//    {
-//        bannerAd.ShowAd();
-//    }
+    public void LoadBanner()
+    {
+        bannerAd.LoadAd();
+    }
 
-//    public void HideBanner()
-//    {
-//        bannerAd.HideAd();
+    public void ShowBanner()
+    {
+        bannerAd.ShowAd();
+    }
 
-//        Debug.Log("HideBanner called");
-//    }
+    public void HideBanner()
+    {
+        bannerAd.HideAd();
 
-//    void BannerOnAdLoadedEvent(LevelPlayAdInfo adInfo)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdLoadedEvent With AdInfo " + adInfo);
-//    }
+        Debug.Log("HideBanner called");
+    }
 
-//    void BannerOnAdLoadFailedEvent(LevelPlayAdError error)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdLoadFailedEvent With Error " + error);
-//    }
+    void BannerOnAdLoadedEvent(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("unity-script: I got BannerOnAdLoadedEvent With AdInfo " + adInfo);
+    }
 
-//    void BannerOnAdClickedEvent(LevelPlayAdInfo adInfo)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdClickedEvent With AdInfo " + adInfo);
-        
-//    }
+    void BannerOnAdLoadFailedEvent(LevelPlayAdError error)
+    {
+        Debug.Log("unity-script: I got BannerOnAdLoadFailedEvent With Error " + error);
+    }
 
-//    void BannerOnAdDisplayedEvent(LevelPlayAdInfo adInfo)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdDisplayedEvent With AdInfo " + adInfo);
-//    }
+    void BannerOnAdClickedEvent(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("unity-script: I got BannerOnAdClickedEvent With AdInfo " + adInfo);
 
-//      private void BannerOnAdDisplayFailedEvent(LevelPlayAdInfo adInfo, LevelPlayAdError error)
-//    {
-//        Debug.LogWarning($"BannerOnAdDisplayFailedEvent adInfo={adInfo}, error={error}");
-        
-//        LoadBanner();
-//    }
+    }
 
-//    void BannerOnAdCollapsedEvent(LevelPlayAdInfo adInfo)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdCollapsedEvent With AdInfo " + adInfo);
-//    }
+    void BannerOnAdDisplayedEvent(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("unity-script: I got BannerOnAdDisplayedEvent With AdInfo " + adInfo);
+    }
 
-//    void BannerOnAdLeftApplicationEvent(LevelPlayAdInfo adInfo)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdLeftApplicationEvent With AdInfo " + adInfo);
-//    }
+    private void BannerOnAdDisplayFailedEvent(LevelPlayAdInfo adInfo, LevelPlayAdError error)
+    {
+        Debug.LogWarning($"BannerOnAdDisplayFailedEvent adInfo={adInfo}, error={error}");
 
-//    void BannerOnAdExpandedEvent(LevelPlayAdInfo adInfo)
-//    {
-//        Debug.Log("unity-script: I got BannerOnAdExpandedEvent With AdInfo " + adInfo);
-//    }
+        LoadBanner();
+    }
 
-//    private void OnDestroy()
-//    {
-//        bannerAd?.DestroyAd();
-//    }
-//}
+    void BannerOnAdCollapsedEvent(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("unity-script: I got BannerOnAdCollapsedEvent With AdInfo " + adInfo);
+    }
+
+    void BannerOnAdLeftApplicationEvent(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("unity-script: I got BannerOnAdLeftApplicationEvent With AdInfo " + adInfo);
+    }
+
+    void BannerOnAdExpandedEvent(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("unity-script: I got BannerOnAdExpandedEvent With AdInfo " + adInfo);
+    }
+
+    private void OnDestroy()
+    {
+        bannerAd?.DestroyAd();
+    }
+}

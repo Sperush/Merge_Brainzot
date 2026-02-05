@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BombPlane : MonoBehaviour
 {
@@ -14,43 +15,59 @@ public class BombPlane : MonoBehaviour
     private Vector3 dir;
     public GameObject buttonGift;
     private bool hasEnteredBackground = false;
+    public bool isEnd;
     public void Init(Action dropCallback, bool isgift = false)
     {
-        gameObject.SetActive(true);
-
+        if(!gameObject.activeSelf) gameObject.SetActive(true);
         isGift = isgift;
         onDropBomb = dropCallback;
         dropped = false;
         hasEnteredBackground = false;
-
-        StartCoroutine(ResetVisuals()); // tên rõ nghĩa hơn
-        StartFly();
+        isEnd = false;
+        StartCoroutine(ResetVisuals());
     }
     IEnumerator ResetVisuals()
     {
         var anim = GetComponent<Animator>();
         var skins = GetComponentsInChildren<UnityEngine.U2D.Animation.SpriteSkin>();
-
-        // stop jobs
         if (anim != null) anim.enabled = false;
         foreach (var s in skins)
             if (s != null) s.enabled = false;
-
         yield return null;
-        yield return null; // an toàn với job
-
-        // resume
-        foreach (var s in skins)
-            if (s != null) s.enabled = true;
-
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        if (isGift)
+        {
+            foreach (var s in skins)
+                if (s != null) s.enabled = true;
+        }
         if (anim != null)
         {
             anim.enabled = true;
-            anim.Rebind();
+            //anim.Rebind();
             anim.Update(0f);
         }
+        StartFly();
     }
+    public IEnumerator ResetVisuals(Queue<BombPlane> p)
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        var anim = GetComponent<Animator>();
+        var skins = GetComponentsInChildren<UnityEngine.U2D.Animation.SpriteSkin>();
 
+        if (anim != null) anim.enabled = false;
+        foreach (var s in skins)
+            if (s != null) s.enabled = false;
+        yield return null;
+        yield return null;
+
+        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(-0.2f, 0.18f, 10));
+        if(!isGift) Destroy(gameObject);
+        else gameObject.SetActive(false);
+        //p.Enqueue(this);
+    }
     public static bool IsInsideBackground(Vector3 pos)
     {
         return LevelBgrManager.Instance.bgr.bounds.Contains(pos);
@@ -75,6 +92,7 @@ public class BombPlane : MonoBehaviour
 
     void Update()
     {
+        if (isEnd) return;
         transform.position += dir * speed * Time.deltaTime;
         if (!hasEnteredBackground && IsInsideBackground(transform.position))
         {
@@ -88,8 +106,9 @@ public class BombPlane : MonoBehaviour
         }
 
         // Kết thúc đường bay
-        if (hasEnteredBackground  && (IsOutOfBackground(transform.position) || (!BattleManager.Instance.startPvP && !isGift)))
+        if (hasEnteredBackground && (transform.position.x >= endPos.x || (!BattleManager.Instance.startPvP && !isGift)))
         {
+            isEnd = true;
             if (isGift)
             {
                 buttonGift.SetActive(true);

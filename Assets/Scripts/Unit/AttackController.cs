@@ -7,7 +7,7 @@ public class AttackController : MonoBehaviour
     public MonsterAI monsterAI;
     public void AttackMelee() //Hàm tấn công của Unit cận chiến
     {
-        if (monsterAI.currentTarget != null && !monsterAI.currentTarget.isDead && !monsterAI.monsterHealth.isDead && BattleManager.Instance.isOkPvP())
+        if (monsterAI.currentTarget != null && monsterAI.isSuccessDistance() && !monsterAI.currentTarget.isDead && !monsterAI.monsterHealth.isDead && BattleManager.Instance.isOkPvP())
         {
             AudioManager.Instance.Play(GameSound.meleeAttackSound);
             monsterAI.currentTarget.TakeDamage(monsterAI.monsterHealth.stats.attackDamage);

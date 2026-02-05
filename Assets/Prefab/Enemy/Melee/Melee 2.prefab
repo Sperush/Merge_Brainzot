@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4053149700151165032}
   - {fileID: 5849715464540365634}
@@ -257,9 +257,9 @@ Transform:
   m_GameObject: {fileID: 3318403318663750076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.94, z: 0}
-  m_LocalScale: {x: 0.56389, y: 0.05755, z: 0.51922}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 13.34, z: 0}
+  m_LocalScale: {x: 8.118572, y: 0.82857263, z: 7.4754386}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8778713472309738866}
   - {fileID: 2252941806897901204}
@@ -560,19 +560,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 448373106244782731, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 448373106244782731, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 686469744766341951, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.07
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 686469744766341951, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.07
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 686469744766341951, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.46666667
+      value: 6.6666665
       objectReference: {fileID: 0}
     - target: {fileID: 686469744766341951, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -628,27 +632,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2971022771185574504, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2971022771185574504, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4554018407173938499, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4554018407173938499, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4675467652288406748, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4675467652288406748, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8323123399521738631, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8323123399521738631, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8484904630513978062, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8484904630513978062, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9065455531314260195, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065455531314260195, guid: cb124c56c0b2c254e9c870720315383b, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

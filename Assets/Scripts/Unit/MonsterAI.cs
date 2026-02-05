@@ -81,6 +81,13 @@ public class MonsterAI : MonoBehaviour
         isUpCached = false;
     }
 
+    public bool isSuccessDistance()
+    {
+        Vector2 myPos = transform.position;
+        Vector2 targetPos = currentTarget.transform.position;
+        return Mathf.Abs(myPos.x - targetPos.x) <= monsterHealth.stats.attackRange+xTolerance && Mathf.Abs(myPos.y - targetPos.y) <= laneTolerance;
+    }
+
     void HandleMelee() //AI của Unit cận chiến gồm: di chuyển và tấn công và xoay hướng
     {
         if (currentTarget == null || currentTarget.isDead || monsterHealth.isDead || animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")) return;
@@ -172,7 +179,7 @@ public class MonsterAI : MonoBehaviour
             BattleManager.Instance.arrUnitReady.Add(gameObject);
             isReady = true;
         }
-        if (currentTarget != null && currentTarget.gameObject.activeSelf && BattleManager.Instance.isOkPvP() && !monsterHealth.isDead)
+        if (currentTarget != null && currentTarget.gameObject.activeSelf && BattleManager.Instance.isOkPvP() && !monsterHealth.isDead && isSuccessDistance())
         {
             PlayAttackAnimation();
         }

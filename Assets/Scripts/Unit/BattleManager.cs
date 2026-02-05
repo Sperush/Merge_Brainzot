@@ -26,7 +26,6 @@ public class BattleManager : MonoBehaviour
     public GameObject[] rangeEnemyPrefab;
     public GameObject[] meleeEnemyPrefab;
     public GameObject Booster;
-    public Button[] btnReward;
     [Header("Config")]
     public float reloadTime = 0.8f;     // Thời gian nghỉ giữa các đợt
     public float maxWaitTime = 5.0f;    // [QUAN TRỌNG] Thời gian chờ tối đa (để chống kẹt đạn)
@@ -40,12 +39,11 @@ public class BattleManager : MonoBehaviour
     public long coinReward = 0;
     public int gemReward = 0;
     public GameObject[] gemWin;
+    public bool mIsMoving = true;
 
     private void Awake()
     {
         Instance = this;
-        btnReward[0].onClick.AddListener(ShowRewardedFromButton);
-        btnReward[1].onClick.AddListener(ShowRewardedFromButton);
     }
     public bool isOkPvP()
     {
@@ -98,21 +96,6 @@ public class BattleManager : MonoBehaviour
         lastCoinReward = (long)System.Math.Round(reward);
         return lastCoinReward;
     }
-    public void ShowRewardedFromButton()
-    {
-        //RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
-        //{
-        //    if (isSuccess)
-        //    {
-        //        Char.Instance.AddCoins(lastCoinReward * AdsConfig.Instance.adsConfig.RewardMultiplier);
-        //        Debug.Log("Đã cộng tiền thành công!");
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
-        //    }
-        //});
-    }
     public bool CheckBattleEnd() //Kiểm tra xem team nào thắng team nào thua
     {
         if (!playerTeam.Exists(m => m.activeSelf))
@@ -149,8 +132,10 @@ public class BattleManager : MonoBehaviour
     }
     public void EndGame(bool isWin)
     {
+        mIsMoving = true;
         bool isCan = Char.Instance.level % 5 == 0;
-        gemReward = isCan ? Char.Instance.level / 5:0;
+        if (isWin) gemReward = isCan ? Char.Instance.level / 5 : 0;
+        else gemReward = 0;
         coinReward = CalulatorReward(isWin);
         txtGemReward.SetText(Char.FormatMoney(gemReward));
         if (isWin)
@@ -265,7 +250,7 @@ public class BattleManager : MonoBehaviour
         }
         startPvP = true;
         ButtonList.SetActive(false);
-        if(Char.Instance.level > 2) Booster.SetActive(true);
+        if(Char.Instance.level > 8) Booster.SetActive(true);
         plane.gameObject.SetActive(false);
     }
     public void ChangeLevelUp() //Thắng nên bấm nút sẽ chuyển tới level tiếp theo

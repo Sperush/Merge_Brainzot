@@ -1,10 +1,7 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-using System.Collections;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 public enum TypeBooster
 {
     Freeze,
@@ -80,10 +77,10 @@ public class BoosterManager : MonoBehaviour
         BombPlane plane = BombPlanePool.Instance.Get();
         plane.Init(() =>
         {
+            AudioManager.Instance.Play(GameSound.bombSound);
             VFXManager.Instance.Play(VFXType.Bomp, Vector3.zero);
             ApplyBombDamage(damage);
         });
-        AudioManager.Instance.Play(GameSound.bombSound);
         // TODO: Plane animation + explosion VFX
     }
     void ApplyBombDamage(int damage)

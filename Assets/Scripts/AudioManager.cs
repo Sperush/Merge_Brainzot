@@ -111,13 +111,30 @@ public class AudioManager : MonoBehaviour
 
             src.volume = volum == -1 ? sfxVolume : volum;
             src.pitch = 1f;
-            src.PlayOneShot(clip);
+            src.clip = clip;
+            src.loop = false;
+            src.Play();
         }
         else
         {
             Debug.LogWarning("AudioManager: Sound not found " + sound);
         }
     }
+    public void Stop(GameSound sound)
+    {
+        if (!soundMap.ContainsKey(sound)) return;
+
+        AudioClip clip = soundMap[sound];
+
+        foreach (var src in audioSources)
+        {
+            if (src.isPlaying && src.clip == clip)
+            {
+                src.Stop();
+            }
+        }
+    }
+
 
     public void PlayUnitSound(int level, MonsterType type, float volum = -1f)
     {

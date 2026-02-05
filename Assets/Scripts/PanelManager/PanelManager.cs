@@ -141,6 +141,10 @@ public class PanelManager : MonoBehaviour
             .SetEase(closeEase)
             .OnComplete(() =>
             {
+                if (panel == unlockUnit || panel == bgrPanel)
+                {
+                    AudioManager.Instance.Stop(GameSound.unlockNewUnit);
+                }
                 isOpenPanel = false;
                 // Sau khi thu nhỏ xong -> Tắt toàn bộ Container (biến mất cả nền đen)
                 if(Char.Instance.level > 2 || streakPanel.activeSelf) darkPanel.SetActive(false);

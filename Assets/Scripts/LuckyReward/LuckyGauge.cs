@@ -14,21 +14,11 @@ namespace GIE
         public float rotationSpeed = 3f;
         public float maxAngle = 30f;
 
-        private bool mIsMoving = true;
         private float mCurrentTime = 0f;
-
-        void Start()
-        {
-            mIsMoving = true;
-        }
         private int oldMultip = -1;
         void Update()
         {
-            if(!mIsMoving && (BattleManager.Instance.winPanel.activeSelf || BattleManager.Instance.losePanel.activeSelf))
-            {
-                mIsMoving = true;
-            }
-            if (mIsMoving)
+            if (BattleManager.Instance.mIsMoving)
             {
                 mCurrentTime += Time.deltaTime * rotationSpeed;
                 float angle = Mathf.Sin(mCurrentTime) * maxAngle;
@@ -54,27 +44,26 @@ namespace GIE
 
         public void OnClickStop()
         {
-            if (!mIsMoving) return;
-            mIsMoving = false;
+            if (!BattleManager.Instance.mIsMoving) return;
+            BattleManager.Instance.mIsMoving = false;
             int multiplier = GetMultiplierByAngle(needleRect.localEulerAngles.z);
 
             Debug.Log($"Kim dừng tại góc: {needleRect.localEulerAngles.z} -> Nhân: x{multiplier}");
 
-            // Gọi xem quảng cáo
-            // Nếu có AdManager thì dùng dòng dưới, nếu test thì gọi thẳng Reward
-            //RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
-            //{
-            //    if (isSuccess)
-            //    {
-            //        GiveReward(multiplier);
-            //        Debug.Log("Đã cộng tiền thành công!");
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
-            //    }
-            //});
-            GiveReward(multiplier);
+             //Gọi xem quảng cáo
+             //Nếu có AdManager thì dùng dòng dưới, nếu test thì gọi thẳng Reward
+            RewardedAds.Instance.LoadRewardedAd((isSuccess) =>
+            {
+                if (isSuccess)
+                {
+                    GiveReward(multiplier);
+                    Debug.Log("Đã cộng tiền thành công!");
+                }
+                else
+                {
+                    Debug.Log("Người chơi tắt ngang hoặc lỗi Ad, không thưởng.");
+                }
+            });
         }
         int GetMultiplierByAngle(float angleZ)
         {

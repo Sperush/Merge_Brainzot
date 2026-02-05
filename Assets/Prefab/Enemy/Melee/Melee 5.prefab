@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.09, y: 0.09, z: 0.09}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4053149700151165032}
   - {fileID: 4506054647084713863}
@@ -257,9 +257,9 @@ Transform:
   m_GameObject: {fileID: 3318403318663750076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.243, z: 0}
-  m_LocalScale: {x: 0.56389, y: 0.05755, z: 0.51922}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 13.64, z: 0}
+  m_LocalScale: {x: 6.3144436, y: 0.64444435, z: 5.814221}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8778713472309738866}
   - {fileID: 2252941806897901204}
@@ -560,23 +560,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 443950462574981739, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 443950462574981739, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1162232663655533888, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1162232663655533888, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2780092573637919548, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.09
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2780092573637919548, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.09
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2780092573637919548, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.1250001
+      value: 12.500001
       objectReference: {fileID: 0}
     - target: {fileID: 2780092573637919548, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -632,19 +640,35 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: ad3cfae4619f9f34faa77da9de93f4e8, type: 2}
     - target: {fileID: 5970924461370390752, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5970924461370390752, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6544403304194005709, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6544403304194005709, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6670859424393203588, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6670859424393203588, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8066108427933381855, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
       propertyPath: m_AutoRebind
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066108427933381855, guid: 5571183e24c3fe842a30148df7c7e2ca, type: 3}
+      propertyPath: m_AlwaysUpdate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

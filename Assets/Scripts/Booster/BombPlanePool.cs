@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class BombPlanePool : MonoBehaviour
@@ -16,22 +16,21 @@ public class BombPlanePool : MonoBehaviour
     public BombPlane Get()
     {
         BombPlane plane;
-        if (pool.Count > 0)
-        {
-            plane = pool.Dequeue();
-            plane.gameObject.SetActive(true);
-        }
-        else
-        {
+        //if (pool.Count > 0)
+        //{
+        //    plane = pool.Dequeue();
+        //}
+        //else
+        //{
             plane = Instantiate(prefab);
-        }
+        //}
         return plane;
     }
 
     public void Release(BombPlane plane)
     {
-        plane.GetComponent<Animator>().enabled = false;
-        plane.gameObject.SetActive(false);
-        pool.Enqueue(plane);
+        plane.StopAllCoroutines();
+        plane.isEnd = true;
+        StartCoroutine(plane.ResetVisuals(pool));
     }
 }
