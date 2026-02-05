@@ -40,6 +40,14 @@ public class BoosterManager : MonoBehaviour
         seq.Append(imgFreeze.DOFade(1f, duration - 0.6f));
         //seq.AppendInterval();
         seq.Append(imgFreeze.DOFade(0.3f, 0.3f));
+        seq.OnUpdate(() =>
+        {
+            if (!BattleManager.Instance.startPvP)
+            {
+                seq.Kill();
+                imgFreeze.gameObject.SetActive(false);
+            }
+        });
         seq.OnComplete(() =>
         {
             imgFreeze.gameObject.SetActive(false);

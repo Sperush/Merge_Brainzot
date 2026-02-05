@@ -78,6 +78,7 @@ public class MonsterAI : MonoBehaviour
     {
         currentTarget = null;
         isReady = false;
+        isUpCached = false;
     }
 
     void HandleMelee() //AI của Unit cận chiến gồm: di chuyển và tấn công và xoay hướng
@@ -191,7 +192,7 @@ public class MonsterAI : MonoBehaviour
         }
         if (HasTarget() && !monsterHealth.isDead)
         {
-            bool isUp = transform.position.y < currentTarget.transform.position.y;
+            bool isUp = monsterHealth.gridY < currentTarget.gridY;
             if (isUp != isUpCached)
             {
                 isUpCached = isUp;

@@ -30,7 +30,7 @@ public class GridManager : MonoBehaviour
 
     public Vector3 GetWorldPos(int x, int y)        
     {
-        return new Vector3(origin.x + x * cellSize, origin.y + y * cellSize-0.3f, 0);
+        return new Vector3(origin.x + x * cellSize, origin.y + y * cellSize, 0);
     }
 
     public bool IsValid(int x, int y)   //kiểm tra xem ô có nằm trong grid không
@@ -60,7 +60,7 @@ public class GridManager : MonoBehaviour
         unit.GetComponent<SortingGroup>().sortingOrder = -y;
         grid[x, y] = unit;
         unit.SetGridPos(x, y);
-        unit.transform.position = GetWorldPos(x, y);
+        unit.transform.position = GetWorldPos(x, y) + new Vector3(0f, -0.2f, 0f);
     }
 
     public void Remove(int x, int y)    //đánh dấu vị trí cũ của unit là null

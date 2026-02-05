@@ -79,7 +79,7 @@ public class PanelManager : MonoBehaviour
             m.Load();
         }
     }
-    void BlockUI(bool block)
+    public void BlockUI(bool block)
     {
         uiBlocker.blocksRaycasts = !block;
         uiBlocker.interactable = !block;
@@ -96,7 +96,7 @@ public class PanelManager : MonoBehaviour
                 statsUnit.Load();
             }
             panel.SetActive(true);
-            AudioManager.Instance.Play(GameSound.clickButtonSound);
+            AudioManager.Instance.Play(GameSound.snapSound);
             initialScale = new Vector3(1, 1, 1);
             panel.transform.localScale = Vector3.zero;
             panel.transform.DOScale(initialScale, duration).SetEase(openEase);

@@ -80,6 +80,7 @@ public class LuckySpinManager : MonoBehaviour
 
     void StartSpin()
     {
+        PanelManager.Instance.BlockUI(true);
         isSpinning = true;
         txtResult.text = "";
 

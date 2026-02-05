@@ -102,7 +102,7 @@ namespace GIE
             needleRect.DOScale(1.2f, 0.2f).SetEase(Ease.OutBack).OnComplete(() => needleRect.DOScale(1f, 0.1f));
             Char.Instance.AddCoins(totalCoins);
             Char.Instance.AddGems(totalGems);
-            if (!BattleManager.Instance.winPanel.activeSelf) BattleManager.Instance.resetlevel();
+            if (!BattleManager.Instance.winPanel.activeSelf) BattleManager.Instance.ResetLV();
             else BattleManager.Instance.ChangeLV();
             oldMultip = -1;
         }

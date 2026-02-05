@@ -241,14 +241,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackPoint: {fileID: 7226422646637613690}
-  projectilePrefab: {fileID: 3136393591688538956, guid: 3548c0515e38e5840a34afe0a110477d, type: 3}
+  projectilePrefab: {fileID: 4165502639305168045, guid: 009c6dfb73ab3ee46b804e67f2ffb15c, type: 3}
   projectileForce: 7
   currentTarget: {fileID: 0}
   projectile: {fileID: 0}
   animator: {fileID: 2953947777093450378}
   visual: {fileID: 2504915544494609837}
   visualRoot: {fileID: 1897286520662465158}
-  imgProjectile: {fileID: -1786020561346971493, guid: 78ab0cfe8081c814899f62f82e7dca8b, type: 3}
+  imgProjectile: {fileID: -1217981594833556012, guid: 6964bed3638b58646bbc83dce4a68993, type: 3}
+  objFreeze: {fileID: 0}
 --- !u!114 &3302721015419603173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +291,7 @@ MonoBehaviour:
   textSpawnPoint: {fileID: 4405846465348446066}
   damageInSecond: 0
   timeShowDameTxt: 1
+  isDie: 0
   yOffset: 0.2
 --- !u!114 &682374677117189781
 MonoBehaviour:

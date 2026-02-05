@@ -332,14 +332,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackPoint: {fileID: 9124053485106472739}
-  projectilePrefab: {fileID: 3136393591688538956, guid: 3548c0515e38e5840a34afe0a110477d, type: 3}
+  projectilePrefab: {fileID: 8674979883891039348, guid: 412275f01e4d7a24398d64de22eafcc0, type: 3}
   projectileForce: 7
   currentTarget: {fileID: 0}
   projectile: {fileID: 0}
   animator: {fileID: 494688044701623153}
   visual: {fileID: 2092001489785826460}
   visualRoot: {fileID: 1897286520662465158}
-  imgProjectile: {fileID: -1786020561346971493, guid: 78ab0cfe8081c814899f62f82e7dca8b, type: 3}
+  imgProjectile: {fileID: -2830599598458784602, guid: 93a63fe3830ac8e43ac3f959037cf160, type: 3}
   objFreeze: {fileID: 3337536652905013782}
 --- !u!114 &3302721015419603173
 MonoBehaviour:

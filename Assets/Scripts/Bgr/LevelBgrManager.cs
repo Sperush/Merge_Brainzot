@@ -5,11 +5,13 @@ using UnityEngine.UI;
 public class LevelBgrManager : MonoBehaviour
 {
     public Sprite[] BgrSprite;
+    public Sprite[] KhungSprite;
     public Image[] imgBgr;
     public Image[] img;
     public static LevelBgrManager Instance;
     public SpriteRenderer bgr;
     public Image bgrIcon;
+    public SpriteRenderer khung;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +30,7 @@ public class LevelBgrManager : MonoBehaviour
         imgBgr[0].sprite = BgrSprite[page];
         imgBgr[1].sprite = BgrSprite[page + 1];
         bgr.sprite = BgrSprite[page];
+        khung.sprite = KhungSprite[page];
         bgrIcon.sprite = BgrSprite[page];
         if(!isLoadGame) StartCoroutine(openPanel());
     }
