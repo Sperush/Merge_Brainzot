@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2895a1e299d36834cb01ca25d8641f5d
+guid: 56f2e83252474ee47a7882d0c51682b3
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -142,12 +142,12 @@ TextureImporter:
       name: CollectionButton_0
       rect:
         serializedVersion: 2
-        x: 141
-        y: 313
-        width: 475
-        height: 475
+        x: 18
+        y: 18
+        width: 464
+        height: 464
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1647c6246901fff4c9aa2c95c30f3271
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 

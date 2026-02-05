@@ -2130,15 +2130,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   fightClip: {fileID: 8300000, guid: 72b2cd7f0618d4d4baf8c8b000c7ba4c, type: 3}
   coinClip: {fileID: 8300000, guid: 345300ff4219c4b4ab126601a34e0c48, type: 3}
-  meleeAttackClip: {fileID: 8300000, guid: 21a586ecd53a0f5408fe389777fcd4d5, type: 3}
+  meleeAttackClip: {fileID: 8300000, guid: de3f963a3d72bd94993949c8ca4673d3, type: 3}
   rangeAttackClip: {fileID: 8300000, guid: 89d40cf7859625b4193ca400336d5527, type: 3}
   victoryClip: {fileID: 8300000, guid: 4235ae0f1495b974298eb8a18c1067dd, type: 3}
   loseClip: {fileID: 8300000, guid: 5358dbb5ee9e1bf47a26286f6c5e2131, type: 3}
   clickButtonClip: {fileID: 8300000, guid: 4d079253a55d359438aad2aa33fe7355, type: 3}
   snapClip: {fileID: 8300000, guid: 14dba9f16e1d3c5479814f18c4ef0470, type: 3}
-  bombBoosterClip: {fileID: 8300000, guid: cfd3782771335d840b1e148533c9d5b5, type: 3}
+  bombBoosterClip: {fileID: 8300000, guid: 7165930f4c8c9b44fa4dd2767e78d566, type: 3}
   freezeBoosterClip: {fileID: 8300000, guid: dcb15b8defa223748beb57df65f347e6, type: 3}
-  bombPlaneFlyClip: {fileID: 8300000, guid: a288ac4aca7d81142a7188d95417f893, type: 3}
+  unlockNewUnitClip: {fileID: 8300000, guid: a9aa8310054af484598e82e9df2a7cac, type: 3}
+  unlockNewMapClip: {fileID: 8300000, guid: a9aa8310054af484598e82e9df2a7cac, type: 3}
   audioSourcePrefab: {fileID: 1700537492}
   sfxVolume: 1
   isMuted: 0

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LevelBgrManager : MonoBehaviour
 {
     public Sprite[] BgrSprite;
+    public Sprite[] unlockNewBackgroundSprite;
     public Sprite[] KhungSprite;
     public Image[] imgBgr;
     public Image[] img;
@@ -27,8 +28,8 @@ public class LevelBgrManager : MonoBehaviour
             img[i].color = i < lvInPage ? Color.green: i == lvInPage ? Color.yellow : Color.white;
         }
 
-        imgBgr[0].sprite = BgrSprite[page];
-        imgBgr[1].sprite = BgrSprite[page + 1];
+        imgBgr[0].sprite = unlockNewBackgroundSprite[page];
+        imgBgr[1].sprite = unlockNewBackgroundSprite[page + 1];
         bgr.sprite = BgrSprite[page];
         khung.sprite = KhungSprite[page];
         bgrIcon.sprite = BgrSprite[page];
