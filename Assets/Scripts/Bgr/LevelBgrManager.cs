@@ -32,7 +32,7 @@ public class LevelBgrManager : MonoBehaviour
         imgBgr[1].sprite = BgrSprite[page + 1];
         bgr.sprite = BgrSprite[page];
         khung.sprite = KhungSprite[page];
-        bgrIcon.sprite = BgrSprite[page];
+        bgrIcon.sprite = unlockNewBackgroundSprite[page];
         if(!isLoadGame) StartCoroutine(openPanel());
     }
     public IEnumerator openPanel()

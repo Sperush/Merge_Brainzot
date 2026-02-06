@@ -31,8 +31,7 @@ namespace GIE
                     oldMultip = multiplier;
                     if (BattleManager.Instance.winPanel.activeSelf)
                     {
-                        txt[0].SetText(Char.FormatMoney(BattleManager.Instance.gemReward * multiplier));
-                        txt[1].SetText(Char.FormatMoney(BattleManager.Instance.coinReward * multiplier));
+                        txt[0].SetText(Char.FormatMoney(BattleManager.Instance.coinReward * multiplier));
                     }
                     else
                     {
@@ -86,11 +85,9 @@ namespace GIE
         void GiveReward(int multiplier)
         {
             long totalCoins = BattleManager.Instance.coinReward * multiplier;
-            int totalGems = BattleManager.Instance.gemReward * multiplier;
             // Hiệu ứng "Punch" cái kim một cái cho nảy nảy
             needleRect.DOScale(1.2f, 0.2f).SetEase(Ease.OutBack).OnComplete(() => needleRect.DOScale(1f, 0.1f));
             Char.Instance.AddCoins(totalCoins);
-            Char.Instance.AddGems(totalGems);
             if (!BattleManager.Instance.winPanel.activeSelf) BattleManager.Instance.ResetLV();
             else BattleManager.Instance.ChangeLV();
             oldMultip = -1;

@@ -215,6 +215,14 @@ MonoBehaviour:
     m_Localized: "Phi\xEAn b\u1EA3n {0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 7088563057868800
+    m_Localized: "Lo\u1EA1i b\u1ECF m\u1ECDi qu\u1EA3ng c\xE1o (tr\u1EEB video th\u01B0\u1EDFng)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7103964491825152
+    m_Localized: "Kh\xF4ng c\xF3 th\u01B0\u1EDFng"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

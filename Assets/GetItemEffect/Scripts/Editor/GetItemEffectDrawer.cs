@@ -4,7 +4,7 @@ using UnityEditorInternal;
 using GIE;
 
 // --- PROPERTY DRAWER CHO CLASS ITEM ---
-[CustomPropertyDrawer(typeof(Item))]
+[CustomPropertyDrawer(typeof(ItemConfig))]
 public class GetItemEffectDrawer : PropertyDrawer
 {
     // Xác định chiều cao của mỗi phần tử trong list

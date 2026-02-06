@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0599976, y: -63.910004}
+  m_AnchoredPosition: {x: 0, y: -85.505005}
   m_SizeDelta: {x: -62.58, y: -171.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6781804055815865822
@@ -94,13 +94,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
+  m_fontSize: 35.45
   m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 35
-  m_fontStyle: 0
+  m_fontSizeMax: 45
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -210,7 +210,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000024796, y: 136.32307}
+  m_AnchoredPosition: {x: -0.0000020428, y: 126.8}
   m_SizeDelta: {x: 220.4, y: 64.5165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1352435487113480603
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 45
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -347,8 +347,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000049591155, y: 55.35005}
-  m_SizeDelta: {x: 109.8, y: 109.8}
+  m_AnchoredPosition: {x: 0.00001049, y: 32.4}
+  m_SizeDelta: {x: 138.92, y: 138.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7500584452844120409
 CanvasRenderer:
@@ -457,7 +457,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6902942414278325751, guid: f7f6a54500a74614a805c27104d861c1, type: 3}
+  m_Sprite: {fileID: 8024834123689002332, guid: cc52b5ce819df244fad8b796b7a86d1f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -492,9 +492,9 @@ MonoBehaviour:
   rewardAmountText:
   - {fileID: 8796988361832209901}
   stateObj:
-  - {fileID: 6902942414278325751, guid: f7f6a54500a74614a805c27104d861c1, type: 3}
-  - {fileID: 4341367187310058329, guid: 0e8622157538c624d96780dade649840, type: 3}
-  - {fileID: 935367798112455826, guid: 06d093d2e70472a4682e3a69399b8a2e, type: 3}
+  - {fileID: 8853189356414278517, guid: d24797262f8a1894e89d5d27ef1fc904, type: 3}
+  - {fileID: -6761761313055988381, guid: fd16e171a512c2c48a06c15f0b6c28ca, type: 3}
+  - {fileID: 8024834123689002332, guid: cc52b5ce819df244fad8b796b7a86d1f, type: 3}
 --- !u!114 &5863514216258502282
 MonoBehaviour:
   m_ObjectHideFlags: 0

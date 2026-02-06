@@ -13,7 +13,7 @@ namespace GIE
     }
 
     [Serializable]
-    public class Item
+    public class ItemConfig
     {
         public TypeItem mItemName;
         public GetItem mItemTemplate;
@@ -56,7 +56,7 @@ namespace GIE
         [HideInInspector]
         public float mFlySpeed = 1.5f;
 
-        public List<Item> mGetItem = new List<Item>();
+        public List<ItemConfig> mGetItem = new List<ItemConfig>();
 
         void Awake()
         {
@@ -109,7 +109,7 @@ namespace GIE
             return 0f;
         }
 
-        public float GetItem(Item item_config, int index, int item_number, Vector3 from_where, Transform to_where, System.Action item_arrive_action)
+        public float GetItem(ItemConfig item_config, int index, int item_number, Vector3 from_where, Transform to_where, System.Action item_arrive_action)
         {
             float maxTime = 0f;
             int use_count = 0;

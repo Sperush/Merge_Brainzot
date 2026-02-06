@@ -38,7 +38,7 @@ public class BattleManager : MonoBehaviour
     private float _stateTimer;
     public long coinReward = 0;
     public int gemReward = 0;
-    public GameObject[] gemWin;
+    //public GameObject[] gemWin;
     public bool mIsMoving = true;
 
     private void Awake()
@@ -140,15 +140,6 @@ public class BattleManager : MonoBehaviour
         txtGemReward.SetText(Char.FormatMoney(gemReward));
         if (isWin)
         {
-            if (isCan)
-            {
-                gemWin[0].SetActive(true);
-                gemWin[1].SetActive(true);
-            } else
-            {
-                gemWin[0].SetActive(false);
-                gemWin[1].SetActive(false);
-            }
             Char.Instance.level++;
         }
         txtCoinReward[isWin ? 0 : 1].SetText(Char.FormatMoney(coinReward));
@@ -162,7 +153,7 @@ public class BattleManager : MonoBehaviour
         buttonGift.SetActive(false);
         if (Char.Instance.level > 3 && AdsConfig.Instance.adsConfig.InterEnable && (!isWin || duration > AdsConfig.Instance.adsConfig.MinGameplaySec))
         {
-            //StartCoroutine(InterstitialAds.Instance.ShowAdsOnStart());
+            StartCoroutine(InterstitialAds.Instance.ShowAdsOnStart());
         }
     }
     public void resetlevel() //Thua nên bấm nút sẽ chơi lại màn đấy

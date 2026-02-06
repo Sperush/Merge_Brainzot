@@ -183,6 +183,14 @@ MonoBehaviour:
     m_Localized: "Vers\xE3o {0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 7088563057868800
+    m_Localized: "Remove todos os an\xFAncios, exceto v\xEDdeos premiados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7103964491825152
+    m_Localized: Sem recompensa
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

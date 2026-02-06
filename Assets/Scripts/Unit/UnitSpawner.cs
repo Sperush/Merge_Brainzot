@@ -16,6 +16,7 @@ public class UnitSpawner : MonoBehaviour
     public SpriteRenderer[] img;
     public GameObject[] buyadsMelee;
     public GameObject[] buyadsRange;
+    public TMP_FontAsset[] fontTxt;
 
     private void Awake()
     {
@@ -39,8 +40,8 @@ public class UnitSpawner : MonoBehaviour
             bool isEnoughR = Char.Instance.coins >= costRange;
             if (!txtCostMelee.gameObject.activeSelf) txtCostMelee.gameObject.SetActive(true);
             if (!txtCostRange.gameObject.activeSelf) txtCostRange.gameObject.SetActive(true);
-            txtCostMelee.SetText(isEnoughM ? Char.FormatMoney(costMelee) : "FREE");
-            txtCostRange.SetText(isEnoughR ? Char.FormatMoney(costRange) : "FREE");
+            txtCostMelee.SetText(isEnoughM ? Char.FormatMoney(costMelee) : Noti.Get("free"));
+            txtCostRange.SetText(isEnoughR ? Char.FormatMoney(costRange) : Noti.Get("free"));
             img[0].sprite = sp[isEnoughM ? 0 : 1];
             img[1].sprite = sp[isEnoughR ? 0 : 1];
             img[2].sprite = sp[isEnoughM ? 2 : 3];
@@ -49,12 +50,16 @@ public class UnitSpawner : MonoBehaviour
             buyadsMelee[1].SetActive(!isEnoughM);
             buyadsRange[0].SetActive(isEnoughR);
             buyadsRange[1].SetActive(!isEnoughR);
+            txtCostMelee.font = fontTxt[isEnoughM ? 0 : 1];
+            txtCostRange.font = fontTxt[isEnoughR ? 0 : 1];
         } else
         {
             if (!txtCostMelee.gameObject.activeSelf) txtCostMelee.gameObject.SetActive(true);
             if (!txtCostRange.gameObject.activeSelf) txtCostRange.gameObject.SetActive(true);
-            txtCostMelee.SetText("FREE");
-            txtCostRange.SetText("FREE");
+            txtCostMelee.SetText(Noti.Get("free"));
+            txtCostRange.SetText(Noti.Get("free"));
+            txtCostMelee.font = fontTxt[1];
+            txtCostRange.font = fontTxt[1];
             img[0].sprite = sp[0];
             img[1].sprite = sp[0];
             img[2].sprite = sp[2];
